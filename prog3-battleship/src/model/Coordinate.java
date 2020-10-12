@@ -5,9 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Collections;
 
+// TODO: Auto-generated Javadoc
 /**
-* @author Francisco Alejandro Pérez Meneses - 48768206H
-*/
+ * The Class Coordinate.
+ *
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 
 // TODO: Auto-generated Javadoc
 /**
@@ -149,6 +152,7 @@ public class Coordinate {
 	 * @param obj the obj
 	 * @return true, if successful
 	 */
+	
 	public boolean equals(Object obj) {
 		
 		if(obj == null) {
@@ -173,10 +177,20 @@ public class Coordinate {
 		}
 	}
 	
-	public Coordinate copy(Coordinate copia) {
-		return new Coordinate(copia.get(0), copia.get(1));
+	/**
+	 * Copy.
+	 *
+	 * @return the coordinate
+	 */
+	public Coordinate copy() {
+		return new Coordinate(this);
 	}
 	
+	/**
+	 * Adjacent coordinates.
+	 *
+	 * @return the sets the
+	 */
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		
