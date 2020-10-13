@@ -1,6 +1,9 @@
 package model;
 
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 // TODO: Auto-generated Javadoc
@@ -47,7 +50,7 @@ public class Ship {
         { 0, 0, 0, 0, 0,               // SOUTH    ·····
           0, 0, 1, 0, 0,               //          ··#·· 7
           0, 0, 1, 0, 0,               //          ··#·· 12
-          0, 0, 1, 0, 0,               //          ..#.. 11
+          0, 0, 1, 0, 0,               //          ..#.. 17
           0, 0, 0, 0, 0},              //          ·····
 
         { 0, 0, 0, 0, 0,               // WEST     ·····
@@ -148,8 +151,9 @@ public class Ship {
 	 * @return the absolute positions
 	 */
 	public Set<Coordinate> getAbsolutePositions(Coordinate position){
+		
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
-	
+		
 		Orientation or = this.orientation;
 		int pos;
 		
@@ -186,9 +190,11 @@ public class Ship {
 				
 				break;
 		}
+	
 		
 		return positionsToReturn;
 	}
+
 	
 	/**
 	 * Gets the absolute positions.
@@ -216,9 +222,21 @@ public class Ship {
 		
 		Set<Coordinate> posAbsolutas = new HashSet<Coordinate>();
 		posAbsolutas = getAbsolutePositions();
+		
+		List<Coordinate> pos1 = new ArrayList<Coordinate>();
+		List<Coordinate> posOrdenadas = new ArrayList<Coordinate>();
+		
+		for(Coordinate a: posAbsolutas) {
+			pos1.add(a);
+		}
+		
+		for(int i = 0;i < pos1.size();i++) {
+			posOrdenadas.add(pos1.get(i));
+		}
+		
 		Coordinate aux = null;
 		int i = 1;
-		for(Coordinate busca: posAbsolutas) {
+		for(Coordinate busca: posOrdenadas) {
 			if(busca.equals(c)) {
 				dev = true;
 				aux = busca;
@@ -230,23 +248,26 @@ public class Ship {
 		}
 		
 		if(dev == true) {
-			int pos;
+			int pos = 0;
 			Coordinate nueva = null;
 			switch(or) {
 			case NORTH:
-				nueva = new Coordinate((aux.get(0) - 2), (aux.get(1) - i));
-				pos = getShapeIndex(nueva) - 1;
+				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) -1));
+				pos = getShapeIndex(nueva);
+				System.out.println(nueva.toString() + " " + pos);
+				
 				if(shape[0][pos] == HIT_VALUE) {
 					dev = false;
 				}
 				else {
-					shape[0][pos] = HIT_VALUE;
+					this.shape[0][pos] = HIT_VALUE;
 				}
 				break;
 				
 			case SOUTH:
 				nueva = new Coordinate((aux.get(0) - 2), (aux.get(1) - i));
-				pos = getShapeIndex(nueva) - 1;
+				pos = getShapeIndex(nueva);
+				
 				if(shape[2][pos] == HIT_VALUE) {
 					dev = false;
 				}
@@ -289,12 +310,12 @@ public class Ship {
 	 * @return true, if is shot down
 	 */
 	public boolean isShotDown() {
-		Orientation or = this.orientation;
+		Orientation or = this.getOrientation();
 		boolean dev = false;
 		
 		switch(or) {
 		case NORTH:
-			if(shape[0][7] == HIT_VALUE && shape[0][12] == HIT_VALUE && shape[0][17] == HIT_VALUE) {
+			if(this.shape[0][7] == HIT_VALUE && this.shape[0][12] == HIT_VALUE && this.shape[0][17] == HIT_VALUE) {
 				dev = true;
 			}
 			break;
@@ -306,7 +327,7 @@ public class Ship {
 			break;
 			
 		case EAST:
-			if(shape[1][11] == HIT_VALUE && shape[1][12] == HIT_VALUE && shape[1][13] == HIT_VALUE) {
+			if(this.shape[1][11] == HIT_VALUE && this.shape[1][12] == HIT_VALUE && this.shape[1][13] == HIT_VALUE) {
 				dev = true;
 			}
 			break;
