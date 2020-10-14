@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package model;
 
 
@@ -248,13 +251,15 @@ public class Ship {
 		}
 		
 		if(dev == true) {
-			int pos = 0;
+			
 			Coordinate nueva = null;
+			nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+			int pos = getShapeIndex(nueva);
+			
 			switch(or) {
 			case NORTH:
-				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) -1));
+				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
 				pos = getShapeIndex(nueva);
-				System.out.println(nueva.toString() + " " + pos);
 				
 				if(shape[0][pos] == HIT_VALUE) {
 					dev = false;
@@ -265,7 +270,7 @@ public class Ship {
 				break;
 				
 			case SOUTH:
-				nueva = new Coordinate((aux.get(0) - 2), (aux.get(1) - i));
+				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
 				pos = getShapeIndex(nueva);
 				
 				if(shape[2][pos] == HIT_VALUE) {
@@ -277,8 +282,9 @@ public class Ship {
 				break;
 				
 			case EAST:
-				nueva = new Coordinate((aux.get(0) - i), (aux.get(1) - 2));
+				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
 				pos = getShapeIndex(nueva);
+				
 				if(shape[1][pos] == HIT_VALUE) {
 					dev = false;
 				}
@@ -288,8 +294,9 @@ public class Ship {
 				break;
 				
 			case WEST:
-				nueva = new Coordinate((aux.get(0) - i), (aux.get(1) - 2));
+				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
 				pos = getShapeIndex(nueva);
+				
 				if(shape[3][pos] == HIT_VALUE) {
 					dev = false;
 				}
