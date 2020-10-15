@@ -33,7 +33,7 @@ public class Board {
 			numCrafts = 0;
 			destroyedCrafts = 0;
 			seen = null;
-			board = null;
+			//board = null;
 		}
 	}
 	
@@ -53,16 +53,21 @@ public class Board {
 	
 	public boolean addShip(Ship ship, Coordinate position) {
 		boolean dev = false;
-		
-		ship.setPosition(position);
-		Set<Coordinate> posAbs = new HashSet<Coordinate>();
-		
-		for(Coordinate c: posAbs) {
-			board.put(c, ship);
+
+		if(checkCoordinate(position)) {
+			ship.setPosition(position);
+			
+			Set<Coordinate> posAbs = new HashSet<Coordinate>();
+			posAbs = ship.getAbsolutePositions();
+			
+			for(Coordinate c: posAbs) {
+				board.put(c, ship);
+			}
+			
+			dev = true;
+			numCrafts ++;
 		}
-		
-		dev = true;
-		numCrafts ++;
+	
 		return dev;
 	}
 	
@@ -73,14 +78,49 @@ public class Board {
 	
 	/*public boolean isSeen(Coordinate c) {
 		
-	}
+	}*/
 	
 	public CellStatus hit(Coordinate c) {
 		
-	}*/
+		CellStatus dev = CellStatus.HIT;
+		
+		if(!checkCoordinate(c)) {
+			dev = CellStatus.WATER;
+			System.err.println("Coordenada fuera del tablero");
+		}
+		
+		if(board.containsKey(c)) {
+			Ship barcoGolpeado = board.get(c);
+			
+			if(!barcoGolpeado.isShotDown()) {
+				barcoGolpeado.llamadaBoard = true;
+				barcoGolpeado.hit(c);
+				
+				if(barcoGolpeado.isShotDown()) {
+					dev = CellStatus.DESTROYED;
+					destroyedCrafts ++;
+				}
+				else {
+					dev = CellStatus.HIT;
+				}
+			}
+			
+		}
+		
+		else {
+			dev = CellStatus.WATER;
+		}
+		return dev;
+	}
 	
 	public boolean areAllCraftsDestroyed() {
-		return board.size() == 0;
+		boolean dev = false;
+		
+		if(numCrafts == destroyedCrafts) {
+			dev = true;
+		}
+		
+		return dev;
 	}
 	
 	/*public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){

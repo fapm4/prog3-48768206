@@ -15,6 +15,8 @@ import java.util.Set;
  */
 public class Ship {
 	
+	boolean llamadaBoard = false;
+	
 	/** The Constant BOUNDING_SQUARE_SIZE. */
 	private final static int BOUNDING_SQUARE_SIZE = 5;
 	
@@ -226,88 +228,198 @@ public class Ship {
 		Set<Coordinate> posAbsolutas = new HashSet<Coordinate>();
 		posAbsolutas = getAbsolutePositions();
 		
+		// Arrays para ordenar las coordenadas
 		List<Coordinate> pos1 = new ArrayList<Coordinate>();
 		List<Coordinate> posOrdenadas = new ArrayList<Coordinate>();
 		
+		// Primero las meto sin orden
 		for(Coordinate a: posAbsolutas) {
 			pos1.add(a);
 		}
 		
+		// Aquí se ordenan solas
 		for(int i = 0;i < pos1.size();i++) {
 			posOrdenadas.add(pos1.get(i));
 		}
 		
 		Coordinate aux = null;
-		int i = 1;
-		for(Coordinate busca: posOrdenadas) {
-			if(busca.equals(c)) {
+			
+		// Busco si la coordenada que me dan es una de mis posiciones absolutas del barco
+		for(Coordinate busca: posAbsolutas) {
+			
+			// Si la encuentro salgo del bucle y paso a modificar el shape
+			if(c.equals(busca)) {
 				dev = true;
 				aux = busca;
 				break;
 			}
-			else {
-				i++;
-			}
 		}
 		
 		if(dev == true) {
-			
 			Coordinate nueva = null;
-			nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-			int pos = getShapeIndex(nueva);
+			int pos;
 			
 			switch(or) {
 			case NORTH:
-				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-				pos = getShapeIndex(nueva);
 				
-				if(shape[0][pos] == HIT_VALUE) {
-					dev = false;
+				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
+				pos = getShapeIndex(aux);
+				
+				if(pos == 7 | pos == 12 | pos == 17) {
+					if(shape[0][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						shape[0][pos] = HIT_VALUE;
+						dev = true;
+					}
 				}
+				
 				else {
-					this.shape[0][pos] = HIT_VALUE;
+					
+					// Sino sacaré la posición relativa de la coordenada a la que me atacan
+					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
+					if(llamadaBoard) {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
+						llamadaBoard = false;
+					}
+					else {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+					}
+					
+					pos = getShapeIndex(nueva);
+					
+										
+					if(shape[0][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						this.shape[0][pos] = HIT_VALUE;
+						dev = true;
+					}					
 				}
+				
 				break;
 				
 			case SOUTH:
-				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-				pos = getShapeIndex(nueva);
 				
-				if(shape[2][pos] == HIT_VALUE) {
-					dev = false;
+				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
+				pos = getShapeIndex(aux);
+				
+				if(pos == 7 | pos == 12 | pos == 17) {
+					if(shape[2][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						shape[2][pos] = HIT_VALUE;
+						dev = true;
+					}
 				}
+				
 				else {
-					shape[2][pos] = HIT_VALUE;
+					
+					// Sino sacaré la posición relativa de la coordenada a la que me atacan
+					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
+					if(llamadaBoard) {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
+						llamadaBoard = false;
+					}
+					else {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+					}
+					pos = getShapeIndex(nueva);
+					
+					
+					if(shape[2][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						this.shape[2][pos] = HIT_VALUE;
+						dev = true;
+					}
+					
 				}
 				break;
 				
 			case EAST:
-				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-				pos = getShapeIndex(nueva);
 				
-				if(shape[1][pos] == HIT_VALUE) {
-					dev = false;
+				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
+				pos = getShapeIndex(aux);
+				if(pos == 11 | pos == 12 | pos == 13) {
+					if(shape[1][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						shape[1][pos] = HIT_VALUE;
+						dev = true;
+					}
 				}
+				
 				else {
-					shape[1][pos] = HIT_VALUE;
+					
+					// Sino sacaré la posición relativa de la coordenada a la que me atacan
+					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
+					if(llamadaBoard) {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
+						llamadaBoard = false;
+					}
+					else {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+					}
+					pos = getShapeIndex(nueva);
+					
+					
+					if(shape[1][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						this.shape[1][pos] = HIT_VALUE;
+						dev = true;
+					}
+					
 				}
 				break;
 				
 			case WEST:
-				nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-				pos = getShapeIndex(nueva);
 				
-				if(shape[3][pos] == HIT_VALUE) {
-					dev = false;
+				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
+				pos = getShapeIndex(aux);
+				if(pos == 11 | pos == 12 | pos == 13) {
+					if(shape[3][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						shape[3][pos] = HIT_VALUE;
+						dev = true;
+					}
 				}
+				
 				else {
-					shape[3][pos] = HIT_VALUE;
+					
+					// Sino sacaré la posición relativa de la coordenada a la que me atacan
+					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
+					if(llamadaBoard) {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
+						llamadaBoard = false;
+					}
+					else {
+						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+					}
+					
+					pos = getShapeIndex(nueva);
+					
+					if(shape[3][pos] == HIT_VALUE) {
+						dev = false;
+					}
+					else {
+						this.shape[3][pos] = HIT_VALUE;
+						dev = true;
+					}
+					
 				}
 				break;
-				
 			}
 		}
-		
 		return dev;
 	}
 	
@@ -317,20 +429,22 @@ public class Ship {
 	 * @return true, if is shot down
 	 */
 	public boolean isShotDown() {
-		Orientation or = this.getOrientation();
+		Orientation or = this.orientation;
 		boolean dev = false;
 		
 		switch(or) {
 		case NORTH:
 			if(this.shape[0][7] == HIT_VALUE && this.shape[0][12] == HIT_VALUE && this.shape[0][17] == HIT_VALUE) {
-				dev = true;
+				dev = true;			
 			}
 			break;
 			
 		case SOUTH:
+			System.out.println(shape[2][7] + " " + shape[2][12] + " " + shape[2][17]);
 			if(shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE && shape[2][17] == HIT_VALUE) {
 				dev = true;
 			}
+			
 			break;
 			
 		case EAST:
