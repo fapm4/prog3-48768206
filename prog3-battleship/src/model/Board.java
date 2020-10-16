@@ -32,7 +32,7 @@ public class Board {
 			this.size = size;
 			numCrafts = 0;
 			destroyedCrafts = 0;
-			seen = null;
+			//seen = null;
 			//board = null;
 		}
 	}
@@ -73,24 +73,37 @@ public class Board {
 	
 	
 	public Ship getShip(Coordinate c) {
-		return board.get(c);
+		
+		if(board.containsKey(c)) {
+			return board.get(c);
+		}
+		else {
+			return null;
+		}
 	}
 	
-	/*public boolean isSeen(Coordinate c) {
-		
-	}*/
+	public boolean isSeen(Coordinate c) {
+		boolean dev = false;
+		for(Coordinate b: seen) {
+			if(b.equals(c)) {
+				dev = true;
+				break;
+			}
+		}
+			
+		return dev;
+	}
 	
 	public CellStatus hit(Coordinate c) {
 		
-		CellStatus dev = CellStatus.HIT;
+		CellStatus dev = CellStatus.WATER;
 		
 		if(!checkCoordinate(c)) {
-			dev = CellStatus.WATER;
 			System.err.println("Coordenada fuera del tablero");
 		}
 		
 		if(board.containsKey(c)) {
-			Ship barcoGolpeado = board.get(c);
+			Ship barcoGolpeado = getShip(c);
 			
 			if(!barcoGolpeado.isShotDown()) {
 				barcoGolpeado.llamadaBoard = true;
@@ -104,12 +117,9 @@ public class Board {
 					dev = CellStatus.HIT;
 				}
 			}
-			
 		}
 		
-		else {
-			dev = CellStatus.WATER;
-		}
+		seen.add(c);
 		return dev;
 	}
 	
@@ -125,8 +135,9 @@ public class Board {
 	
 	/*public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){
 		
-	}
+	}*/
 	
+	/*
 	public Set<Coordinate> getNeighborhood(Ship s){
 		
 	}

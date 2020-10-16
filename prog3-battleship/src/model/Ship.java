@@ -281,7 +281,6 @@ public class Ship {
 					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
 					if(llamadaBoard) {
 						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
-						llamadaBoard = false;
 					}
 					else {
 						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
@@ -322,13 +321,15 @@ public class Ship {
 					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
 					if(llamadaBoard) {
 						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
-						llamadaBoard = false;
 					}
 					else {
 						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
 					}
 					pos = getShapeIndex(nueva);
 					
+					if(nueva.get(0) < 2) {
+						shape[2][7] = HIT_VALUE;
+					}
 					
 					if(shape[2][pos] == HIT_VALUE) {
 						dev = false;
@@ -345,6 +346,7 @@ public class Ship {
 				
 				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
 				pos = getShapeIndex(aux);
+				
 				if(pos == 11 | pos == 12 | pos == 13) {
 					if(shape[1][pos] == HIT_VALUE) {
 						dev = false;
@@ -357,33 +359,26 @@ public class Ship {
 				
 				else {
 					
-					// Sino sacaré la posición relativa de la coordenada a la que me atacan
-					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
-					if(llamadaBoard) {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
-						llamadaBoard = false;
-					}
-					else {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-					}
-					pos = getShapeIndex(nueva);
-					
-					
+					nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+
+					pos = getShapeIndex(nueva);					
+										
 					if(shape[1][pos] == HIT_VALUE) {
 						dev = false;
 					}
 					else {
 						this.shape[1][pos] = HIT_VALUE;
 						dev = true;
-					}
-					
+					}					
 				}
+				
 				break;
 				
 			case WEST:
 				
 				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
 				pos = getShapeIndex(aux);
+				
 				if(pos == 11 | pos == 12 | pos == 13) {
 					if(shape[3][pos] == HIT_VALUE) {
 						dev = false;
@@ -396,30 +391,25 @@ public class Ship {
 				
 				else {
 					
-					// Sino sacaré la posición relativa de la coordenada a la que me atacan
-					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
-					if(llamadaBoard) {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
-						llamadaBoard = false;
-					}
-					else {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-					}
+					nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
 					
-					pos = getShapeIndex(nueva);
-					
+					pos = getShapeIndex(nueva);					
+										
 					if(shape[3][pos] == HIT_VALUE) {
 						dev = false;
 					}
 					else {
 						this.shape[3][pos] = HIT_VALUE;
 						dev = true;
-					}
-					
+					}					
 				}
+				
 				break;
+
 			}
 		}
+		
+		llamadaBoard = false;
 		return dev;
 	}
 	
@@ -440,7 +430,6 @@ public class Ship {
 			break;
 			
 		case SOUTH:
-			System.out.println(shape[2][7] + " " + shape[2][12] + " " + shape[2][17]);
 			if(shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE && shape[2][17] == HIT_VALUE) {
 				dev = true;
 			}
