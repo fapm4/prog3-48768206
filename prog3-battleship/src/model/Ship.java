@@ -478,6 +478,7 @@ public class Ship {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Orientation or = this.orientation;
+		
 		sb.append(this.name + " (" + this.orientation + ")\n");
 		sb.append(" -----\n");
 		
