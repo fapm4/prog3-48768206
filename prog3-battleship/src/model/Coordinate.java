@@ -3,14 +3,10 @@ package model;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Collections;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Coordinate.
- *
- * @author Francisco Alejandro Pérez Meneses - 48768206H
- */
+* @author Francisco Alejandro Pérez Meneses - 48768206H
+*/
 
 // TODO: Auto-generated Javadoc
 /**

@@ -9,12 +9,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+* @author Francisco Alejandro Pérez Meneses - 48768206H
+*/
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Ship.
  */
 public class Ship {
 	
+	/** The llamada board. */
 	boolean llamadaBoard = false;
 	
 	/** The Constant BOUNDING_SQUARE_SIZE. */
@@ -160,7 +165,6 @@ public class Ship {
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
 		
 		Orientation or = this.orientation;
-		int pos;
 		
 		switch(or) {
 			case NORTH:
@@ -229,17 +233,17 @@ public class Ship {
 		posAbsolutas = getAbsolutePositions();
 		
 		// Arrays para ordenar las coordenadas
-		List<Coordinate> pos1 = new ArrayList<Coordinate>();
+		List<Coordinate> posSinOrdenar = new ArrayList<Coordinate>();
 		List<Coordinate> posOrdenadas = new ArrayList<Coordinate>();
 		
 		// Primero las meto sin orden
 		for(Coordinate a: posAbsolutas) {
-			pos1.add(a);
+			posSinOrdenar.add(a);
 		}
 		
 		// Aquí se ordenan solas
-		for(int i = 0;i < pos1.size();i++) {
-			posOrdenadas.add(pos1.get(i));
+		for(int i = 0;i < posSinOrdenar.size();i++) {
+			posOrdenadas.add(posSinOrdenar.get(i));
 		}
 		
 		Coordinate aux = null;
@@ -251,7 +255,6 @@ public class Ship {
 			if(c.equals(busca)) {
 				dev = true;
 				aux = busca;
-				break;
 			}
 		}
 		
@@ -462,11 +465,11 @@ public class Ship {
 	 */
 	public boolean isHit(Coordinate c) {
 		
-		if(hit(c) == false) {
-			return true;
+		if(hit(c) == true) {
+			return false;
 		}
 		else {
-			return false;
+			return true;
 		}
 	}
 	
@@ -482,10 +485,10 @@ public class Ship {
 		sb.append(this.name + " (" + this.orientation + ")\n");
 		sb.append(" -----\n");
 		
-		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
-			for(int i = 0;i < 5;i++) {
-				sb.append("|");
-				for(int j = 0;j < 5;j++) {
+		for(int i = 0;i < BOUNDING_SQUARE_SIZE;i++) {
+			sb.append("|");
+			for(int j = 0;j < BOUNDING_SQUARE_SIZE;j++) {
+				if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
 					if(j == 2) {
 						if(i == 1 | i == 2 | i == 3) {
 							sb.append(this.symbol);
@@ -498,15 +501,7 @@ public class Ship {
 						sb.append(Board.WATER_SYMBOL);	
 					}
 				}
-				sb.append("|");
-				sb.append("\n");
-			}
-		}
-		
-		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)) {
-			for(int i = 0;i < 5;i++) {
-				sb.append("|");
-				for(int j = 0;j < 5;j++) {
+				else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
 					if(i == 2) {
 						if(j == 1 | j == 2 | j == 3) {
 							sb.append(this.symbol);
@@ -519,10 +514,12 @@ public class Ship {
 						sb.append(Board.WATER_SYMBOL);	
 					}
 				}
-				sb.append("|");
-				sb.append("\n");
 			}
+			
+			sb.append("|");
+			sb.append("\n");
 		}
+		
 		
 		sb.append(" -----");
 		return sb.toString();

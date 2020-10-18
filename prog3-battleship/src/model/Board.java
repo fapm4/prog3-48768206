@@ -1,6 +1,3 @@
-/*
- * 
- */
 package model;
 
 import java.util.HashMap;
@@ -8,10 +5,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+* @author Francisco Alejandro Pérez Meneses - 48768206H
+*/
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Board.
  */
+
 public class Board {
 	
 	//Variables
@@ -115,10 +117,14 @@ public class Board {
 		Set<Coordinate> vecindario = new HashSet<Coordinate>();
 		posAbs = ship.getAbsolutePositions();
 
-		// Compruebo si la coordenada está fuera del tablero
-		posCorrecta = checkCoordinate(position);
-		if(posCorrecta == false) {
-			System.err.println("Coordenada fuera del tablero");
+		// Compruebo si las coordenadas del barco están fuera del tablero
+		for(Coordinate c: posAbs) {
+			if(!checkCoordinate(c)) {
+				posCorrecta = false;
+			}
+			else {
+				posCorrecta = true;
+			}
 		}
 		
 		// ----------------------------
@@ -318,31 +324,37 @@ public class Board {
 				if(unveil) {
 					Coordinate coord = new Coordinate(i, j);
 					
-					if(seen.contains(coord)) {
-						Ship barco = getShip(coord);
-						
-						if(barco.isHit(coord)) {
-							sb.append(HIT_SYMBOL);
-						}
-						sb.append(barco.getSymbol());
+					Ship barco = null;
+					
+					if(board.containsKey(coord)) {
+						barco = getShip(coord);
+					}
+					
+					if(hit(coord).equals(CellStatus.WATER)) {
+						sb.append(WATER_SYMBOL);
+					}
+					else if(hit(coord).equals(CellStatus.HIT)) {
+						sb.append(HIT_SYMBOL);
 					}
 					else {
-						sb.append(WATER_SYMBOL);
+						sb.append(barco.getSymbol());
 					}
 				}
 				
 				else {
 					Coordinate coord = new Coordinate(i, j);
 					
-					if(seen.contains(coord)) {
-						Ship barco = getShip(coord);
-						
-						if(barco.isHit(coord)) {
-							sb.append(HIT_SYMBOL);
-						}
-						else {
-							sb.append(WATER_SYMBOL);
-						}
+					Ship barco = null;
+					
+					if(board.containsKey(coord)) {
+						barco = getShip(coord);
+					}
+					
+					if(hit(coord).equals(CellStatus.WATER)) {
+						sb.append(WATER_SYMBOL);
+					}
+					else if(hit(coord).equals(CellStatus.HIT)) {
+						sb.append(HIT_SYMBOL);
 					}
 					else {
 						sb.append(NOTSEEN_SYMBOL);
