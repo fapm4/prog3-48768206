@@ -9,18 +9,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
-* @author Francisco Alejandro Pérez Meneses - 48768206H
-*/
+ * The Class Ship.
+ *
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Ship.
  */
 public class Ship {
-	
-	/** The llamada board. */
-	boolean llamadaBoard = false;
 	
 	/** The Constant BOUNDING_SQUARE_SIZE. */
 	private final static int BOUNDING_SQUARE_SIZE = 5;
@@ -103,7 +103,7 @@ public class Ship {
 	 * @param position the new position
 	 */
 	public void setPosition(Coordinate position) {
-		this.position = position;
+		this.position = new Coordinate(position);
 		
 	}
 	
@@ -264,8 +264,7 @@ public class Ship {
 			
 			switch(or) {
 			case NORTH:
-				
-				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
+		
 				pos = getShapeIndex(aux);
 				
 				if(pos == 7 | pos == 12 | pos == 17) {
@@ -280,18 +279,10 @@ public class Ship {
 				
 				else {
 					
-					// Sino sacaré la posición relativa de la coordenada a la que me atacan
-					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
-					if(llamadaBoard) {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
-					}
-					else {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-					}
-					
+					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+
 					pos = getShapeIndex(nueva);
-					
-										
+								
 					if(shape[0][pos] == HIT_VALUE) {
 						dev = false;
 					}
@@ -305,7 +296,6 @@ public class Ship {
 				
 			case SOUTH:
 				
-				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
 				pos = getShapeIndex(aux);
 				
 				if(pos == 7 | pos == 12 | pos == 17) {
@@ -320,14 +310,8 @@ public class Ship {
 				
 				else {
 					
-					// Sino sacaré la posición relativa de la coordenada a la que me atacan
-					// Si llamo desde board tengo que restar 2, mientras que si llamo de ship, solo resto 1
-					if(llamadaBoard) {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 2));
-					}
-					else {
-						nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-					}
+					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+
 					pos = getShapeIndex(nueva);
 					
 					if(nueva.get(0) < 2) {
@@ -347,7 +331,6 @@ public class Ship {
 				
 			case EAST:
 				
-				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
 				pos = getShapeIndex(aux);
 				
 				if(pos == 11 | pos == 12 | pos == 13) {
@@ -362,7 +345,7 @@ public class Ship {
 				
 				else {
 					
-					nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
+					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
 
 					pos = getShapeIndex(nueva);					
 										
@@ -379,7 +362,6 @@ public class Ship {
 				
 			case WEST:
 				
-				// Primero compruebo que si las posiciones de la coordenada corresponden con shape, los modificó directamente
 				pos = getShapeIndex(aux);
 				
 				if(pos == 11 | pos == 12 | pos == 13) {
@@ -392,10 +374,10 @@ public class Ship {
 					}
 				}
 				
-				else {
+				else {				
 					
-					nueva = new Coordinate((aux.get(0) - 3), (aux.get(1) - 1));
-					
+					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+
 					pos = getShapeIndex(nueva);					
 										
 					if(shape[3][pos] == HIT_VALUE) {
@@ -412,7 +394,6 @@ public class Ship {
 			}
 		}
 		
-		llamadaBoard = false;
 		return dev;
 	}
 	
@@ -464,13 +445,20 @@ public class Ship {
 	 * @return true, if is hit
 	 */
 	public boolean isHit(Coordinate c) {
+		boolean dev = false;
 		
-		if(hit(c) == true) {
-			return false;
+		if(position == null) {
+			dev = false;
 		}
+		
 		else {
-			return true;
+			boolean golpeado = hit(c);
+			if(!golpeado) {
+				dev = true;
+			}	
 		}
+		
+		return dev;
 	}
 	
 	/**

@@ -5,8 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
-* @author Francisco Alejandro Pérez Meneses - 48768206H
-*/
+ *
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 
 // TODO: Auto-generated Javadoc
 /**
@@ -190,18 +191,16 @@ public class Coordinate {
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		
-		int xIn = this.get(0);
-		int yIn = this.get(1);
+		int x = this.get(0);
+		int y = this.get(1);
 		
-		for(int i = xIn - 1;i< xIn + 2;i++) {
-			for(int j = yIn - 1;j < yIn + 2;j++) {
-				if(i >= 0 && j >= 0) {
-					nuevo.add(new Coordinate(i, j));
-				}
+		for(int i = x - 1;i< x + 2;i++) {
+			for(int j = y - 1;j < y + 2;j++) {
+				nuevo.add(new Coordinate(i, j));
 			}
 		}
 		
-		nuevo.remove(new Coordinate(xIn, yIn));
+		nuevo.remove(new Coordinate(x, y));
 		return nuevo;
 	}
 
