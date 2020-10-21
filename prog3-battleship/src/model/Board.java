@@ -17,6 +17,9 @@ import java.util.Set;
 public class Board {
 	
 	//Variables
+	private boolean desdeAdd = false;
+	private boolean notSet = false;
+	
 	/** The size. */
 	private int size;
 	
@@ -101,13 +104,14 @@ public class Board {
 	 * @param position the position
 	 * @return true, if successful
 	 */
+
 	public boolean addShip(Ship ship, Coordinate position) {
 		
 		// Variable a devolver
 		boolean dev = false;
 		
 		// Variables de las posiciones
-		boolean posCorrecta = false;
+		boolean posIncorrecta = false;
 		boolean posOcupada = false;	
 		boolean posVecindario = false;
 		
@@ -117,35 +121,35 @@ public class Board {
 		Set<Coordinate> vecindario = new HashSet<Coordinate>();
 		posAbs = ship.getAbsolutePositions();
 
-		// Compruebo si las coordenadas del barco están fuera del tablero
+		// ----------------------------------------------------------------
+		// Compruebo que las coordenadas del ship no estén fuera del tablero
 		for(Coordinate c: posAbs) {
 			if(!checkCoordinate(c)) {
-				posCorrecta = false;
-			}
-			else {
-				posCorrecta = true;
+				posIncorrecta = true;
 			}
 		}
 		
-		// ----------------------------
+		if(posIncorrecta) {
+			System.err.println("Coordenada fuera del tablero");
+		}
 		
-		// Compruebo si algunas de las posiciones donde se pondrá el barco ya están ocupadas
+		// ----------------------------------------------------------------
+		// Compruebo que las posiciones del barco no estén ocupadas
 		for(Coordinate c: posAbs) {
 			if(board.containsKey(c)) {
 				posOcupada = true;
 			}
 		}
-					
-		if(posOcupada == true) {
-			System.err.println("Una de las coordenads del barco ya se encuentra ocupada");
+		
+		if(posOcupada) {
+			System.err.println("Coordenada ocupada");
 		}
 		
-		// ------------------------------
+		// ----------------------------------------------------------------
+		// Compruebo que las posiciones cercanas del barco
 		
-		// Compruebo que la vecindad no esté ocupada
-		
+		desdeAdd = true;
 		vecindario = getNeighborhood(ship, position);
-		
 		for(Coordinate c: vecindario) {
 			if(board.containsKey(c)) {
 				posVecindario = true;
@@ -153,13 +157,10 @@ public class Board {
 		}
 		
 		if(posVecindario) {
-			System.err.println("Vecindario ocupado");
+			System.err.println("Coordenada cercana ocupada");
 		}
 		
-		// ------------------------------
-
-		// Si se cumplen las tres condiciones añado el ship
-		if(posCorrecta == true && posOcupada == false && posVecindario == false) {
+		if(posIncorrecta == false && posOcupada == false && posVecindario == false) {
 			for(Coordinate c: posAbs) {
 				board.put(c, ship);
 			}
@@ -225,7 +226,6 @@ public class Board {
 			Ship barcoGolpeado = getShip(c);
 			
 			if(!barcoGolpeado.isShotDown()) {
-				barcoGolpeado.llamadaBoard = true;
 				
 				if(barcoGolpeado.hit(c)) {
 					if(barcoGolpeado.isShotDown()) {
@@ -273,29 +273,58 @@ public class Board {
 		
 		Set<Coordinate> vecindario = new HashSet<Coordinate>();
 		Set<Coordinate> vecindarioToReturn = new HashSet<Coordinate>();
-		Set<Coordinate> posAbsolutas = new HashSet<Coordinate>();
+		Set<Coordinate> listaVacia = new HashSet<Coordinate>();
+		Set<Coordinate> posAbs = new HashSet<Coordinate>();
+		int contFuera = 0;
 		
-		Coordinate posActual = ship.getPosition();
+		if(notSet == false) {
+		}
 		
-		if(board.containsValue(ship)) {
-			ship.setPosition(position);
-			posAbsolutas = ship.getAbsolutePositions();
-			
-			for(Coordinate c: posAbsolutas) {
+		Ship copia = new Ship(ship.getOrientation(), ship.getSymbol(), ship.getName());
+		copia.setPosition(position);
+		posAbs = copia.getAbsolutePositions();
+		
+		if(desdeAdd == true) {
+			for(Coordinate c: posAbs) {
 				vecindario.addAll(c.adjacentCoordinates());
 			}
-							
+			
 			for(Coordinate c: vecindario) {
 				if(checkCoordinate(c)) {
 					vecindarioToReturn.add(c);
 				}
 			}
-						
-			vecindarioToReturn.removeAll(posAbsolutas);	
-		
+			
+			vecindarioToReturn.removeAll(posAbs);
 		}
 		
-		ship.setPosition(posActual);
+		else {
+			if(notSet == false) {
+				vecindarioToReturn = listaVacia;
+			}
+			
+			for(Coordinate c: posAbs) {
+				if(!checkCoordinate(c)) {
+					contFuera ++;
+				}
+			}
+			
+			if(contFuera == 3) {
+				for(Coordinate c: posAbs) {
+					vecindario.addAll(c.adjacentCoordinates());
+				}
+				
+				for(Coordinate c: vecindario) {
+					if(checkCoordinate(c)) {
+						vecindarioToReturn.add(c);
+					}
+				}
+				
+				vecindarioToReturn.removeAll(posAbs);
+			}
+		}
+		
+		
 		return vecindarioToReturn;
 	}
 	
@@ -306,7 +335,9 @@ public class Board {
 	 * @param s the s
 	 * @return the neighborhood
 	 */
-	public Set<Coordinate> getNeighborhood(Ship s){
+	public Set<Coordinate> getNeighborhood(Ship s){		
+
+		
 		return getNeighborhood(s, s.getPosition());
 	}
 	
