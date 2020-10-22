@@ -1,12 +1,11 @@
 package model;
 
-/**
-* @author Francisco Alejandro Pérez Meneses - 48768206H
-*/
 
 // TODO: Auto-generated Javadoc
 /**
  * The Enum Orientation.
+ * 
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public enum Orientation {
 	

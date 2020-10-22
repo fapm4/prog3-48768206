@@ -5,19 +5,20 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
-* @author Francisco Alejandro Pérez Meneses - 48768206H
-*/
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Board.
+ *
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 
 public class Board {
 	
+	/** The desde add. */
 	//Variables
 	private boolean desdeAdd = false;
+	
+	/** The not set. */
 	private boolean notSet = false;
 	
 	/** The size. */
@@ -214,12 +215,13 @@ public class Board {
 	/**
 	 * Hit.
 	 *
-	 * @param c the c
+	 * @param coord the coord
 	 * @return the cell status
 	 */
-	public CellStatus hit(Coordinate c) {
+	public CellStatus hit(Coordinate coord) {
 		
 		CellStatus estado = null;
+		Coordinate c = new Coordinate(coord);
 		
 		if(!checkCoordinate(c)) {
 			System.err.println("Coordenada fuera del tablero");

@@ -1,6 +1,3 @@
-/*
- * 
- */
 package model;
 
 
@@ -9,16 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Ship.
- *
- * @author Francisco Alejandro Pérez Meneses - 48768206H
- */
+
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Ship.
+ * 
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public class Ship {
 	
@@ -102,7 +96,8 @@ public class Ship {
 	 *
 	 * @param position the new position
 	 */
-	public void setPosition(Coordinate position) {
+	public void setPosition(Coordinate position){
+		
 		this.position = new Coordinate(position);
 		
 	}

@@ -4,16 +4,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class Coordinate.
  *
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Coordinate.
- */
-public class Coordinate {
+
+public class Coordinate{
 
 	
 	/** The components. */
@@ -27,7 +26,7 @@ public class Coordinate {
 	 * @param x the x
 	 * @param y the y
 	 */
-	public Coordinate(int x, int y) {
+	public Coordinate(int x, int y){
 		components = new int[2];
 		components[0] = x;
 		components[1] = y;
