@@ -264,130 +264,72 @@ public class Ship {
 			
 			switch(or) {
 			case NORTH:
-		
-				pos = getShapeIndex(aux);
-				
-				if(pos == 7 | pos == 12 | pos == 17) {
-					if(shape[0][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						shape[0][pos] = HIT_VALUE;
-						dev = true;
-					}
-				}
-				
-				else {
 					
-					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
 
-					pos = getShapeIndex(nueva);
-								
-					if(shape[0][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						this.shape[0][pos] = HIT_VALUE;
-						dev = true;
-					}					
+				pos = getShapeIndex(nueva);
+							
+				if(shape[0][pos] == HIT_VALUE) {
+					dev = false;
 				}
+				else {
+					this.shape[0][pos] = HIT_VALUE;
+					dev = true;
+				}					
+				
 				
 				break;
 				
 			case SOUTH:
-				
-				pos = getShapeIndex(aux);
-				
-				if(pos == 7 | pos == 12 | pos == 17) {
-					if(shape[2][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						shape[2][pos] = HIT_VALUE;
-						dev = true;
-					}
-				}
-				
-				else {
-					
-					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
 
-					pos = getShapeIndex(nueva);
-					
-					if(nueva.get(0) < 2) {
-						shape[2][7] = HIT_VALUE;
-					}
-					
-					if(shape[2][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						this.shape[2][pos] = HIT_VALUE;
-						dev = true;
-					}
-					
+				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+
+				pos = getShapeIndex(nueva);
+				
+				if(nueva.get(0) < 2) {
+					shape[2][7] = HIT_VALUE;
 				}
+				
+				if(shape[2][pos] == HIT_VALUE) {
+					dev = false;
+				}
+				else {
+					this.shape[2][pos] = HIT_VALUE;
+					dev = true;
+				}
+					
 				break;
 				
 			case EAST:
-				
-				pos = getShapeIndex(aux);
-				
-				if(pos == 11 | pos == 12 | pos == 13) {
-					if(shape[1][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						shape[1][pos] = HIT_VALUE;
-						dev = true;
-					}
-				}
-				
-				else {
-					
-					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+									
+				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
 
-					pos = getShapeIndex(nueva);					
-										
-					if(shape[1][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						this.shape[1][pos] = HIT_VALUE;
-						dev = true;
-					}					
+				pos = getShapeIndex(nueva);					
+									
+				if(shape[1][pos] == HIT_VALUE) {
+					dev = false;
 				}
+				else {
+					this.shape[1][pos] = HIT_VALUE;
+					dev = true;
+				}					
+				
 				
 				break;
 				
 			case WEST:
-				
-				pos = getShapeIndex(aux);
-				
-				if(pos == 11 | pos == 12 | pos == 13) {
-					if(shape[3][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						shape[3][pos] = HIT_VALUE;
-						dev = true;
-					}
-				}
-				
-				else {				
-					
-					nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
+									
+				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
 
-					pos = getShapeIndex(nueva);					
-										
-					if(shape[3][pos] == HIT_VALUE) {
-						dev = false;
-					}
-					else {
-						this.shape[3][pos] = HIT_VALUE;
-						dev = true;
-					}					
+				pos = getShapeIndex(nueva);					
+									
+				if(shape[3][pos] == HIT_VALUE) {
+					dev = false;
 				}
+				else {
+					this.shape[3][pos] = HIT_VALUE;
+					dev = true;
+				}					
 				
 				break;
 
@@ -408,12 +350,14 @@ public class Ship {
 		
 		switch(or) {
 		case NORTH:
+			//System.out.println(shape[0][7] + " " + shape[0][12] + " " + shape[0][17]);
 			if(this.shape[0][7] == HIT_VALUE && this.shape[0][12] == HIT_VALUE && this.shape[0][17] == HIT_VALUE) {
 				dev = true;			
 			}
 			break;
 			
 		case SOUTH:
+			//System.out.println(shape[2][7] + " " + shape[2][12] + " " + shape[2][17]);
 			if(shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE && shape[2][17] == HIT_VALUE) {
 				dev = true;
 			}
@@ -421,6 +365,7 @@ public class Ship {
 			break;
 			
 		case EAST:
+			//System.out.println(shape[1][11] + " " + shape[1][12] + " " + shape[1][13]);
 			if(this.shape[1][11] == HIT_VALUE && this.shape[1][12] == HIT_VALUE && this.shape[1][13] == HIT_VALUE) {
 				dev = true;
 			}
@@ -446,19 +391,55 @@ public class Ship {
 	 */
 	public boolean isHit(Coordinate c) {
 		boolean dev = false;
+		Orientation or = this.orientation;
+		boolean encontrado = false;
+		int pos = 0;
 		
-		if(position == null) {
-			dev = false;
+		if(this.position == null) {
+			return false;
 		}
 		
-		else {
-			boolean golpeado = hit(c);
-			if(!golpeado) {
-				dev = true;
-			}	
+		Set<Coordinate> posAbs = new HashSet<Coordinate>();
+		posAbs = getAbsolutePositions(this.position);
+		
+		for(Coordinate b: posAbs) {
+			if(b.equals(c)){
+				encontrado = true;
+			}
 		}
 		
+		if(encontrado) {
+			Coordinate relativa = new Coordinate(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
+			pos = getShapeIndex(relativa);
+			
+			switch(or) {
+				case NORTH:
+					if(shape[0][pos] == HIT_VALUE) {
+						dev = true;
+					}
+					break;
+					
+				case SOUTH:
+					if(shape[2][pos] == HIT_VALUE) {
+						dev = true;
+					}
+					break;
+					
+				case EAST:
+					if(shape[1][pos] == HIT_VALUE) {
+						dev = true;
+					}
+					break;
+					
+				case WEST:
+					if(shape[3][pos] == HIT_VALUE) {
+						dev = true;
+					}
+					break;
+			}
+		}
 		return dev;
+
 	}
 	
 	/**

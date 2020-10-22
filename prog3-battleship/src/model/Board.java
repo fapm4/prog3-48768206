@@ -196,6 +196,10 @@ public class Board {
 	 * @return true, if is seen
 	 */
 	public boolean isSeen(Coordinate c) {
+		for(Coordinate q: seen) {
+			//System.out.println(q.toString());
+		}
+		
 		boolean dev = false;
 		for(Coordinate b: seen) {
 			if(b.equals(c)) {
@@ -215,37 +219,40 @@ public class Board {
 	 */
 	public CellStatus hit(Coordinate c) {
 		
-		CellStatus dev = CellStatus.WATER;
-		Set<Coordinate> vecinos = new HashSet<Coordinate>();
+		CellStatus estado = null;
 		
 		if(!checkCoordinate(c)) {
 			System.err.println("Coordenada fuera del tablero");
+			estado = CellStatus.WATER;
 		}
 		
-		if(board.containsKey(c)) {
+		if(getShip(c) == null) {
+			estado = CellStatus.WATER;
+			seen.add(c);
+		}
+		
+		else {
 			Ship barcoGolpeado = getShip(c);
+			boolean golpe = barcoGolpeado.hit(c);
 			
-			if(!barcoGolpeado.isShotDown()) {
-				
-				if(barcoGolpeado.hit(c)) {
-					if(barcoGolpeado.isShotDown()) {
-						
-						vecinos = getNeighborhood(barcoGolpeado, c);
-						seen.addAll(vecinos);
-						dev = CellStatus.DESTROYED;
-						destroyedCrafts ++;
-					}
-					else {
-						dev = CellStatus.HIT;
-					}	
+			if(golpe) {
+				if(barcoGolpeado.isShotDown()) {
+					Set<Coordinate> vecinos = getNeighborhood(barcoGolpeado);
+					seen.addAll(vecinos);
+					estado = CellStatus.DESTROYED;
+					destroyedCrafts ++;
+				}
+				else {
+					estado = CellStatus.HIT;
 				}
 			}
+			seen.add(c);
 		}
 		
 		
-		seen.add(c);
-		return dev;
+		return estado;
 	}
+	
 	
 	/**
 	 * Are all crafts destroyed.
@@ -276,9 +283,6 @@ public class Board {
 		Set<Coordinate> listaVacia = new HashSet<Coordinate>();
 		Set<Coordinate> posAbs = new HashSet<Coordinate>();
 		int contFuera = 0;
-		
-		if(notSet == false) {
-		}
 		
 		Ship copia = new Ship(ship.getOrientation(), ship.getSymbol(), ship.getName());
 		copia.setPosition(position);
@@ -320,10 +324,22 @@ public class Board {
 					}
 				}
 				
-				vecindarioToReturn.removeAll(posAbs);
 			}
+			else {
+				for(Coordinate c: posAbs) {
+					vecindario.addAll(c.adjacentCoordinates());
+				}
+				
+				for(Coordinate c: vecindario) {
+					if(checkCoordinate(c)) {
+						vecindarioToReturn.add(c);
+					}
+				}
+				
+			}
+			
+			vecindarioToReturn.removeAll(posAbs);
 		}
-		
 		
 		return vecindarioToReturn;
 	}
@@ -336,9 +352,14 @@ public class Board {
 	 * @return the neighborhood
 	 */
 	public Set<Coordinate> getNeighborhood(Ship s){		
+		Set<Coordinate> listaVacia = new HashSet<Coordinate>();
 
-		
-		return getNeighborhood(s, s.getPosition());
+		if(!board.containsValue(s)) {
+			return listaVacia;
+		}
+		else {
+			return getNeighborhood(s, s.getPosition());
+		}
 	}
 	
 	/**
@@ -347,45 +368,46 @@ public class Board {
 	 * @param unveil the unveil
 	 * @return the string
 	 */
+	
 	public String show(boolean unveil) {
 		StringBuilder sb = new StringBuilder();
-			
+		
 		for(int i = 0;i < size;i++) {
 			for(int j = 0;j < size;j++) {
+				Coordinate nueva = new Coordinate(j, i);
+				Ship barco = getShip(nueva);
+				
 				if(unveil) {
-					Coordinate coord = new Coordinate(i, j);
-					
-					Ship barco = null;
-					
-					if(board.containsKey(coord)) {
-						barco = getShip(coord);
-					}
-					
-					if(hit(coord).equals(CellStatus.WATER)) {
-						sb.append(WATER_SYMBOL);
-					}
-					else if(hit(coord).equals(CellStatus.HIT)) {
-						sb.append(HIT_SYMBOL);
+					if(barco != null) {
+						if(barco.isHit(nueva)) {
+							sb.append(HIT_SYMBOL);
+						}
+						else {
+							sb.append(barco.getSymbol());
+						}
 					}
 					else {
-						sb.append(barco.getSymbol());
+						sb.append(WATER_SYMBOL);
 					}
+					
 				}
 				
 				else {
-					Coordinate coord = new Coordinate(i, j);
 					
-					Ship barco = null;
-					
-					if(board.containsKey(coord)) {
-						barco = getShip(coord);
-					}
-					
-					if(hit(coord).equals(CellStatus.WATER)) {
-						sb.append(WATER_SYMBOL);
-					}
-					else if(hit(coord).equals(CellStatus.HIT)) {
-						sb.append(HIT_SYMBOL);
+					if(isSeen(nueva)) {
+						if(barco != null) {
+							if(barco.isHit(nueva)) {
+								if(barco.isShotDown()) {
+									sb.append(barco.getSymbol());
+								}
+								else {
+									sb.append(HIT_SYMBOL);
+								}
+							}
+						}
+						else {
+							sb.append(WATER_SYMBOL);
+						}
 					}
 					else {
 						sb.append(NOTSEEN_SYMBOL);
@@ -394,12 +416,13 @@ public class Board {
 			}
 			
 			if(i < size - 1) {
-				sb.append("\n");	
+				sb.append("\n");
 			}
 		}
 		
 		return sb.toString();
 	}
+
 	
 	/**
 	 * To string.
