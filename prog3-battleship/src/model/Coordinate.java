@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import model.aircraft.Coordinate3D;
+import model.ship.Coordinate2D;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Coordinate.
@@ -12,11 +15,11 @@ import java.util.Set;
  */
 
 
-public class Coordinate{
+public abstract class Coordinate{
 
 	
 	/** The components. */
-	private int [] components;
+	protected int [] components;
 
 
 	
@@ -26,23 +29,31 @@ public class Coordinate{
 	 * @param x the x
 	 * @param y the y
 	 */
-	public Coordinate(int x, int y){
-		components = new int[2];
-		components[0] = x;
-		components[1] = y;
+	
+	protected Coordinate(int dim){
+		 components = new int[dim];
 	}
 	
 
-	
 	/**
 	 * Instantiates a new coordinate.
 	 *
 	 * @param c the c
 	 */
-	public Coordinate(Coordinate c) {
-		components = new int[2];
-		for(int i = 0; i < components.length; i++) {
-			components[i] = c.components[i];
+	protected Coordinate(Coordinate c) {
+		
+		if(components.length == 2) {
+			components = new int[2];
+			for(int i = 0; i < components.length; i++) {
+				components[i] = c.components[i];
+			}
+		}
+		
+		else if(components.length == 3) {
+			components = new int[3];
+			for(int i = 0; i < components.length; i++) {
+				components[i] = c.components[i];
+			}
 		}
 	}
 	
@@ -53,12 +64,24 @@ public class Coordinate{
 	 * @param component the component
 	 * @param value the value
 	 */
-	public void set(int component, int value) {
-		if(component >= 0 && component < components.length) {
-			components[component] = value;
+	public void set(int component, int value) throws Exception{
+		
+		if(components.length == 2) {
+			if(component >= 0 && component < 2) {
+				components[component] = value;
+			}
+			else {
+				throw new IllegalArgumentException();
+			}
 		}
-		else {
-			System.out.println("Error in Coordinate.set, component " + component + " is out of range");
+		
+		else if(components.length == 3) {
+			if(component >= 0 && component < 3) {
+				components[component] = value;
+			}
+			else {
+				throw new IllegalArgumentException();
+			}
 		}
 	}
 	
@@ -70,13 +93,27 @@ public class Coordinate{
 	 * @return the int
 	 */
 	public final int get(int component) {
-		if(component >= 0 && component < components.length) {
-			return components[component];
+		
+		int dev = -1;
+		if(components.length == 2) {
+			if(component >= 0 && component < 2) {
+				dev = components[component];
+			}
+			else {
+				throw new IllegalArgumentException();
+			}
 		}
-		else {
-			System.out.println("Error in Coordinate.get, component " + component + " is out of range");
-			return -1;
+		
+		else if(components.length == 3) {
+			if(component >= 0 && component < 3) {
+				dev = components[component];
+			}
+			else {
+				throw new IllegalArgumentException();
+			}
 		}
+		
+		return dev;
 	}
 	
 	
@@ -85,13 +122,56 @@ public class Coordinate{
 	 *
 	 * @param c the c
 	 * @return the coordinate
+	 * @throws Exception 
 	 */
-	public Coordinate add(Coordinate c) {
-		Coordinate nuevo = new Coordinate(0, 0);
-		for(int i = 0 ; i < components.length; i++) {
-			nuevo.set(i, this.get(i) + c.get(i));
-		}		
-		return nuevo;
+	
+	public Coordinate add(Coordinate c) throws Exception {
+		
+		if(c == null) {
+			throw new NullPointerException();
+		}
+		Coordinate toReturn = null;
+		Coordinate2D caso2D = new Coordinate2D(0, 0);
+		Coordinate3D caso3D = new Coordinate3D(0, 0, 0);
+		
+		if(components.length == 2 && c.components.length == 2) {
+			for(int i = 0; i < components.length;i++) {
+				try {
+					caso2D.set(i, components[i] + c.components[i]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+			
+			toReturn = caso2D;
+		}
+		
+		if(components.length == 3 && c.components.length == 3) {
+			for(int i = 0; i < components.length;i++) {
+				try {
+					caso3D.set(i, components[i] + c.components[i]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+			
+			toReturn = caso3D;
+		}
+		
+		if((components.length == 2 && c.components.length == 3) | (components.length == 3 && c.components.length == 2)){
+			for(int i = 0; i < 2;i++) {
+				try {
+					caso3D.set(i, components[i] + c.components[i]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+			
+			caso3D.set(2, components[2]);
+			toReturn = caso3D;
+		}
+		
+		return toReturn;
 	}
 	
 	/**
@@ -99,34 +179,58 @@ public class Coordinate{
 	 *
 	 * @param c the c
 	 * @return the coordinate
+	 * @throws Exception 
 	 */
-	public Coordinate substract(Coordinate c) {
-		Coordinate nuevo = new Coordinate(0, 0);
-		for(int i = 0 ; i < components.length; i++) {
-			nuevo.set(i, this.get(i) - c.get(i));
-		}		
-		return nuevo;
-	}
-	
-	
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("(");
-		for(int i = 0; i < components.length; i++) {
-			sb.append(components[i]);
-			if(i < components.length - 1) {
-				sb.append(", ");
-			}
+	public Coordinate subtract(Coordinate c) throws Exception {
+		
+		if(c == null) {
+			throw new NullPointerException();
 		}
 		
-		sb.append(")");
-		return sb.toString();
+		Coordinate toReturn = null;
+		Coordinate2D caso2D = new Coordinate2D(0, 0);
+		Coordinate3D caso3D = new Coordinate3D(0, 0, 0);
+		
+		if(components.length == 2 && c.components.length == 2) {
+			for(int i = 0; i < components.length;i++) {
+				try {
+					caso2D.set(i, components[i] - c.components[i]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+			
+			toReturn = caso2D;
 		}
+		
+		if(components.length == 3 && c.components.length == 3) {
+			for(int i = 0; i < components.length;i++) {
+				try {
+					caso3D.set(i, components[i] - c.components[i]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+			
+			toReturn = caso3D;
+		}
+		
+		if((components.length == 2 && c.components.length == 3) | (components.length == 3 && c.components.length == 2)){
+			for(int i = 0; i < 2;i++) {
+				try {
+					caso3D.set(i, components[i] - c.components[i]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+			
+			caso3D.set(2, components[2]);
+			toReturn = caso3D;
+		}
+		
+		return toReturn;
+	}
+	
 
 	/**
 	 * Hash code.
@@ -173,34 +277,4 @@ public class Coordinate{
 		}
 	}
 	
-	/**
-	 * Copy.
-	 *
-	 * @return the coordinate
-	 */
-	public Coordinate copy() {
-		return new Coordinate(this);
-	}
-	
-	/**
-	 * Adjacent coordinates.
-	 *
-	 * @return the sets the
-	 */
-	public Set<Coordinate> adjacentCoordinates(){
-		Set<Coordinate> nuevo = new HashSet<Coordinate>();
-		
-		int x = this.get(0);
-		int y = this.get(1);
-		
-		for(int i = x - 1;i< x + 2;i++) {
-			for(int j = y - 1;j < y + 2;j++) {
-				nuevo.add(new Coordinate(i, j));
-			}
-		}
-		
-		nuevo.remove(new Coordinate(x, y));
-		return nuevo;
-	}
-
 }
