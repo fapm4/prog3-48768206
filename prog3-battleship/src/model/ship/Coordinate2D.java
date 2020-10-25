@@ -68,11 +68,7 @@ public class Coordinate2D extends Coordinate{
 			for(int j = y - 1;j < y + 2;j++) {
 				int coords[] = {i, j};
 				
-				try {
-					coord = CoordinateFactory.createCoordinate(coords);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				coord = CoordinateFactory.createCoordinate(coords);
 				nuevo.add(coord);
 			}
 		}

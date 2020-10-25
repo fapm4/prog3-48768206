@@ -4,116 +4,63 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.Coordinate;
+
 import model.aircraft.Coordinate3D;
+import model.exceptions.CoordinateAlreadyHitException;
 import model.ship.Coordinate2D;
 
 public abstract class Craft {
+
 	/** The Constant BOUNDING_SQUARE_SIZE. */
-	private final static int BOUNDING_SQUARE_SIZE = 5;
-	
+	private static final int BOUNDING_SQUARE_SIZE = 5;
 	/** The Constant HIT_VALUE. */
-	private final static int HIT_VALUE = -1;
-	
+	private static final int HIT_VALUE = -1;
 	/** The Constant CRAFT_VALUE. */
-	private final static int CRAFT_VALUE = 1;
-	
+	private static final int CRAFT_VALUE = 1;
 	/** The symbol. */
 	private char symbol;
-	
 	/** The name. */
 	private String name;
-	
 	/** The orientation. */
-	Orientation orientation;
-	
+	private Orientation orientation;
 	/** The position. */
-	Coordinate position;
-	
+	private Coordinate position;
 	/** The shape. */
-	protected int shape[][] = new int[][] {
-        { 0, 0, 0, 0, 0,               // NORTH    ·····
-          0, 0, 1, 0, 0,               //          ··#·· 7
-          0, 0, 1, 0, 0,               //          ··#·· 12
-          0, 0, 1, 0, 0,               //          ..#.. 17
-          0, 0, 0, 0, 0},              //          ·····
-
-        { 0, 0, 0, 0, 0,               // EAST     ·····
-          0, 0, 0, 0, 0,               //          ·····
-          0, 1, 1, 1, 0,               //          ·###· 11 12 13
-          0, 0, 0, 0, 0,               //          ·····
-          0, 0, 0, 0, 0},              //          ·····
-
-        { 0, 0, 0, 0, 0,               // SOUTH    ·····
-          0, 0, 1, 0, 0,               //          ··#·· 7
-          0, 0, 1, 0, 0,               //          ··#·· 12
-          0, 0, 1, 0, 0,               //          ..#.. 17
-          0, 0, 0, 0, 0},              //          ·····
-
-        { 0, 0, 0, 0, 0,               // WEST     ·····
-          0, 0, 0, 0, 0,               //          ·····
-          0, 1, 1, 1, 0,               //          ·###· 11 12 13
-          0, 0, 0, 0, 0,               //          ·····
-          0, 0, 0, 0, 0}};             //          ·····
+	protected int shape[][];
 	
-	/**
-	 * Instantiates a new ship.
-	 *
-	 * @param o the o
-	 * @param s the s
-	 * @param n the n
-	 */
 	public Craft(Orientation o, char s, String n) {
 		orientation = o;
 		symbol = s;
 		name = n;
-		position = null;
+		position = null;		
 	}
-	
+
 	/**
 	 * Gets the position.
 	 *
 	 * @return the position
-	 * @throws Exception 
 	 */
-	public Coordinate getPosition() throws Exception {
-		Coordinate positionToReturn = null;
-
-		
+	public Coordinate getPosition() {
 		if(position == null) {
 			return null;
 		}
 		else {
-			if(position instanceof Coordinate2D) {
-				Coordinate2D Position = (Coordinate2D) position;
-				positionToReturn = Position.copy();
-			}
-			else if(position instanceof Coordinate3D) {
-				Coordinate3D Position = (Coordinate3D) position;
-				positionToReturn = Position.copy();
-			}
+			return this.position;
 		}
-		
-		return positionToReturn;
 	}
-	
+
 	/**
 	 * Sets the position.
 	 *
 	 * @param position the new position
 	 * @throws Exception 
 	 */
-	public void setPosition(Coordinate position) throws Exception{
+	public void setPosition(Coordinate position) throws Exception {
 		
-		if(position instanceof Coordinate2D) {
-			this.position = new Coordinate2D(position.get(0), position.get(1));
-		}
+		this.position = position.copy();
 		
-		else if(position instanceof Coordinate3D) {
-			this.position = new Coordinate3D(position.get(0), position.get(1), position.get(2));
-		}		
 	}
-	
+
 	/**
 	 * Gets the name.
 	 *
@@ -122,7 +69,7 @@ public abstract class Craft {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Gets the orientation.
 	 *
@@ -131,7 +78,7 @@ public abstract class Craft {
 	public Orientation getOrientation() {
 		return orientation;
 	}
-	
+
 	/**
 	 * Gets the symbol.
 	 *
@@ -140,17 +87,16 @@ public abstract class Craft {
 	public char getSymbol() {
 		return symbol;
 	}
-	
+
 	/**
 	 * Gets the shape.
 	 *
 	 * @return the shape
 	 */
-	public int[][] getShape(){
+	public int[][] getShape() {
 		return shape;
 	}
-	
-	
+
 	/**
 	 * Gets the shape index.
 	 *
@@ -158,81 +104,88 @@ public abstract class Craft {
 	 * @return the shape index
 	 */
 	public int getShapeIndex(Coordinate c) {
+		if(c == null) {
+			throw new NullPointerException();
+		}
 		return (c.get(1) * BOUNDING_SQUARE_SIZE) + c.get(0);
 	}
-	
+
 	/**
 	 * Gets the absolute positions.
 	 *
 	 * @param position the position
 	 * @return the absolute positions
+	 * @throws Exception 
 	 */
-	public Set<Coordinate> getAbsolutePositions(Coordinate position){
+	public Set<Coordinate> getAbsolutePositions(Coordinate position) throws Exception {
+		if(position == null) {
+			throw new NullPointerException();
+		}
 		
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
-		
 		Orientation or = this.orientation;
+		Coordinate nuevo = null;
 		
-		switch(or) {
-			case NORTH:
-				for(int i = 1;i <= 3;i++) {
-					Coordinate nuevo = new Coordinate(position.get(0) + 2, position.get(1) + i);
-					positionsToReturn.add(nuevo);
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)) {
+			for(int i = 1;i <= 3;i++) {
+				if(position instanceof Coordinate2D) {
+					int coords[] = {position.get(0) + 2, position.get(1) + i};
+					nuevo = CoordinateFactory.createCoordinate(coords);
+				}
+				if(position instanceof Coordinate3D) {
+					int coords[] = {position.get(0) + 2, position.get(1) + i, position.get(2)};
+					nuevo = CoordinateFactory.createCoordinate(coords);
 				}
 				
-				break;
-				
-			case SOUTH:
-				for(int i = 1;i <= 3;i++) {
-					Coordinate nuevo = new Coordinate(position.get(0) + 2, position.get(1) + i);
-					positionsToReturn.add(nuevo);
-				}
-
-				break;
-				
-			case EAST:
-				for(int i = 1;i <= 3;i++) {
-					Coordinate nuevo = new Coordinate(position.get(0) + i, position.get(1) + 2);
-					positionsToReturn.add(nuevo);
-				}
-				
-				break;
-				
-			case WEST:
-				for(int i = 1;i <= 3;i++) {
-					Coordinate nuevo = new Coordinate(position.get(0) + i, position.get(1) + 2);
-					positionsToReturn.add(nuevo);
-				}
-				
-				break;
+				positionsToReturn.add(nuevo);
+			}
 		}
-	
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
+			for(int i = 1;i <= 3;i++) {
+				if(position instanceof Coordinate2D) {
+					int coords[] = {position.get(0) + 2, position.get(1) + i};
+					nuevo = CoordinateFactory.createCoordinate(coords);
+				}
+				
+				else if(position instanceof Coordinate3D) {
+					int coords[] = {position.get(0) + 2, position.get(1) + i, position.get(2)};
+					nuevo = CoordinateFactory.createCoordinate(coords);
+				}
+				
+				positionsToReturn.add(nuevo);
+			}
+		}
 		
 		return positionsToReturn;
 	}
 
-	
 	/**
 	 * Gets the absolute positions.
 	 *
 	 * @return the absolute positions
+	 * @throws Exception 
 	 */
-	public Set<Coordinate> getAbsolutePositions(){
+	
+	public Set<Coordinate> getAbsolutePositions() throws Exception {
 		return getAbsolutePositions(this.position);
 	}
-	
+
 	/**
 	 * Hit.
 	 *
 	 * @param c the c
 	 * @return true, if successful
+	 * @throws Exception 
 	 */
-	public boolean hit(Coordinate c) {
+	public boolean hit(Coordinate c) throws Exception {
 		boolean dev = false;
 		
 		if(this.getPosition() == null) {
 			return false;
 		}
+		
+		int coords[] = null;
 		
 		Orientation or = this.orientation;
 		
@@ -271,13 +224,25 @@ public abstract class Craft {
 			
 			switch(or) {
 			case NORTH:
-					
-				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
-
+				
+				if(aux instanceof Coordinate2D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+				
+				else if(aux instanceof Coordinate3D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					coords[2] = aux.get(2) - this.position.get(2);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+				
 				pos = getShapeIndex(nueva);
 							
 				if(shape[0][pos] == HIT_VALUE) {
 					dev = false;
+					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
 					this.shape[0][pos] = HIT_VALUE;
@@ -288,9 +253,20 @@ public abstract class Craft {
 				break;
 				
 			case SOUTH:
-
-				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
-
+	
+				if(aux instanceof Coordinate2D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+				
+				else if(aux instanceof Coordinate3D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					coords[2] = aux.get(2) - this.position.get(2);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+	
 				pos = getShapeIndex(nueva);
 				
 				if(nueva.get(0) < 2) {
@@ -299,6 +275,7 @@ public abstract class Craft {
 				
 				if(shape[2][pos] == HIT_VALUE) {
 					dev = false;
+					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
 					this.shape[2][pos] = HIT_VALUE;
@@ -309,12 +286,24 @@ public abstract class Craft {
 				
 			case EAST:
 									
-				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
-
+				if(aux instanceof Coordinate2D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+				
+				else if(aux instanceof Coordinate3D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					coords[2] = aux.get(2) - this.position.get(2);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+	
 				pos = getShapeIndex(nueva);					
 									
 				if(shape[1][pos] == HIT_VALUE) {
 					dev = false;
+					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
 					this.shape[1][pos] = HIT_VALUE;
@@ -326,12 +315,24 @@ public abstract class Craft {
 				
 			case WEST:
 									
-				nueva = new Coordinate(aux.get(0) - this.position.get(0), aux.get(1) - this.position.get(1));
-
+				if(aux instanceof Coordinate2D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+				
+				else if(aux instanceof Coordinate3D) {
+					coords[0] = aux.get(0) - this.position.get(0);
+					coords[1] = aux.get(1) - this.position.get(1);
+					coords[2] = aux.get(2) - this.position.get(2);
+					nueva = CoordinateFactory.createCoordinate(coords);
+				}
+	
 				pos = getShapeIndex(nueva);					
 									
 				if(shape[3][pos] == HIT_VALUE) {
 					dev = false;
+					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
 					this.shape[3][pos] = HIT_VALUE;
@@ -339,13 +340,13 @@ public abstract class Craft {
 				}					
 				
 				break;
-
+	
 			}
 		}
 		
 		return dev;
 	}
-	
+
 	/**
 	 * Checks if is shot down.
 	 *
@@ -388,19 +389,21 @@ public abstract class Craft {
 		
 		return dev;
 	}
-	
-	
+
 	/**
 	 * Checks if is hit.
 	 *
 	 * @param c the c
 	 * @return true, if is hit
+	 * @throws Exception 
 	 */
-	public boolean isHit(Coordinate c) {
+	public boolean isHit(Coordinate c) throws Exception {
 		boolean dev = false;
 		Orientation or = this.orientation;
 		boolean encontrado = false;
 		int pos = 0;
+		int coords[] = null;
+		Coordinate relativa = null;
 		
 		if(this.position == null) {
 			return false;
@@ -416,7 +419,20 @@ public abstract class Craft {
 		}
 		
 		if(encontrado) {
-			Coordinate relativa = new Coordinate(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
+			
+			if(c instanceof Coordinate2D) {
+				coords[0] = c.get(0) - this.position.get(0);
+				coords[1] = c.get(1) - this.position.get(1);
+				relativa = CoordinateFactory.createCoordinate(coords);
+			}
+			
+			else if(c instanceof Coordinate3D) {
+				coords[0] = c.get(0) - this.position.get(0);
+				coords[1] = c.get(1) - this.position.get(1);
+				coords[2] = c.get(2) - this.position.get(2);
+				relativa = CoordinateFactory.createCoordinate(coords);
+			}
+
 			pos = getShapeIndex(relativa);
 			
 			switch(or) {
@@ -446,9 +462,9 @@ public abstract class Craft {
 			}
 		}
 		return dev;
-
-	}
 	
+	}
+
 	/**
 	 * To string.
 	 *
@@ -500,4 +516,5 @@ public abstract class Craft {
 		sb.append(" -----");
 		return sb.toString();
 	}
+
 }

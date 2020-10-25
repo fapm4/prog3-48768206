@@ -76,12 +76,7 @@ public class Coordinate3D extends Coordinate{
 			for(int j = y - 1;j < y + 2;j++) {
 				for(int k = z - 1;k < z + 2;k++) {
 					int coords[] = {i, j, k};
-					
-					try {
-						coord = CoordinateFactory.createCoordinate(coords);
-					} catch (Exception e) {
-						e.getMessage();
-					}
+					coord = CoordinateFactory.createCoordinate(coords);
 					nuevo.add(coord);	
 				}
 			}

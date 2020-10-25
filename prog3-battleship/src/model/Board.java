@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import model.ship.Ship;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Board.
@@ -180,7 +182,7 @@ public class Board {
 	 * @param c the c
 	 * @return the ship
 	 */
-	public Ship getShip(Coordinate c) {
+	public Craft getShip(Coordinate c) {
 		
 		if(board.containsKey(c)) {
 			return board.get(c);
@@ -234,7 +236,7 @@ public class Board {
 		}
 		
 		else {
-			Ship barcoGolpeado = getShip(c);
+			Craft barcoGolpeado = getShip(c);
 			boolean golpe = barcoGolpeado.hit(c);
 			
 			if(golpe) {
@@ -278,7 +280,7 @@ public class Board {
 	 * @param position the position
 	 * @return the neighborhood
 	 */
-	public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){
+	public Set<Coordinate> getNeighborhood(Craft ship, Coordinate position){
 		
 		Set<Coordinate> vecindario = new HashSet<Coordinate>();
 		Set<Coordinate> vecindarioToReturn = new HashSet<Coordinate>();
@@ -286,7 +288,7 @@ public class Board {
 		Set<Coordinate> posAbs = new HashSet<Coordinate>();
 		int contFuera = 0;
 		
-		Ship copia = new Ship(ship.getOrientation(), ship.getSymbol(), ship.getName());
+		Craft copia = new Ship(ship.getOrientation(), ship.getSymbol(), ship.getName());
 		copia.setPosition(position);
 		posAbs = copia.getAbsolutePositions();
 		
@@ -353,7 +355,7 @@ public class Board {
 	 * @param s the s
 	 * @return the neighborhood
 	 */
-	public Set<Coordinate> getNeighborhood(Ship s){		
+	public Set<Coordinate> getNeighborhood(Craft s){		
 		Set<Coordinate> listaVacia = new HashSet<Coordinate>();
 
 		if(!board.containsValue(s)) {
@@ -377,7 +379,7 @@ public class Board {
 		for(int i = 0;i < size;i++) {
 			for(int j = 0;j < size;j++) {
 				Coordinate nueva = new Coordinate(j, i);
-				Ship barco = getShip(nueva);
+				Craft barco = getShip(nueva);
 				
 				if(unveil) {
 					if(barco != null) {

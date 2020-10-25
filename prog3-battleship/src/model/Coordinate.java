@@ -42,14 +42,14 @@ public abstract class Coordinate{
 	 */
 	protected Coordinate(Coordinate c) {
 		
-		if(components.length == 2) {
+		if(c.components.length == 2) {
 			components = new int[2];
 			for(int i = 0; i < components.length; i++) {
 				components[i] = c.components[i];
 			}
 		}
 		
-		else if(components.length == 3) {
+		else if(c.components.length == 3) {
 			components = new int[3];
 			for(int i = 0; i < components.length; i++) {
 				components[i] = c.components[i];
@@ -175,7 +175,7 @@ public abstract class Coordinate{
 	}
 	
 	/**
-	 * Substract.
+	 * Subtract.
 	 *
 	 * @param c the c
 	 * @return the coordinate
@@ -276,5 +276,8 @@ public abstract class Coordinate{
 			return true;
 		}
 	}
+
+	public abstract Coordinate copy() throws Exception;
+	public abstract Set<Coordinate> adjacentCoordinates() throws Exception;
 	
 }
