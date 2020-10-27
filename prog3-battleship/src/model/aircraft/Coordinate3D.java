@@ -5,7 +5,6 @@ import java.util.Set;
 
 import model.Coordinate;
 import model.CoordinateFactory;
-import model.ship.Coordinate2D;
 
 public class Coordinate3D extends Coordinate{
 	public Coordinate3D(int x, int y, int z) {
