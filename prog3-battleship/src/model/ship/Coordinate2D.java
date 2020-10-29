@@ -8,16 +8,27 @@ import model.CoordinateFactory;
 
 public class Coordinate2D extends Coordinate{
 
-	public Coordinate2D(int x, int y) throws Exception {
+	public Coordinate2D(int x, int y) {
 		super(2);
-		set(0, x);
-		set(1, y);
+		try {
+			set(0, x);
+			set(1, y);
+		}
+		catch(Exception e) {
+			e.getMessage();
+		}
 	}
 	
-	public Coordinate2D(Coordinate2D c) throws Exception {
+	public Coordinate2D(Coordinate2D c){
 		super(2);
+		
 		for(int i = 0;i < 2;i++) {
-			set(i, c.components[i]);
+			try {
+				set(i, c.components[i]);
+			}
+			catch(Exception e) {
+				
+			}
 		}
 	}
 	
@@ -46,8 +57,16 @@ public class Coordinate2D extends Coordinate{
 	 * @return the coordinate
 	 * @throws Exception 
 	 */
-	public Coordinate copy() throws Exception {
-		return new Coordinate2D(this.get(0), this.get(1));
+	public Coordinate copy() {
+		Coordinate2D toReturn = null;
+		try {
+			toReturn = new Coordinate2D(this);
+			return toReturn;
+		}
+		catch(Exception e){
+			e.getMessage();
+		}
+		return toReturn;
 	}
 	
 	/**
@@ -57,7 +76,7 @@ public class Coordinate2D extends Coordinate{
 	 * @throws Exception 
 	 */
 	
-	public Set<Coordinate> adjacentCoordinates() throws Exception{
+	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		
 		int x = this.get(0);
@@ -68,8 +87,13 @@ public class Coordinate2D extends Coordinate{
 			for(int j = y - 1;j < y + 2;j++) {
 				int coords[] = {i, j};
 				
-				coord = CoordinateFactory.createCoordinate(coords);
-				nuevo.add(coord);
+				try {
+					coord = CoordinateFactory.createCoordinate(coords);
+					nuevo.add(coord);
+				}
+				catch(Exception e) {
+					e.getMessage();
+				}
 			}
 		}
 		

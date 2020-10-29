@@ -15,7 +15,7 @@ import model.Craft;
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 
-public abstract class Board2D extends Board {
+public class Board2D extends Board {
 	
 	/**
 	 * Instantiates a new board.
@@ -58,15 +58,18 @@ public abstract class Board2D extends Board {
 	 * @throws Exception 
 	 */
 	@Override
-	public String show(boolean unveil) throws Exception {
+	public String show(boolean unveil){
+		
 		StringBuilder sb = new StringBuilder();
 		int size = getSize();
+		Craft barco = null;
+		Coordinate nueva = null;
 		
 		for(int i = 0;i < size;i++) {
 			for(int j = 0;j < size;j++) {
-				int coords[] = {i, j};
-				Coordinate nueva = CoordinateFactory.createCoordinate(coords);
-				Craft barco = getCraft(nueva);
+				
+				nueva = new Coordinate2D(j, i);
+				barco = getCraft(nueva);
 				
 				if(unveil) {
 					if(barco != null) {

@@ -4,11 +4,14 @@ import model.aircraft.Coordinate3D;
 import model.ship.Coordinate2D;
 
 public class CoordinateFactory {
-	public static Coordinate createCoordinate(int coords[]) throws Exception{
+	public static Coordinate createCoordinate(int coords[]){
 		
 		int p1 = 0, p2 = 0, p3 = 0;
 		Coordinate normal = null;
 		
+		if(coords.length == 1) {
+			throw new IllegalArgumentException();
+		}
 		if(coords.length < 2 | coords.length > 3) {
 			throw new IllegalArgumentException();
 		}

@@ -20,7 +20,7 @@ public abstract class Coordinate{
 	
 	/** The components. */
 	protected int [] components;
-
+	
 
 	
 	/**
@@ -42,14 +42,14 @@ public abstract class Coordinate{
 	 */
 	protected Coordinate(Coordinate c) {
 		
-		if(c.components.length == 2) {
+		if(c instanceof Coordinate2D) {
 			components = new int[2];
 			for(int i = 0; i < components.length; i++) {
 				components[i] = c.components[i];
 			}
 		}
 		
-		else if(c.components.length == 3) {
+		else if(c instanceof Coordinate3D) {
 			components = new int[3];
 			for(int i = 0; i < components.length; i++) {
 				components[i] = c.components[i];
@@ -64,24 +64,30 @@ public abstract class Coordinate{
 	 * @param component the component
 	 * @param value the value
 	 */
-	public void set(int component, int value) throws Exception{
+	public void set(int component, int value){
 		
-		if(components.length == 2) {
+		boolean exp = false;
+		
+		if(this instanceof Coordinate2D) {
 			if(component >= 0 && component < 2) {
 				components[component] = value;
 			}
 			else {
-				throw new IllegalArgumentException();
+				exp = true;
 			}
 		}
 		
-		else if(components.length == 3) {
+		else if(this instanceof Coordinate3D) {
 			if(component >= 0 && component < 3) {
 				components[component] = value;
 			}
 			else {
-				throw new IllegalArgumentException();
+				exp = true;
 			}
+		}
+		
+		if(exp) {
+			throw new IllegalArgumentException();
 		}
 	}
 	
@@ -92,25 +98,31 @@ public abstract class Coordinate{
 	 * @param component the component
 	 * @return the int
 	 */
-	public final int get(int component) {
+	public int get(int component){
 		
 		int dev = -1;
-		if(components.length == 2) {
+		boolean exp = false;
+		
+		if(this instanceof Coordinate2D) {
 			if(component >= 0 && component < 2) {
 				dev = components[component];
 			}
 			else {
-				throw new IllegalArgumentException();
+				exp = true;
 			}
 		}
 		
-		else if(components.length == 3) {
+		else if(this instanceof Coordinate3D) {
 			if(component >= 0 && component < 3) {
 				dev = components[component];
 			}
 			else {
-				throw new IllegalArgumentException();
+				exp = true;
 			}
+		}
+		
+		if(exp) {
+			throw new IllegalArgumentException();
 		}
 		
 		return dev;
@@ -125,46 +137,44 @@ public abstract class Coordinate{
 	 * @throws Exception 
 	 */
 	
-	public Coordinate add(Coordinate c) throws Exception {
+	public Coordinate add(Coordinate c){
 		
 		if(c == null) {
 			throw new NullPointerException();
 		}
+		
 		Coordinate toReturn = null;
 		Coordinate2D caso2D = new Coordinate2D(0, 0);
 		Coordinate3D caso3D = new Coordinate3D(0, 0, 0);
 		
-		if(components.length == 2 && c.components.length == 2) {
+		if(this instanceof Coordinate2D && c instanceof Coordinate2D) {
 			for(int i = 0; i < components.length;i++) {
-				try {
-					caso2D.set(i, components[i] + c.components[i]);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				caso2D.set(i, components[i] + c.components[i]);
 			}
 			
 			toReturn = caso2D;
 		}
 		
-		if(components.length == 3 && c.components.length == 3) {
+		if(this instanceof Coordinate3D && c instanceof Coordinate3D) {
 			for(int i = 0; i < components.length;i++) {
-				try {
-					caso3D.set(i, components[i] + c.components[i]);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				caso3D.set(i, components[i] + c.components[i]);
 			}
 			
 			toReturn = caso3D;
 		}
 		
-		if((components.length == 2 && c.components.length == 3) | (components.length == 3 && c.components.length == 2)){
+		if(this instanceof Coordinate2D && c instanceof Coordinate3D){
 			for(int i = 0; i < 2;i++) {
-				try {
-					caso3D.set(i, components[i] + c.components[i]);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				caso3D.set(i, components[i] + c.components[i]);
+			}
+			
+			caso3D.set(2, c.components[2]);
+			toReturn = caso3D;
+		}
+		
+		if(this instanceof Coordinate3D && c instanceof Coordinate2D){
+			for(int i = 0; i < 2;i++) {
+				caso3D.set(i, components[i] + c.components[i]);
 			}
 			
 			caso3D.set(2, components[2]);
@@ -191,37 +201,34 @@ public abstract class Coordinate{
 		Coordinate2D caso2D = new Coordinate2D(0, 0);
 		Coordinate3D caso3D = new Coordinate3D(0, 0, 0);
 		
-		if(components.length == 2 && c.components.length == 2) {
+		if(this instanceof Coordinate2D && c instanceof Coordinate2D) {
 			for(int i = 0; i < components.length;i++) {
-				try {
-					caso2D.set(i, components[i] - c.components[i]);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				caso2D.set(i, components[i] - c.components[i]);
 			}
 			
 			toReturn = caso2D;
 		}
 		
-		if(components.length == 3 && c.components.length == 3) {
+		if(this instanceof Coordinate3D && c instanceof Coordinate3D) {
 			for(int i = 0; i < components.length;i++) {
-				try {
-					caso3D.set(i, components[i] - c.components[i]);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				caso3D.set(i, components[i] - c.components[i]);
 			}
 			
 			toReturn = caso3D;
 		}
 		
-		if((components.length == 2 && c.components.length == 3) | (components.length == 3 && c.components.length == 2)){
+		if(this instanceof Coordinate2D && c instanceof Coordinate3D){
 			for(int i = 0; i < 2;i++) {
-				try {
-					caso3D.set(i, components[i] - c.components[i]);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				caso3D.set(i, components[i] - c.components[i]);
+			}
+			
+			caso3D.set(2, c.components[2]);
+			toReturn = caso3D;
+		}
+		
+		if(this instanceof Coordinate3D && c instanceof Coordinate2D){
+			for(int i = 0; i < 2;i++) {
+				caso3D.set(i, components[i] - c.components[i]);
 			}
 			
 			caso3D.set(2, components[2]);
@@ -277,7 +284,7 @@ public abstract class Coordinate{
 		}
 	}
 
-	public abstract Coordinate copy() throws Exception;
-	public abstract Set<Coordinate> adjacentCoordinates() throws Exception;
+	public abstract Coordinate copy();
+	public abstract Set<Coordinate> adjacentCoordinates();
 	
 }

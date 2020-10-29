@@ -20,7 +20,7 @@ public class Coordinate3D extends Coordinate{
 		}
 	}
 	
-	public Coordinate3D(Coordinate3D c) throws Exception {
+	public Coordinate3D(Coordinate3D c){
 		super(3);
 		for(int i = 0;i < 3;i++) {
 			set(i, c.components[i]);
@@ -52,7 +52,7 @@ public class Coordinate3D extends Coordinate{
 	 * @return the coordinate
 	 * @throws Exception 
 	 */
-	public Coordinate copy() throws Exception {
+	public Coordinate copy(){
 		return new Coordinate3D(this.get(0), this.get(1), this.get(2));
 	}
 	
@@ -63,7 +63,7 @@ public class Coordinate3D extends Coordinate{
 	 * @throws Exception 
 	 */
 	
-	public Set<Coordinate> adjacentCoordinates() throws Exception{
+	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		
 		int x = this.get(0);
