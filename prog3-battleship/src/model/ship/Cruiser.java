@@ -4,7 +4,7 @@ import model.Orientation;
 
 public class Cruiser extends Ship{
 	
-	protected int[][] shape = new int[][] {
+	private int[][] shape = new int[][] {
        {0, 0, 0, 0, 0,
     	0, 0, 1, 0, 0,	
     	0, 0, 1, 0, 0,	

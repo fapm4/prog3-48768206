@@ -16,6 +16,6 @@ public class NextToAnotherCraftException extends BattleshipException{
 	public String getMessage() {
 		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " está cerca de otra nave";
+		return "La coordenada " + copia.toString() + " está cerca de otra nave (NextToAnotherCraftException)";
 	}
 }

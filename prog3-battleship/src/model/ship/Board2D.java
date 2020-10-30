@@ -36,18 +36,18 @@ public class Board2D extends Board {
 	public boolean checkCoordinate(Coordinate c) {
 		
 		int size = getSize();
+		boolean dev = true;
 		
 		if(c instanceof Coordinate2D) {
 			if(c.get(0) < 0 | c.get(1) < 0 | c.get(0) > (size - 1) | c.get(1) > (size - 1)) {
 				return false;
 			}
-			else {
-				return true;
-			}	
 		}
 		else {
 			throw new IllegalArgumentException();
 		}
+		
+		return dev;
 	}
 	
 	/**
@@ -67,7 +67,6 @@ public class Board2D extends Board {
 		
 		for(int i = 0;i < size;i++) {
 			for(int j = 0;j < size;j++) {
-				
 				nueva = new Coordinate2D(j, i);
 				barco = getCraft(nueva);
 				
@@ -108,7 +107,6 @@ public class Board2D extends Board {
 					}
 				}
 			}
-			
 			if(i < size - 1) {
 				sb.append("\n");
 			}

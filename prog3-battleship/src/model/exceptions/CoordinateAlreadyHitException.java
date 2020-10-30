@@ -16,6 +16,6 @@ public class CoordinateAlreadyHitException extends BattleshipException{
 	public String getMessage() {
 		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " ya ha golpeada anteriormente";
+		return "La coordenada " + copia.toString() + " ya ha golpeada anteriormente (CoordinateAlreadyHitException)";
 	}
 }

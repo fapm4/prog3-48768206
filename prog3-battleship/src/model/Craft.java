@@ -88,22 +88,40 @@ public abstract class Craft {
 		return (c.get(1) * BOUNDING_SQUARE_SIZE) + c.get(0);
 	}
 
-	
 	public Set<Coordinate> getAbsolutePositions(Coordinate position){
-		
 	
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
 		Orientation or = this.orientation;
 		Coordinate nuevo = null;
+		int cont = -1;
+		int iterador = 1;
+		
+		if(this instanceof Destroyer) {
+			cont = 2;
+		}
+		
+		if(this instanceof Cruiser) {
+			cont = 3;
+		}
+		
+		if(this instanceof Carrier) {
+			cont = 5;
+		}
+		
+		if(this instanceof Battleship) {
+			cont = 5;
+			iterador = 2;
+		}
+		
 		
 		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)) {
-			for(int i = 1;i <= 3;i++) {
+			for(int i = iterador;i <= cont;i++) {
 				if(position instanceof Coordinate2D) {
 					
 					nuevo = new Coordinate2D(position.get(0) + 2, position.get(1) + i);
 					positionsToReturn.add(nuevo);
 				}
-				if(position instanceof Coordinate3D) {
+				else if(position instanceof Coordinate3D) {
 					
 					nuevo = new Coordinate3D(position.get(0) + 2, position.get(1) + i, position.get(2));
 					positionsToReturn.add(nuevo);
@@ -113,7 +131,7 @@ public abstract class Craft {
 		}
 		
 		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
-			for(int i = 1;i <= 3;i++) {
+			for(int i = iterador;i <= cont;i++) {
 				if(position instanceof Coordinate2D) {
 
 					nuevo = new Coordinate2D(position.get(0) + i, position.get(1) + 2);
@@ -193,18 +211,20 @@ public abstract class Craft {
 				else if(aux instanceof Coordinate3D) {
 					nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
 				}
+	
+				pos = getShapeIndex(nueva);		
+
+				if(this instanceof Battleship | this instanceof Carrier) {
+					pos -= 3;
+				}
 				
-				pos = getShapeIndex(nueva);
-							
 				if(shapeOf[0][pos] == HIT_VALUE) {
-					dev = false;
 					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
 					shapeOf[0][pos] = HIT_VALUE;
 					dev = true;
 				}					
-				
 				
 				break;
 				
@@ -218,21 +238,20 @@ public abstract class Craft {
 					nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
 				}
 	
-				pos = getShapeIndex(nueva);
-				
-				if(nueva.get(0) < 2) {
-					shapeOf[2][7] = HIT_VALUE;
+				pos = getShapeIndex(nueva);		
+
+				if(this instanceof Battleship | this instanceof Carrier) {
+					pos -= 3;
 				}
 				
 				if(shapeOf[2][pos] == HIT_VALUE) {
-					dev = false;
 					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
 					shapeOf[2][pos] = HIT_VALUE;
 					dev = true;
-				}
-					
+				}					
+				
 				break;
 				
 			case EAST:
@@ -247,8 +266,11 @@ public abstract class Craft {
 	
 				pos = getShapeIndex(nueva);		
 
+				if(this instanceof Battleship | this instanceof Carrier) {
+					pos -= 3;
+				}
+				
 				if(shapeOf[1][pos] == HIT_VALUE) {
-					dev = false;
 					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
@@ -269,9 +291,12 @@ public abstract class Craft {
 				}
 	
 				pos = getShapeIndex(nueva);					
-									
+							
+				if(this instanceof Battleship | this instanceof Carrier) {
+					pos -= 3;
+				}
+				
 				if(shapeOf[3][pos] == HIT_VALUE) {
-					dev = false;
 					throw new CoordinateAlreadyHitException(nueva);
 				}
 				else {
@@ -610,24 +635,40 @@ public abstract class Craft {
 			
 			switch(or) {
 				case NORTH:
+					if(this instanceof Battleship | this instanceof Carrier) {
+						pos -= 3;
+					}
+					
 					if(shapeOf[0][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					break;
 					
 				case SOUTH:
+					if(this instanceof Battleship | this instanceof Carrier) {
+						pos -= 3;
+					}
+					
 					if(shapeOf[2][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					break;
 					
 				case EAST:
+					if(this instanceof Battleship | this instanceof Carrier) {
+						pos -= 3;
+					}
+					
 					if(shapeOf[1][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					break;
 					
 				case WEST:
+					if(this instanceof Battleship | this instanceof Carrier) {
+						pos -= 3;
+					}
+					
 					if(shapeOf[3][pos] == HIT_VALUE) {
 						dev = true;
 					}
@@ -637,10 +678,141 @@ public abstract class Craft {
 		return dev;
 	
 	}
+	
+	private char toStringDestroyer(Orientation or, int i, int j) {
+		char toReturn = 0;
+		
+		
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
+			if(j == 2) {
+				if(i == 1 | i == 2) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;
+			}
+		}
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
+			if(i == 2) {
+				if(j == 1 | j == 2) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;	
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	private char toStringCruiser(Orientation or, int i, int j) {
+		char toReturn = 0;
+		
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
+			if(j == 2) {
+				if(i == 1 | i == 2 | i == 3) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;
+			}
+		}
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
+			if(i == 2) {
+				if(j == 1 | j == 2 | j == 3) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;	
+			}
+		}
+		
+		return toReturn;
+	}
 
+	private char toStringCarrier(Orientation or, int i, int j) {
+		char toReturn = 0;
+		
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
+			if(j == 2) {
+				
+				toReturn = this.getSymbol();
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;
+			}
+		}
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
+			if(i == 2) {
+				
+				toReturn = this.getSymbol();
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;	
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	private char toStringBattleship(Orientation or, int i, int j) {
+		char toReturn = 0;
+		
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
+			if(j == 2) {
+				if(i >= 1) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;
+			}
+		}
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
+			if(i == 2) {
+				if(j >= 1) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			else {
+				toReturn = Board.WATER_SYMBOL;	
+			}
+		}
+		
+		return toReturn;
+	}
+
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Orientation or = this.orientation;
+		char toAppend;
 		
 		sb.append(this.name + " (" + this.orientation + ")\n");
 		sb.append(" -----\n");
@@ -648,31 +820,26 @@ public abstract class Craft {
 		for(int i = 0;i < BOUNDING_SQUARE_SIZE;i++) {
 			sb.append("|");
 			for(int j = 0;j < BOUNDING_SQUARE_SIZE;j++) {
-				if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
-					if(j == 2) {
-						if(i == 1 | i == 2 | i == 3) {
-							sb.append(this.symbol);
-						}
-						else {
-							sb.append(Board.WATER_SYMBOL);	
-						}
-					}
-					else {
-						sb.append(Board.WATER_SYMBOL);	
-					}
+				
+				if(this instanceof Destroyer) {
+					toAppend = toStringDestroyer(or, i, j);
+					sb.append(toAppend);
 				}
-				else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
-					if(i == 2) {
-						if(j == 1 | j == 2 | j == 3) {
-							sb.append(this.symbol);
-						}
-						else {
-							sb.append(Board.WATER_SYMBOL);
-						}
-					}
-					else {
-						sb.append(Board.WATER_SYMBOL);	
-					}
+				
+				
+				if(this instanceof Cruiser) {
+					toAppend = toStringCruiser(or, i, j);
+					sb.append(toAppend);
+				}
+				
+				if(this instanceof Carrier) {
+					toAppend = toStringCarrier(or, i, j);
+					sb.append(toAppend);
+				}
+				
+				if(this instanceof Battleship) {
+					toAppend = toStringBattleship(or, i, j);
+					sb.append(toAppend);
 				}
 			}
 			
@@ -683,6 +850,6 @@ public abstract class Craft {
 		
 		sb.append(" -----");
 		return sb.toString();
-	}
 
+	}
 }
