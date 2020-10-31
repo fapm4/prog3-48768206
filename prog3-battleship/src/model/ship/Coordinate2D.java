@@ -10,25 +10,15 @@ public class Coordinate2D extends Coordinate{
 
 	public Coordinate2D(int x, int y) {
 		super(2);
-		try {
-			set(0, x);
-			set(1, y);
-		}
-		catch(Exception e) {
-			e.getMessage();
-		}
+		set(0, x);
+		set(1, y);
 	}
 	
 	public Coordinate2D(Coordinate2D c){
 		super(2);
 		
 		for(int i = 0;i < 2;i++) {
-			try {
-				set(i, c.components[i]);
-			}
-			catch(Exception e) {
-				
-			}
+			set(i, c.components[i]);
 		}
 	}
 	
@@ -58,14 +48,8 @@ public class Coordinate2D extends Coordinate{
 	 * @throws Exception 
 	 */
 	public Coordinate copy() {
-		Coordinate2D toReturn = null;
-		try {
-			toReturn = new Coordinate2D(this);
-			return toReturn;
-		}
-		catch(Exception e){
-			e.getMessage();
-		}
+		Coordinate2D toReturn = new Coordinate2D(this);
+
 		return toReturn;
 	}
 	
