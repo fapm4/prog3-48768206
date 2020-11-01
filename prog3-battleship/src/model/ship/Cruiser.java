@@ -29,9 +29,11 @@ public class Cruiser extends Ship{
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0}};
 		
+		
 	public Cruiser(Orientation o) {
 		super(o, 'Ø', "Cruiser");
 	}
+	
 	
 	public int[][] getShape(){
 		return this.shape;

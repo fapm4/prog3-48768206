@@ -7,17 +7,12 @@ import model.Coordinate;
 import model.CoordinateFactory;
 
 public class Coordinate3D extends Coordinate{
+	
 	public Coordinate3D(int x, int y, int z) {
 		super(3);
-		
-		try {
-			set(0, x);
-			set(1, y);
-			set(2, z);
-		}
-		catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
+		set(0, x);
+		set(1, y);
+		set(2, z);
 	}
 	
 	public Coordinate3D(Coordinate3D c){
@@ -27,11 +22,7 @@ public class Coordinate3D extends Coordinate{
 		}
 	}
 	
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(");
@@ -46,23 +37,12 @@ public class Coordinate3D extends Coordinate{
 		return sb.toString();
 	}
 	
-	/**
-	 * Copy.
-	 *
-	 * @return the coordinate
-	 * @throws Exception 
-	 */
+
 	public Coordinate copy(){
 		return new Coordinate3D(this.get(0), this.get(1), this.get(2));
 	}
-	
-	/**
-	 * Adjacent coordinates.
-	 *
-	 * @return the sets the
-	 * @throws Exception 
-	 */
-	
+
+
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		
@@ -74,8 +54,7 @@ public class Coordinate3D extends Coordinate{
 		for(int i = x - 1;i< x + 2;i++) {
 			for(int j = y - 1;j < y + 2;j++) {
 				for(int k = z - 1;k < z + 2;k++) {
-					int coords[] = {i, j, k};
-					coord = CoordinateFactory.createCoordinate(coords);
+					coord = CoordinateFactory.createCoordinate(i, j, k);
 					nuevo.add(coord);	
 				}
 			}

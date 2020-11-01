@@ -17,7 +17,6 @@ import model.ship.Cruiser;
 import model.ship.Destroyer;
 
 public abstract class Craft {
-
 	
 	private static final int BOUNDING_SQUARE_SIZE = 5;
 	
@@ -88,7 +87,8 @@ public abstract class Craft {
 		return (c.get(1) * BOUNDING_SQUARE_SIZE) + c.get(0);
 	}
 
-	private Set<Coordinate> getAbsolutePositionsTransport(Coordinate position, Orientation or, Craft craft){
+	
+	private Set<Coordinate> getAbsolutePositionsTransport(Coordinate position, Orientation or){
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
 		
 		switch(or) {
@@ -161,6 +161,132 @@ public abstract class Craft {
 		
 	}
 	
+	
+	private Set<Coordinate> getAbsolutePositionsFighter(Coordinate position, Orientation or){
+		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
+		
+		switch(or) {
+			case NORTH:
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				break;
+				
+			case SOUTH:
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+			
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				break;
+				
+			case EAST:
+				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				break;
+				
+			case WEST:
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				break;
+		}
+		return positionsToReturn;
+	}
+	
+	
+	private Set<Coordinate> getAbsolutePositionsBomber(Coordinate position, Orientation or){
+		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
+		
+		switch(or) {
+			case NORTH:
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				break;
+				
+			case SOUTH:
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 1));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 1));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				break;
+				
+			case EAST:
+				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1)));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 4));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				break;
+				
+			case WEST:
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1)));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 4));
+				
+				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				break;
+		}
+		
+		return positionsToReturn;
+	}
+	
+	
 	public Set<Coordinate> getAbsolutePositions(Coordinate position){
 	
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
@@ -187,10 +313,19 @@ public abstract class Craft {
 		}
 		
 		if(this instanceof Transport) {
-			positionsToReturn = getAbsolutePositionsTransport(position, or, this);
+			positionsToReturn = getAbsolutePositionsTransport(position, or);
+		}
+		
+		if(this instanceof Fighter) {
+			positionsToReturn = getAbsolutePositionsFighter(position, or);
+		}
+		
+		if(this instanceof Bomber) {
+			positionsToReturn = getAbsolutePositionsBomber(position, or);
 		}
 		
 		if(this instanceof Destroyer | this instanceof Carrier | this instanceof Battleship | this instanceof Cruiser) {
+			
 			if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)) {
 				for(int i = iterador;i <= cont;i++) {
 					if(position instanceof Coordinate2D) {
@@ -391,6 +526,7 @@ public abstract class Craft {
 		
 		return dev;
 	}
+	
 	
 	private boolean compruebaTipoNORTH(Craft nave) {
 		
@@ -771,6 +907,7 @@ public abstract class Craft {
 	
 	}
 	
+	
 	private char toStringDestroyer(Orientation or, int i, int j) {
 		char toReturn = 0;
 		
@@ -806,6 +943,7 @@ public abstract class Craft {
 		return toReturn;
 	}
 	
+	
 	private char toStringCruiser(Orientation or, int i, int j) {
 		char toReturn = 0;
 		
@@ -840,6 +978,7 @@ public abstract class Craft {
 		return toReturn;
 	}
 
+	
 	private char toStringCarrier(Orientation or, int i, int j) {
 		char toReturn = 0;
 		
@@ -865,6 +1004,7 @@ public abstract class Craft {
 		
 		return toReturn;
 	}
+	
 	
 	private char toStringBattleship(Orientation or, int i, int j) {
 		char toReturn = 0;
@@ -969,6 +1109,154 @@ public abstract class Craft {
 		return toReturn;
 	}
 	
+	
+	private char toStringFighter(Orientation or, int i, int j) {
+		char toReturn = 0;
+		
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
+			
+			if(or.equals(Orientation.NORTH)) {
+				if(j == 2 && i > 0) {
+					toReturn = this.getSymbol();
+				}
+				
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			
+			if(or.equals(Orientation.SOUTH)) {
+				if(j == 2 && i != 4) {
+					toReturn = this.getSymbol();
+				}
+				
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			
+			if(i == 2) {
+				if(j == 1 | j == 2 | j == 3) {
+					toReturn = this.getSymbol();
+				}
+			}
+			
+		}
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)) {
+			
+			if(or.equals(Orientation.EAST)) {
+				if(i == 2 && j != 4) {
+					toReturn = this.getSymbol();
+				}
+				
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			
+			if(or.equals(Orientation.WEST)) {
+				if(i == 2 && j != 0) {
+					toReturn = this.getSymbol();
+				}
+				
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+			}
+			
+			if(j == 2) {
+				if(i == 1 | i == 2 | i == 3) {
+					toReturn = this.getSymbol();
+				}
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	
+	private char toStringBomber(Orientation or, int i, int j) {
+		char toReturn = 0;
+		
+		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)) {
+			
+			if(or.equals(Orientation.NORTH)) {
+				if(j == 2 && i > 0) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(i == 3) {
+					if(j == 0 | j == 2 | j == 4) {
+						toReturn = this.getSymbol();
+					}
+				}
+			}
+			
+			if(or.equals(Orientation.SOUTH)) {
+				if(j == 2 && i != 4) {
+					toReturn = this.getSymbol();
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(i == 1) {
+					if(j == 0 | j == 2 | j == 4) {
+						toReturn = this.getSymbol();
+					}
+				}
+			}
+			
+			if(i == 2) {
+				toReturn = this.getSymbol();
+			}
+		}
+		
+		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
+			
+			if(or.equals(Orientation.EAST)) {
+				if(i == 2 && j != 4) {
+					toReturn = this.getSymbol();	
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(j == 1) {
+					if(i == 0 | i == 4) {
+						toReturn = this.getSymbol();
+					}
+				}
+			}
+			
+			if(or.equals(Orientation.WEST)) {
+				if(i == 2 && j != 0) {
+					toReturn = this.getSymbol();	
+				}
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(j == 3) {
+					if(i == 0 | i == 4) {
+						toReturn = this.getSymbol();
+					}
+				}
+			}
+			
+			if(j == 2) {
+				toReturn = this.getSymbol();
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		Orientation or = this.orientation;
@@ -1006,6 +1294,16 @@ public abstract class Craft {
 					toAppend = toStringTransport(or, i, j);
 					sb.append(toAppend);
 				}
+				
+				if(this instanceof Fighter) {
+					toAppend = toStringFighter(or, i, j);
+					sb.append(toAppend);
+				}
+				
+				if(this instanceof Bomber) {
+					toAppend = toStringBomber(or, i, j);
+					sb.append(toAppend);
+				}
 			}
 			
 			sb.append("|");
@@ -1015,6 +1313,5 @@ public abstract class Craft {
 		
 		sb.append(" -----");
 		return sb.toString();
-
 	}
 }

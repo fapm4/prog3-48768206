@@ -1,37 +1,16 @@
 package model.ship;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 import model.Board;
 import model.Coordinate;
-import model.CoordinateFactory;
 import model.Craft;
-
-// TODO: Auto-generated Javadoc
-/**
- * The Class Board.
- *
- * @author Francisco Alejandro Pérez Meneses - 48768206H
- */
 
 public class Board2D extends Board {
 	
-	/**
-	 * Instantiates a new board.
-	 *
-	 * @param size the size
-	 */
 	public Board2D(int size) {
 		super(size);
 	}
 	
-	/**
-	 * Check coordinate.
-	 *
-	 * @param c the c
-	 * @return true, if successful
-	 */
+
 	@Override
 	public boolean checkCoordinate(Coordinate c) {
 		
@@ -50,13 +29,7 @@ public class Board2D extends Board {
 		return dev;
 	}
 	
-	/**
-	 * Show.
-	 *
-	 * @param unveil the unveil
-	 * @return the string
-	 * @throws Exception 
-	 */
+
 	@Override
 	public String show(boolean unveil){
 		

@@ -1,45 +1,23 @@
 package model;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import model.aircraft.Coordinate3D;
 import model.ship.Coordinate2D;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Coordinate.
- *
- * @author Francisco Alejandro Pérez Meneses - 48768206H
- */
 
 
 public abstract class Coordinate{
 
-	
-	/** The components. */
 	protected int [] components;
 	
-
-	
-	/**
-	 * Instantiates a new coordinate.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 */
 	
 	protected Coordinate(int dim){
 		 components = new int[dim];
 	}
 	
 
-	/**
-	 * Instantiates a new coordinate.
-	 *
-	 * @param c the c
-	 */
 	protected Coordinate(Coordinate c) {
 		
 		if(c instanceof Coordinate2D) {
@@ -58,12 +36,6 @@ public abstract class Coordinate{
 	}
 	
 
-	/**
-	 * Sets the.
-	 *
-	 * @param component the component
-	 * @param value the value
-	 */
 	public void set(int component, int value){
 		
 		boolean exp = false;
@@ -92,12 +64,6 @@ public abstract class Coordinate{
 	}
 	
 
-	/**
-	 * Gets the.
-	 *
-	 * @param component the component
-	 * @return the int
-	 */
 	public int get(int component){
 		
 		int dev = -1;
@@ -129,14 +95,6 @@ public abstract class Coordinate{
 	}
 	
 	
-	/**
-	 * Adds the.
-	 *
-	 * @param c the c
-	 * @return the coordinate
-	 * @throws Exception 
-	 */
-	
 	public Coordinate add(Coordinate c){
 		
 		if(c == null) {
@@ -165,11 +123,10 @@ public abstract class Coordinate{
 		
 		if(this instanceof Coordinate2D && c instanceof Coordinate3D){
 			for(int i = 0; i < 2;i++) {
-				caso3D.set(i, components[i] + c.components[i]);
+				caso2D.set(i, this.components[i] + c.components[i]);
 			}
-			
-			caso3D.set(2, c.components[2]);
-			toReturn = caso3D;
+		
+			toReturn = caso2D;
 		}
 		
 		if(this instanceof Coordinate3D && c instanceof Coordinate2D){
@@ -183,15 +140,9 @@ public abstract class Coordinate{
 		
 		return toReturn;
 	}
+
 	
-	/**
-	 * Subtract.
-	 *
-	 * @param c the c
-	 * @return the coordinate
-	 * @throws Exception 
-	 */
-	public Coordinate subtract(Coordinate c) throws Exception {
+	public Coordinate subtract(Coordinate c){
 		
 		if(c == null) {
 			throw new NullPointerException();
@@ -219,11 +170,10 @@ public abstract class Coordinate{
 		
 		if(this instanceof Coordinate2D && c instanceof Coordinate3D){
 			for(int i = 0; i < 2;i++) {
-				caso3D.set(i, components[i] - c.components[i]);
+				caso2D.set(i, components[i] - c.components[i]);
 			}
 			
-			caso3D.set(2, c.components[2]);
-			toReturn = caso3D;
+			toReturn = caso2D;
 		}
 		
 		if(this instanceof Coordinate3D && c instanceof Coordinate2D){
@@ -239,11 +189,6 @@ public abstract class Coordinate{
 	}
 	
 
-	/**
-	 * Hash code.
-	 *
-	 * @return the int
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -252,13 +197,6 @@ public abstract class Coordinate{
 		return result;
 	}
 	
-
-	/**
-	 * Equals.
-	 *
-	 * @param obj the obj
-	 * @return true, if successful
-	 */
 	
 	public boolean equals(Object obj) {
 		
@@ -266,9 +204,6 @@ public abstract class Coordinate{
 			return false;
 		}
 		
-		if(this == null) {
-			return false;
-		}
 		
 		if(!(obj instanceof Coordinate)) {
 			return false;
@@ -284,6 +219,7 @@ public abstract class Coordinate{
 		}
 	}
 
+	
 	public abstract Coordinate copy();
 	public abstract Set<Coordinate> adjacentCoordinates();
 	

@@ -29,9 +29,11 @@ public class Battleship extends Ship{
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0}};
 		
+		
 	public Battleship(Orientation o) {
 		super(o, 'O', "Battleship");
 	}
+	
 	
 	public int[][] getShape(){
 		return this.shape;

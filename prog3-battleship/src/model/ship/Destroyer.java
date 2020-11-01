@@ -29,9 +29,11 @@ public class Destroyer extends Ship{
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0}};
 		
+		
 	public Destroyer(Orientation o) {
 		super(o, 'Ω', "Destroyer");
 	}
+	
 	
 	public int[][] getShape(){
 		return this.shape;

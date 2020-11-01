@@ -4,9 +4,6 @@ import model.Coordinate;
 
 public class NextToAnotherCraftException extends BattleshipException{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public NextToAnotherCraftException(Coordinate c) {

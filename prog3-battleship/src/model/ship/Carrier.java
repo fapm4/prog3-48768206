@@ -29,9 +29,11 @@ public class Carrier extends Ship{
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0}};
 		
+		
 	public Carrier(Orientation o) {
 		super(o, '®', "Carrier");
 	}
+	
 	
 	public int[][] getShape(){
 		return this.shape;

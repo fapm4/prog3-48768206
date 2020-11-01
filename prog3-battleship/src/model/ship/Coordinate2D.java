@@ -22,11 +22,7 @@ public class Coordinate2D extends Coordinate{
 		}
 	}
 	
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(");
@@ -41,25 +37,14 @@ public class Coordinate2D extends Coordinate{
 		return sb.toString();
 	}
 	
-	/**
-	 * Copy.
-	 *
-	 * @return the coordinate
-	 * @throws Exception 
-	 */
+
 	public Coordinate copy() {
 		Coordinate2D toReturn = new Coordinate2D(this);
 
 		return toReturn;
 	}
 	
-	/**
-	 * Adjacent coordinates.
-	 *
-	 * @return the sets the
-	 * @throws Exception 
-	 */
-	
+
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		
@@ -69,20 +54,12 @@ public class Coordinate2D extends Coordinate{
 		
 		for(int i = x - 1;i< x + 2;i++) {
 			for(int j = y - 1;j < y + 2;j++) {
-				int coords[] = {i, j};
-				
-				try {
-					coord = CoordinateFactory.createCoordinate(coords);
-					nuevo.add(coord);
-				}
-				catch(Exception e) {
-					e.getMessage();
-				}
+				coord = CoordinateFactory.createCoordinate(i, j);
+				nuevo.add(coord);
 			}
 		}
 		
 		nuevo.remove(new Coordinate2D(x, y));
 		return nuevo;
 	}
-
 }

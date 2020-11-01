@@ -29,9 +29,11 @@ public class Transport extends Aircraft{
 		0, 0, 1, 0, 0,
 		0, 0, 0, 1, 0}};
 		
+		
 	public Transport(Orientation o) {
 		super(o, '⇋', "Transport");
 	}
+	
 	
 	public int[][] getShape(){
 		return this.shape;

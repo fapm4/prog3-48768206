@@ -29,13 +29,13 @@ public class Fighter extends Aircraft{
 		0, 0, 1, 0, 0,
 		0, 0, 0, 0, 0}}; 
 		
+		
 	public Fighter(Orientation o) {
 		super(o, '⇄', "Fighter");
 	}
 	
+	
 	public int[][] getShape(){
 		return this.shape;
-	}
-			
-			
+	}		
 }

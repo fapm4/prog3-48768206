@@ -9,41 +9,36 @@ import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
 import model.exceptions.OccupiedCoordinateException;
-import model.ship.Battleship;
-import model.ship.Carrier;
-import model.ship.Cruiser;
-import model.ship.Destroyer;
-import model.ship.Ship;
 
 public abstract class Board {
 
-	/** The desde add. */
 	private boolean desdeAdd = false;
-	/** The not set. */
+	
 	private boolean notSet = false;
-	/** The size. */
+	
 	private int size;
-	/** The num crafts. */
+	
 	private int numCrafts;
-	/** The destroyed crafts. */
+	
 	private int destroyedCrafts;
-	/** The seen. */
+	
 	private Set<Coordinate> seen = new HashSet<Coordinate>();
-	/** The board. */
+	
 	private Map<Coordinate, Craft> board = new HashMap<Coordinate, Craft>();
-	/** The Constant MIN_BOARD_SIZE. */
+	
 	protected static final int MIN_BOARD_SIZE = 5;
-	/** The Constant MAX_BOARD_SIZE. */
+	
 	public static final int MAX_BOARD_SIZE = 20;
-	/** The Constant NOTSEEN_SYMBOL. */
+	
 	public static final char NOTSEEN_SYMBOL = '?';
-	/** The Constant WATER_SYMBOL. */
+	
 	public static final char WATER_SYMBOL = ' ';
-	/** The Constant HIT_SYMBOL. */
+	
 	public static final char HIT_SYMBOL = '•';
 	
 	public static final char Board_SEPARATOR = '|';
 
+	
 	public Board(int size) {
 		if(size < MIN_BOARD_SIZE | size > MAX_BOARD_SIZE) {
 			throw new IllegalArgumentException();
@@ -58,23 +53,12 @@ public abstract class Board {
 		}
 	}
 
-	/**
-	 * Gets the size.
-	 *
-	 * @return the size
-	 */
+	
 	public int getSize() {
 		return size;
 	}
 
-	/**
-	 * Adds the ship.
-	 *
-	 * @param ship the ship
-	 * @param position the position
-	 * @return true, if successful
-	 * @throws Exception 
-	 */
+
 	public boolean addCraft(Craft craft, Coordinate position) throws InvalidCoordinateException,
 	OccupiedCoordinateException, NextToAnotherCraftException{
 		
@@ -143,12 +127,7 @@ public abstract class Board {
 		return dev;
 	}
 
-	/**
-	 * Gets the ship.
-	 *
-	 * @param c the c
-	 * @return the ship
-	 */
+
 	public Craft getCraft(Coordinate c) {
 		
 		if(board.containsKey(c)) {
@@ -159,12 +138,7 @@ public abstract class Board {
 		}
 	}
 
-	/**
-	 * Checks if is seen.
-	 *
-	 * @param c the c
-	 * @return true, if is seen
-	 */
+
 	public boolean isSeen(Coordinate c) {
 		
 		boolean dev = false;
@@ -178,15 +152,8 @@ public abstract class Board {
 		return dev;
 	}
 
-	/**
-	 * Hit.
-	 *
-	 * @param coord the coord
-	 * @return the cell status
-	 * @throws CoordinateAlreadyHitException 
-	 * @throws Exception 
-	 */
-public CellStatus hit(Coordinate coord) throws InvalidCoordinateException, CoordinateAlreadyHitException{
+
+	public CellStatus hit(Coordinate coord) throws InvalidCoordinateException, CoordinateAlreadyHitException{
 		
 		CellStatus estado = null;
 		Coordinate c = coord.copy();
@@ -223,11 +190,7 @@ public CellStatus hit(Coordinate coord) throws InvalidCoordinateException, Coord
 		return estado;
 	}
 
-	/**
-	 * Are all crafts destroyed.
-	 *
-	 * @return true, if successful
-	 */
+
 	public boolean areAllCraftsDestroyed() {
 		boolean dev = false;
 		
@@ -238,14 +201,7 @@ public CellStatus hit(Coordinate coord) throws InvalidCoordinateException, Coord
 		return dev;
 	}
 
-	/**
-	 * Gets the neighborhood.
-	 *
-	 * @param ship the ship
-	 * @param position the position
-	 * @return the neighborhood
-	 * @throws Exception 
-	 */
+
 	public Set<Coordinate> getNeighborhood(Craft ship, Coordinate position){
 		
 		if(ship == null | position == null) {
@@ -318,13 +274,7 @@ public CellStatus hit(Coordinate coord) throws InvalidCoordinateException, Coord
 		return vecindarioToReturn;
 	}
 
-	/**
-	 * Gets the neighborhood.
-	 *
-	 * @param s the s
-	 * @return the neighborhood
-	 * @throws Exception 
-	 */
+
 	public Set<Coordinate> getNeighborhood(Craft s){			
 		if(!board.containsValue(s)) {
 			throw new NullPointerException();
@@ -334,14 +284,11 @@ public CellStatus hit(Coordinate coord) throws InvalidCoordinateException, Coord
 		}
 	}
 	
+	
 	public abstract boolean checkCoordinate(Coordinate c);
 	public abstract String show(boolean unveil);
 
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
+
 	public String toString() {
 		String dev = "Board " + this.size + "; " + "crafts: " + numCrafts + "; " + "destroyed: " + destroyedCrafts;
 		return dev;
