@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import model.aircraft.Bomber;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
@@ -70,6 +71,7 @@ public abstract class Board {
 		boolean posOcupada = false;	
 		boolean posVecindario = false;
 		
+		
 		// Conjuntos de coordenadas
 		craft.setPosition(position);
 		Set<Coordinate> posAbs = new HashSet<Coordinate>();
@@ -82,6 +84,9 @@ public abstract class Board {
 			if(!checkCoordinate(c)) {
 				posIncorrecta = true;
 			}
+			if(craft instanceof Bomber) {
+				posIncorrecta = false;
+			}
 		}
 		
 		if(posIncorrecta) {
@@ -93,6 +98,9 @@ public abstract class Board {
 		for(Coordinate c: posAbs) {
 			if(board.containsKey(c)) {
 				posOcupada = true;
+			}
+			if(craft instanceof Bomber) {
+				posOcupada = false;
 			}
 		}
 		
@@ -109,11 +117,15 @@ public abstract class Board {
 			if(board.containsKey(c)) {
 				posVecindario = true;
 			}
+			if(craft instanceof Bomber) {
+				posVecindario = false;
+			}
 		}
 		
 		if(posVecindario) {
 			throw new NextToAnotherCraftException(position);
 		}
+		
 		
 		if(posIncorrecta == false && posOcupada == false && posVecindario == false) {
 			for(Coordinate c: posAbs) {

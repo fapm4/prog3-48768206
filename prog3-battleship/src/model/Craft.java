@@ -110,18 +110,18 @@ public abstract class Craft {
 					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4)); //  |
 				}
 				else if(position instanceof Coordinate3D) {
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));  	// |
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));  // |
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1), position.get(2)));  	// |
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));  // |
 					
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2)); // |||
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2))); // |||
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
 					
-					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));// | | |
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 3, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));// | | |
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 3, position.get(2)));
 					
-					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4)); //  |	
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 4, position.get(2))); //  |	
 				}
 	
 				break;

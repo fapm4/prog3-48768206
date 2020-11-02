@@ -15,10 +15,10 @@ public class Coordinate3D extends Coordinate{
 		set(2, z);
 	}
 	
-	public Coordinate3D(Coordinate3D c){
+	public Coordinate3D(Coordinate coordinate){
 		super(3);
 		for(int i = 0;i < 3;i++) {
-			set(i, c.components[i]);
+			set(i, coordinate.get(i));
 		}
 	}
 	
