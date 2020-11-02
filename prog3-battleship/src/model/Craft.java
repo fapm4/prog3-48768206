@@ -35,6 +35,7 @@ public abstract class Craft {
 	protected int shape[][];
 	
 	public Craft(Orientation o, char s, String n) {
+		
 		orientation = o;
 		symbol = s;
 		name = n;
@@ -43,6 +44,7 @@ public abstract class Craft {
 
 
 	public Coordinate getPosition() {
+		
 		if(position == null) {
 			return null;
 		}
@@ -53,9 +55,7 @@ public abstract class Craft {
 
 	
 	public void setPosition(Coordinate position){
-		
 		this.position = position.copy();
-		
 	}
 
 	
@@ -80,6 +80,7 @@ public abstract class Craft {
 
 
 	public int getShapeIndex(Coordinate c){
+		
 		if(c == null) {
 			throw new NullPointerException();
 		}
@@ -94,66 +95,132 @@ public abstract class Craft {
 		switch(or) {
 			case NORTH:
 			
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));  	// |
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));  // |
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2)); // |||
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));// | | |
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4)); //  |
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));  	// |
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));  // |
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2)); // |||
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));// | | |
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4)); //  |
+				}
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));  	// |
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));  // |
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2)); // |||
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));// | | |
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4)); //  |	
+				}
 	
 				break;
 			
 			case SOUTH:
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));//		|
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));//  | | |
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 1));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));//   |||
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));//    |
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));//    |	
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));//		|
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));//  | | |
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 1));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));//   |||
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));//    |
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));//    |
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1), position.get(2)));//		|
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));//  | | |
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 1, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));//   |||
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));//    |
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 4, position.get(2)));//    |
+				}
 
 				break;
 				
 			case EAST:
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 4));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 4));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 4, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 2, position.get(2)));
+				}
 				break;
 				
 			case WEST:
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 4));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 4));
 
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				}
+				
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 4, position.get(2)));
+
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 2, position.get(2)));
+				}
 				break;
 		}
 		
@@ -167,47 +234,100 @@ public abstract class Craft {
 		
 		switch(or) {
 			case NORTH:
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				else if(position instanceof Coordinate3D){
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 4, position.get(2)));	
+				}
 				break;
 				
 			case SOUTH:
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-			
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				}
+				
+				else if(position instanceof Coordinate3D){
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+				
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+				}
+				
 				break;
 				
 			case EAST:
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+				}
 				break;
 				
 			case WEST:
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 2, position.get(2)));	
+				}
 				break;
 		}
 		return positionsToReturn;
@@ -219,67 +339,140 @@ public abstract class Craft {
 		
 		switch(or) {
 			case NORTH:
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 3));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 3));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 3, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 3, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 4, position.get(2)));
+				}
 				break;
 				
 			case SOUTH:
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 1));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 1));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1), position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 1, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+				}
+		
 				break;
 				
 			case EAST:
-				positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0), position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 4));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				}
 				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 4));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0), position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 4, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 4, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+				}
 				break;
 				
 			case WEST:
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1)));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 4));
-				
-				positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));
+				if(position instanceof Coordinate2D) {
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 1, position.get(1) + 2));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 1));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 3));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 2, position.get(1) + 4));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1)));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 2));
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 3, position.get(1) + 4));
+					
+					positionsToReturn.add(new Coordinate2D(position.get(0) + 4, position.get(1) + 2));		
+				}
+			
+				else if(position instanceof Coordinate3D) {
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 1, position.get(1) + 2, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 1, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 3, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 2, position.get(1) + 4, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1), position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 2, position.get(2)));
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 3, position.get(1) + 4, position.get(2)));
+					
+					positionsToReturn.add(new Coordinate3D(position.get(0) + 4, position.get(1) + 2, position.get(2)));
+				}
 				break;
 		}
 		
