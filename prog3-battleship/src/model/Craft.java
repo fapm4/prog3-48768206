@@ -486,23 +486,25 @@ public abstract class Craft {
 		Orientation or = this.orientation;
 		Coordinate nuevo = null;
 		int cont = -1;
-		int iterador = 1;
+		int iterador = 0;
 		
 		if(this instanceof Destroyer) {
 			cont = 2;
+			iterador = 1;
 		}
 		
 		if(this instanceof Cruiser) {
 			cont = 3;
+			iterador = 1;
 		}
 		
 		if(this instanceof Carrier) {
-			cont = 5;
+			cont = 4;
 		}
 		
 		if(this instanceof Battleship) {
-			cont = 5;
-			iterador = 2;
+			cont = 4;
+			iterador = 1;
 		}
 		
 		if(this instanceof Transport) {
@@ -830,8 +832,8 @@ public abstract class Craft {
 		}
 		
 		if(nave instanceof Fighter) {
-			if(shape[2][7] == HIT_VALUE && shapeOf[2][10] == HIT_VALUE && shapeOf[2][11] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE
-					&& shapeOf[2][13] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE && shapeOf[2][22] == HIT_VALUE) {
+			if(shapeOf[2][2] == HIT_VALUE && shapeOf[2][7] == HIT_VALUE && shapeOf[2][11] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE
+					&& shapeOf[2][13] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE) {
 				dev = true;
 			}
 		}

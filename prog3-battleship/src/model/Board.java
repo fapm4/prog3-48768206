@@ -78,14 +78,16 @@ public abstract class Board {
 		Set<Coordinate> vecindario = new HashSet<Coordinate>();
 		posAbs = craft.getAbsolutePositions();
 	
+		
 		// ----------------------------------------------------------------
 		// Compruebo que las coordenadas del ship no estén fuera del tablero
 		for(Coordinate c: posAbs) {
+			if(!checkCoordinate(position) | checkCoordinate(position)) {
+				posIncorrecta = false;
+			}
+			
 			if(!checkCoordinate(c)) {
 				posIncorrecta = true;
-			}
-			if(craft instanceof Bomber) {
-				posIncorrecta = false;
 			}
 		}
 		
@@ -98,9 +100,6 @@ public abstract class Board {
 		for(Coordinate c: posAbs) {
 			if(board.containsKey(c)) {
 				posOcupada = true;
-			}
-			if(craft instanceof Bomber) {
-				posOcupada = false;
 			}
 		}
 		
@@ -116,9 +115,6 @@ public abstract class Board {
 		for(Coordinate c: vecindario) {
 			if(board.containsKey(c)) {
 				posVecindario = true;
-			}
-			if(craft instanceof Bomber) {
-				posVecindario = false;
 			}
 		}
 		
