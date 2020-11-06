@@ -2,8 +2,14 @@ package model.aircraft;
 
 import model.Orientation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Transport.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class Transport extends Aircraft{
 	
+	/** The shape. */
 	private int[][] shape = new int[][] {
        {0, 0, 1, 0, 0,	//2
     	0, 0, 1, 0, 0,	//7
@@ -30,11 +36,21 @@ public class Transport extends Aircraft{
 		0, 0, 0, 1, 0}};
 		
 		
+	/**
+	 * Instantiates a new transport.
+	 *
+	 * @param o the o
+	 */
 	public Transport(Orientation o) {
 		super(o, '⇋', "Transport");
 	}
 	
 	
+	/**
+	 * Gets the shape.
+	 *
+	 * @return the shape
+	 */
 	public int[][] getShape(){
 		return this.shape;
 	}

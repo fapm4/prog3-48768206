@@ -3,7 +3,19 @@ package model;
 import model.aircraft.Coordinate3D;
 import model.ship.Coordinate2D;
 
+// TODO: Auto-generated Javadoc
+/**
+ * A factory for creating Coordinate objects.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class CoordinateFactory {
+	
+	/**
+	 * Creates a new Coordinate object.
+	 *
+	 * @param coords the coords
+	 * @return the coordinate
+	 */
 	public static Coordinate createCoordinate(int ...coords){
 		
 		int p1 = 0, p2 = 0, p3 = 0;

@@ -4,20 +4,20 @@ import model.Coordinate;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class OccupiedCoordinateException.
+ * The Class InvalidCoordinateException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class OccupiedCoordinateException extends BattleshipException{
+public class InvalidCoordinateException extends BattleshipException{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instantiates a new occupied coordinate exception.
+	 * Instantiates a new invalid coordinate exception.
 	 *
 	 * @param c the c
 	 */
-	public OccupiedCoordinateException(Coordinate c) {
+	public InvalidCoordinateException(Coordinate c) {
 		super(c);
 	}
 	
@@ -29,6 +29,6 @@ public class OccupiedCoordinateException extends BattleshipException{
 	public String getMessage() {
 		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " ya está ocupada (OccupiedCoordinateException)";
+		return "La coordenada " + copia.toString() + " está fuera del tablero (InvalidCoordinateException)";
 	}
 }

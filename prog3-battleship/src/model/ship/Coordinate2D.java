@@ -6,14 +6,30 @@ import java.util.Set;
 import model.Coordinate;
 import model.CoordinateFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Coordinate2D.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class Coordinate2D extends Coordinate{
 
+	/**
+	 * Instantiates a new coordinate 2 D.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
 	public Coordinate2D(int x, int y) {
 		super(2);
 		set(0, x);
 		set(1, y);
 	}
 	
+	/**
+	 * Instantiates a new coordinate 2 D.
+	 *
+	 * @param c the c
+	 */
 	public Coordinate2D(Coordinate2D c){
 		super(2);
 		
@@ -23,6 +39,11 @@ public class Coordinate2D extends Coordinate{
 	}
 	
 	
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(");
@@ -38,6 +59,11 @@ public class Coordinate2D extends Coordinate{
 	}
 	
 
+	/**
+	 * Copy.
+	 *
+	 * @return the coordinate
+	 */
 	public Coordinate copy() {
 		Coordinate2D toReturn = new Coordinate2D(this);
 
@@ -45,6 +71,11 @@ public class Coordinate2D extends Coordinate{
 	}
 	
 
+	/**
+	 * Adjacent coordinates.
+	 *
+	 * @return the sets the
+	 */
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> nuevo = new HashSet<Coordinate>();
 		

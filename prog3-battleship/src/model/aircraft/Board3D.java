@@ -6,13 +6,29 @@ import model.Craft;
 import model.ship.Coordinate2D;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Board3D.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class Board3D extends Board{
 	
+	/**
+	 * Instantiates a new board 3 D.
+	 *
+	 * @param size the size
+	 */
 	public Board3D(int size) {
 		super(size);
 	}
 	
 	
+	/**
+	 * Check coordinate.
+	 *
+	 * @param c the c
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean checkCoordinate(Coordinate c) {
 		
@@ -32,6 +48,12 @@ public class Board3D extends Board{
 	}
 	
 	
+	/**
+	 * Show.
+	 *
+	 * @param unveil the unveil
+	 * @return the string
+	 */
 	@Override
 	public String show(boolean unveil) {
 		StringBuilder sb = new StringBuilder();

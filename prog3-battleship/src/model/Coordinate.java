@@ -8,16 +8,32 @@ import model.ship.Coordinate2D;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Coordinate.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public abstract class Coordinate{
 
+	/** The components. */
 	protected int [] components;
 	
 	
+	/**
+	 * Instantiates a new coordinate.
+	 *
+	 * @param dim the dim
+	 */
 	protected Coordinate(int dim){
 		 components = new int[dim];
 	}
 	
 
+	/**
+	 * Instantiates a new coordinate.
+	 *
+	 * @param c the c
+	 */
 	protected Coordinate(Coordinate c) {
 		
 		if(c instanceof Coordinate2D) {
@@ -36,7 +52,13 @@ public abstract class Coordinate{
 	}
 	
 
-	public void set(int component, int value){
+	/**
+	 * Sets the.
+	 *
+	 * @param component the component
+	 * @param value the value
+	 */
+	protected void set(int component, int value){
 		
 		boolean exp = false;
 		
@@ -64,6 +86,12 @@ public abstract class Coordinate{
 	}
 	
 
+	/**
+	 * Gets the.
+	 *
+	 * @param component the component
+	 * @return the int
+	 */
 	public int get(int component){
 		
 		int dev = -1;
@@ -95,6 +123,12 @@ public abstract class Coordinate{
 	}
 	
 	
+	/**
+	 * Adds the.
+	 *
+	 * @param c the c
+	 * @return the coordinate
+	 */
 	public Coordinate add(Coordinate c){
 		
 		if(c == null) {
@@ -142,6 +176,12 @@ public abstract class Coordinate{
 	}
 
 	
+	/**
+	 * Subtract.
+	 *
+	 * @param c the c
+	 * @return the coordinate
+	 */
 	public Coordinate subtract(Coordinate c){
 		
 		if(c == null) {
@@ -189,6 +229,11 @@ public abstract class Coordinate{
 	}
 	
 
+	/**
+	 * Hash code.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -198,6 +243,12 @@ public abstract class Coordinate{
 	}
 	
 	
+	/**
+	 * Equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
 	public boolean equals(Object obj) {
 		
 		if(obj == null) {
@@ -220,7 +271,18 @@ public abstract class Coordinate{
 	}
 
 	
+	/**
+	 * Copy.
+	 *
+	 * @return the coordinate
+	 */
 	public abstract Coordinate copy();
+	
+	/**
+	 * Adjacent coordinates.
+	 *
+	 * @return the sets the
+	 */
 	public abstract Set<Coordinate> adjacentCoordinates();
 	
 }
