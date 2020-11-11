@@ -46,7 +46,7 @@ public abstract class Craft {
 	
 	/** The shape. */
 	protected int shape[][];
-	
+		
 	/**
 	 * Instantiates a new craft.
 	 *
@@ -571,6 +571,10 @@ public abstract class Craft {
 		int cont = -1;
 		int iterador = 0;
 		
+		if(position == null) {
+			throw new NullPointerException();
+		}
+		
 		if(this instanceof Destroyer) {
 			cont = 2;
 			iterador = 1;
@@ -665,10 +669,27 @@ public abstract class Craft {
 		if(this.getPosition() == null) {
 			throw new NullPointerException();
 		}
-		
-		int[][] shapeOf = this.getShape();
-		
+				
 		Orientation or = this.orientation;
+		
+		int ori = 0;
+		switch(or) {
+			case NORTH:
+				ori = 0;
+				break;
+				
+			case SOUTH:
+				ori = 2;
+				break;
+				
+			case EAST:
+				ori = 1;
+				break;
+				
+			case WEST:
+				ori = 3;
+				break;
+		}
 		
 		Set<Coordinate> posAbsolutas = new HashSet<Coordinate>();
 		
@@ -694,124 +715,34 @@ public abstract class Craft {
 		// Busco si la coordenada que me dan es una de mis posiciones absolutas del barco
 		for(Coordinate busca: posOrdenadas) {
 			
-			// Si la encuentro salgo del bucle y paso a modificar el shapeOf
+			// Si la encuentro salgo del bucle y paso a modificar el shape
 			if(c.equals(busca)) {
 				dev = true;
 				aux = busca;
 			}
 		}
 		
-		
 		if(dev == true) {
 			Coordinate nueva = null;
 			int pos;
 			
-			switch(or) {
-			case NORTH:
-				
-				if(aux instanceof Coordinate2D) {
-					nueva = new Coordinate2D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
-				}
-				
-				else if(aux instanceof Coordinate3D) {
-					nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
-				}
-	
-				pos = getShapeIndex(nueva);		
-
-				if(pos == 27) {
-					pos -= 3;
-				}
-				
-				if(shapeOf[0][pos] == HIT_VALUE) {
-					throw new CoordinateAlreadyHitException(nueva);
-				}
-				else {
-					shapeOf[0][pos] = HIT_VALUE;
-					dev = true;
-				}					
-				
-				break;
-				
-			case SOUTH:
-	
-				if(aux instanceof Coordinate2D) {
-					nueva = new Coordinate2D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
-				}
-				
-				else if(aux instanceof Coordinate3D) {
-					nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
-				}
-	
-				pos = getShapeIndex(nueva);		
-				
-				if(pos == 27) {
-					pos -= 3;
-				}
-				
-				if(shapeOf[2][pos] == HIT_VALUE) {
-					throw new CoordinateAlreadyHitException(nueva);
-				}
-				else {
-					shapeOf[2][pos] = HIT_VALUE;
-					dev = true;
-				}					
-				
-				break;
-				
-			case EAST:
-				
-				if(aux instanceof Coordinate2D) {
-					nueva = new Coordinate2D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
-				}
-				
-				else if(aux instanceof Coordinate3D) {
-					nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
-				}
-	
-				pos = getShapeIndex(nueva);	
-				
-				if(pos == 27) {
-					pos -= 3;
-				}
-			
-				if(shapeOf[1][pos] == HIT_VALUE) {
-					throw new CoordinateAlreadyHitException(nueva);
-				}
-				else {
-					shapeOf[1][pos] = HIT_VALUE;
-					dev = true;
-				}					
-				
-				break;
-				
-			case WEST:
-									
-				if(aux instanceof Coordinate2D) {
-					nueva = new Coordinate2D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
-				}
-				
-				else if(aux instanceof Coordinate3D) {
-					nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
-				}
-	
-				pos = getShapeIndex(nueva);			
-				
-				if(pos == 27) {
-					pos -= 3;
-				}
-				
-				if(shapeOf[3][pos] == HIT_VALUE) {
-					throw new CoordinateAlreadyHitException(nueva);
-				}
-				else {
-					shapeOf[3][pos] = HIT_VALUE;
-					dev = true;
-				}					
-				
-				break;
-	
+			if(aux instanceof Coordinate2D) {
+				nueva = new Coordinate2D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1));
 			}
+			
+			else if(aux instanceof Coordinate3D) {
+				nueva = new Coordinate3D(c.get(0) - this.position.get(0), c.get(1) - this.position.get(1), c.get(2) - this.position.get(2));
+			}
+
+			pos = getShapeIndex(nueva);	
+			
+			if(shape[ori][pos] == HIT_VALUE) {
+				throw new CoordinateAlreadyHitException(nueva);
+			}
+			else {
+				shape[ori][pos] = HIT_VALUE;
+				dev = true;
+			}					
 		}
 		
 		return dev;
@@ -827,32 +758,32 @@ public abstract class Craft {
 	private boolean compruebaTipoNORTH(Craft nave) {
 		
 		boolean dev = false;
-		int[][] shapeOf = nave.getShape();
+		int[][] shape = nave.getShape();
 		
 		// -------------------------------------------------------
 		// ------------------ SUBCLASES DE SHIP ------------------
 		// -------------------------------------------------------
 		
 		if(nave instanceof Battleship) {
-			if(shapeOf[0][7] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE && shapeOf[0][17] == HIT_VALUE && shapeOf[0][22] == HIT_VALUE) {
+			if(shape[0][7] == HIT_VALUE && shape[0][12] == HIT_VALUE && shape[0][17] == HIT_VALUE && shape[0][22] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Carrier) {
-			if(shapeOf[0][2] == HIT_VALUE && shapeOf[0][7] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE && shapeOf[0][17] == HIT_VALUE && shapeOf[0][22] == HIT_VALUE) {
+			if(shape[0][2] == HIT_VALUE && shape[0][7] == HIT_VALUE && shape[0][12] == HIT_VALUE && shape[0][17] == HIT_VALUE && shape[0][22] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Cruiser) {
-			if(shapeOf[0][7] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE && shapeOf[0][17] == HIT_VALUE) {
+			if(shape[0][7] == HIT_VALUE && shape[0][12] == HIT_VALUE && shape[0][17] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Destroyer) {
-			if(shapeOf[0][7] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE) {
+			if(shape[0][7] == HIT_VALUE && shape[0][12] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
@@ -862,24 +793,24 @@ public abstract class Craft {
 		// --------------------------------------------------------
 		
 		if(nave instanceof Bomber) {
-			if(shapeOf[0][7] == HIT_VALUE && shapeOf[0][10] == HIT_VALUE && shapeOf[0][11] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE
-					&& shapeOf[0][13] == HIT_VALUE && shapeOf[0][14] == HIT_VALUE && shapeOf[0][15] == HIT_VALUE && shapeOf[0][17] == HIT_VALUE
-					&& shapeOf[0][19] == HIT_VALUE && shapeOf[0][22] == HIT_VALUE) {
+			if(shape[0][7] == HIT_VALUE && shape[0][10] == HIT_VALUE && shape[0][11] == HIT_VALUE && shape[0][12] == HIT_VALUE
+					&& shape[0][13] == HIT_VALUE && shape[0][14] == HIT_VALUE && shape[0][15] == HIT_VALUE && shape[0][17] == HIT_VALUE
+					&& shape[0][19] == HIT_VALUE && shape[0][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Fighter) {
-			if(shape[0][7] == HIT_VALUE && shapeOf[0][10] == HIT_VALUE && shapeOf[0][11] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE
-					&& shapeOf[0][13] == HIT_VALUE && shapeOf[0][17] == HIT_VALUE && shapeOf[0][22] == HIT_VALUE) {
+			if(shape[0][7] == HIT_VALUE && shape[0][10] == HIT_VALUE && shape[0][11] == HIT_VALUE && shape[0][12] == HIT_VALUE
+					&& shape[0][13] == HIT_VALUE && shape[0][17] == HIT_VALUE && shape[0][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Transport) {
-			if(shapeOf[0][2] == HIT_VALUE && shapeOf[0][7] == HIT_VALUE && shapeOf[0][11] == HIT_VALUE && shapeOf[0][12] == HIT_VALUE
-					&& shapeOf[0][13] == HIT_VALUE && shapeOf[0][15] == HIT_VALUE && shapeOf[0][17] == HIT_VALUE && shapeOf[0][19] == HIT_VALUE
-					&& shapeOf[0][22] == HIT_VALUE) {
+			if(shape[0][2] == HIT_VALUE && shape[0][7] == HIT_VALUE && shape[0][11] == HIT_VALUE && shape[0][12] == HIT_VALUE
+					&& shape[0][13] == HIT_VALUE && shape[0][15] == HIT_VALUE && shape[0][17] == HIT_VALUE && shape[0][19] == HIT_VALUE
+					&& shape[0][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
@@ -896,32 +827,32 @@ public abstract class Craft {
 	private boolean compruebaTipoSOUTH(Craft nave) {
 		
 		boolean dev = false;
-		int[][] shapeOf = nave.getShape();
+		int[][] shape = nave.getShape();
 		
 		// -------------------------------------------------------
 		// ------------------ SUBCLASES DE SHIP ------------------
 		// -------------------------------------------------------
 		
 		if(nave instanceof Battleship) {
-			if(shapeOf[2][7] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE && shapeOf[2][22] == HIT_VALUE) {
+			if(shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE && shape[2][17] == HIT_VALUE && shape[2][22] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Carrier) {
-			if(shapeOf[2][2] == HIT_VALUE && shapeOf[2][7] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE && shapeOf[2][22] == HIT_VALUE) {
+			if(shape[2][2] == HIT_VALUE && shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE && shape[2][17] == HIT_VALUE && shape[2][22] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Cruiser) {
-			if(shapeOf[2][7] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE) {
+			if(shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE && shape[2][17] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Destroyer) {
-			if(shapeOf[2][7] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE) {
+			if(shape[2][7] == HIT_VALUE && shape[2][12] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
@@ -931,24 +862,24 @@ public abstract class Craft {
 		// --------------------------------------------------------
 		
 		if(nave instanceof Bomber) {
-			if(shapeOf[2][7] == HIT_VALUE && shapeOf[2][10] == HIT_VALUE && shapeOf[2][11] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE
-					&& shapeOf[2][13] == HIT_VALUE && shapeOf[2][14] == HIT_VALUE && shapeOf[2][15] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE
-					&& shapeOf[2][19] == HIT_VALUE && shapeOf[2][22] == HIT_VALUE) {
+			if(shape[2][7] == HIT_VALUE && shape[2][10] == HIT_VALUE && shape[2][11] == HIT_VALUE && shape[2][12] == HIT_VALUE
+					&& shape[2][13] == HIT_VALUE && shape[2][14] == HIT_VALUE && shape[2][15] == HIT_VALUE && shape[2][17] == HIT_VALUE
+					&& shape[2][19] == HIT_VALUE && shape[2][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Fighter) {
-			if(shapeOf[2][2] == HIT_VALUE && shapeOf[2][7] == HIT_VALUE && shapeOf[2][11] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE
-					&& shapeOf[2][13] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE) {
+			if(shape[2][2] == HIT_VALUE && shape[2][7] == HIT_VALUE && shape[2][11] == HIT_VALUE && shape[2][12] == HIT_VALUE
+					&& shape[2][13] == HIT_VALUE && shape[2][17] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Transport) {
-			if(shapeOf[2][2] == HIT_VALUE && shapeOf[2][7] == HIT_VALUE && shapeOf[2][11] == HIT_VALUE && shapeOf[2][12] == HIT_VALUE
-					&& shapeOf[2][13] == HIT_VALUE && shapeOf[2][15] == HIT_VALUE && shapeOf[2][17] == HIT_VALUE && shapeOf[2][19] == HIT_VALUE
-					&& shapeOf[2][22] == HIT_VALUE) {
+			if(shape[2][2] == HIT_VALUE && shape[2][7] == HIT_VALUE && shape[2][11] == HIT_VALUE && shape[2][12] == HIT_VALUE
+					&& shape[2][13] == HIT_VALUE && shape[2][15] == HIT_VALUE && shape[2][17] == HIT_VALUE && shape[2][19] == HIT_VALUE
+					&& shape[2][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
@@ -965,7 +896,7 @@ public abstract class Craft {
 	private boolean compruebaTipoEAST(Craft nave) {
 		
 		boolean dev = false;
-		int[][] shapeOf = nave.getShape();
+		int[][] shape = nave.getShape();
 		
 		// -------------------------------------------------------
 		// ------------------ SUBCLASES DE SHIP ------------------
@@ -973,26 +904,26 @@ public abstract class Craft {
 		
 		
 		if(nave instanceof Battleship) {
-			if(shapeOf[1][11] == HIT_VALUE && this.shape[1][12] == HIT_VALUE && this.shape[1][13] == HIT_VALUE && this.shape[1][14] == HIT_VALUE) {
+			if(shape[1][11] == HIT_VALUE && this.shape[1][12] == HIT_VALUE && this.shape[1][13] == HIT_VALUE && this.shape[1][14] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(this instanceof Carrier) {
-			if(this.shape[1][10] == HIT_VALUE && this.shape[1][11] == HIT_VALUE && this.shape[1][12] == HIT_VALUE && this.shape[1][13] == HIT_VALUE && shapeOf[1][14] == HIT_VALUE) {
+			if(this.shape[1][10] == HIT_VALUE && this.shape[1][11] == HIT_VALUE && this.shape[1][12] == HIT_VALUE && this.shape[1][13] == HIT_VALUE && shape[1][14] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Cruiser) {
-			if(shapeOf[1][11] == HIT_VALUE && shapeOf[1][12] == HIT_VALUE && shapeOf[1][13] == HIT_VALUE) {
+			if(shape[1][11] == HIT_VALUE && shape[1][12] == HIT_VALUE && shape[1][13] == HIT_VALUE) {
 				dev = true;			
 			}
 			
 		}
 		
 		if(nave instanceof Destroyer) {
-			if(shapeOf[1][11] == HIT_VALUE && shapeOf[1][12] == HIT_VALUE) {
+			if(shape[1][11] == HIT_VALUE && shape[1][12] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
@@ -1002,24 +933,24 @@ public abstract class Craft {
 		// --------------------------------------------------------
 		
 		if(nave instanceof Bomber) {
-			if(shapeOf[1][1] == HIT_VALUE && shapeOf[1][2] == HIT_VALUE && shapeOf[1][7] == HIT_VALUE && shapeOf[1][10] == HIT_VALUE 
-					&& shapeOf[1][11] == HIT_VALUE && shapeOf[1][12] == HIT_VALUE && shapeOf[1][13] == HIT_VALUE && shapeOf[1][17] == HIT_VALUE
-					&& shapeOf[1][12] == HIT_VALUE && shapeOf[1][21] == HIT_VALUE && shapeOf[1][22] == HIT_VALUE) {
+			if(shape[1][1] == HIT_VALUE && shape[1][2] == HIT_VALUE && shape[1][7] == HIT_VALUE && shape[1][10] == HIT_VALUE 
+					&& shape[1][11] == HIT_VALUE && shape[1][12] == HIT_VALUE && shape[1][13] == HIT_VALUE && shape[1][17] == HIT_VALUE
+					&& shape[1][12] == HIT_VALUE && shape[1][21] == HIT_VALUE && shape[1][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Fighter) {
-			if(shapeOf[1][7] == HIT_VALUE && shapeOf[1][10] == HIT_VALUE && shapeOf[1][11] == HIT_VALUE && shapeOf[1][12] == HIT_VALUE 
-					&& shapeOf[1][13] == HIT_VALUE && shapeOf[1][17] == HIT_VALUE) {
+			if(shape[1][7] == HIT_VALUE && shape[1][10] == HIT_VALUE && shape[1][11] == HIT_VALUE && shape[1][12] == HIT_VALUE 
+					&& shape[1][13] == HIT_VALUE && shape[1][17] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Transport) {
-			if(shapeOf[1][1] == HIT_VALUE && shapeOf[1][7] == HIT_VALUE && shapeOf[1][10] == HIT_VALUE && shapeOf[1][11] == HIT_VALUE
-					&& shapeOf[1][12] == HIT_VALUE && shapeOf[1][13] == HIT_VALUE && shapeOf[1][14] == HIT_VALUE && shapeOf[1][17] == HIT_VALUE
-					&& shapeOf[1][21] == HIT_VALUE) {
+			if(shape[1][1] == HIT_VALUE && shape[1][7] == HIT_VALUE && shape[1][10] == HIT_VALUE && shape[1][11] == HIT_VALUE
+					&& shape[1][12] == HIT_VALUE && shape[1][13] == HIT_VALUE && shape[1][14] == HIT_VALUE && shape[1][17] == HIT_VALUE
+					&& shape[1][21] == HIT_VALUE) {
 				dev = true;
 			}
 		}
@@ -1037,32 +968,31 @@ public abstract class Craft {
 	private boolean compruebaTipoWEST(Craft nave) {
 		
 		boolean dev = false;
-		int[][] shapeOf = nave.getShape();
 		
 		// -------------------------------------------------------
 		// ------------------ SUBCLASES DE SHIP ------------------
 		// -------------------------------------------------------
 		
 		if(nave instanceof Battleship) {
-			if(shapeOf[3][11] == HIT_VALUE && shapeOf[3][12] == HIT_VALUE && shapeOf[3][13] == HIT_VALUE && shapeOf[3][14] == HIT_VALUE) {
+			if(shape[3][11] == HIT_VALUE && shape[3][12] == HIT_VALUE && shape[3][13] == HIT_VALUE && shape[3][14] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Carrier) {
-			if(shapeOf[3][10] == HIT_VALUE && shapeOf[3][11] == HIT_VALUE && shapeOf[3][12] == HIT_VALUE && shapeOf[3][13] == HIT_VALUE && shapeOf[3][14] == HIT_VALUE) {
+			if(shape[3][10] == HIT_VALUE && shape[3][11] == HIT_VALUE && shape[3][12] == HIT_VALUE && shape[3][13] == HIT_VALUE && shape[3][14] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Cruiser) {
-			if(shapeOf[3][11] == HIT_VALUE && shapeOf[3][12] == HIT_VALUE && shapeOf[3][13] == HIT_VALUE) {
+			if(shape[3][11] == HIT_VALUE && shape[3][12] == HIT_VALUE && shape[3][13] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
 		
 		if(nave instanceof Destroyer) {
-			if(shapeOf[3][11] == HIT_VALUE && shapeOf[3][12] == HIT_VALUE) {
+			if(shape[3][11] == HIT_VALUE && shape[3][12] == HIT_VALUE) {
 				dev = true;			
 			}
 		}
@@ -1072,24 +1002,24 @@ public abstract class Craft {
 		// --------------------------------------------------------
 		
 		if(nave instanceof Bomber) {
-			if(shapeOf[3][1] == HIT_VALUE && shapeOf[3][2] == HIT_VALUE && shapeOf[3][7] == HIT_VALUE && shapeOf[3][10] == HIT_VALUE 
-					&& shapeOf[3][11] == HIT_VALUE && shapeOf[3][12] == HIT_VALUE && shapeOf[3][13] == HIT_VALUE && shapeOf[3][17] == HIT_VALUE
-					&& shapeOf[3][12] == HIT_VALUE && shapeOf[3][21] == HIT_VALUE && shapeOf[3][22] == HIT_VALUE) {
+			if(shape[3][1] == HIT_VALUE && shape[3][2] == HIT_VALUE && shape[3][7] == HIT_VALUE && shape[3][10] == HIT_VALUE 
+					&& shape[3][11] == HIT_VALUE && shape[3][12] == HIT_VALUE && shape[3][13] == HIT_VALUE && shape[3][17] == HIT_VALUE
+					&& shape[3][12] == HIT_VALUE && shape[3][21] == HIT_VALUE && shape[3][22] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Fighter) {
-			if(shapeOf[3][7] == HIT_VALUE && shapeOf[3][10] == HIT_VALUE && shapeOf[3][11] == HIT_VALUE && shapeOf[3][12] == HIT_VALUE 
-					&& shapeOf[3][13] == HIT_VALUE && shapeOf[3][17] == HIT_VALUE) {
+			if(shape[3][7] == HIT_VALUE && shape[3][11] == HIT_VALUE && shape[3][12] == HIT_VALUE 
+					&& shape[3][13] == HIT_VALUE && shape[3][14] == HIT_VALUE && shape[3][17] == HIT_VALUE) {
 				dev = true;
 			}
 		}
 		
 		if(nave instanceof Transport) {
-			if(shapeOf[3][1] == HIT_VALUE && shapeOf[3][7] == HIT_VALUE && shapeOf[3][10] == HIT_VALUE && shapeOf[3][11] == HIT_VALUE
-					&& shapeOf[3][12] == HIT_VALUE && shapeOf[3][13] == HIT_VALUE && shapeOf[3][14] == HIT_VALUE && shapeOf[3][17] == HIT_VALUE
-					&& shapeOf[3][21] == HIT_VALUE) {
+			if(shape[3][1] == HIT_VALUE && shape[3][7] == HIT_VALUE && shape[3][10] == HIT_VALUE && shape[3][11] == HIT_VALUE
+					&& shape[3][12] == HIT_VALUE && shape[3][13] == HIT_VALUE && shape[3][14] == HIT_VALUE && shape[3][17] == HIT_VALUE
+					&& shape[3][21] == HIT_VALUE) {
 				dev = true;
 			}
 		}
@@ -1146,7 +1076,7 @@ public abstract class Craft {
 		boolean encontrado = false;
 		int pos = 0;
 		Coordinate relativa = null;
-		int[][] shapeOf = this.getShape();
+		int[][] shape = this.getShape();
 		
 		if(this.position == null) {
 			throw new NullPointerException();
@@ -1176,26 +1106,15 @@ public abstract class Craft {
 			switch(or) {
 				case NORTH:
 					
-					if(this instanceof Battleship | this instanceof Carrier) {
-						if(pos > 24) {
-							pos -= 3;
-						}
-					}
-					
-					if(shapeOf[0][pos] == HIT_VALUE) {
+
+					if(shape[0][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					break;
 					
 				case SOUTH:
 					
-					if(this instanceof Battleship | this instanceof Carrier) {
-						if(pos > 24) {
-							pos -= 3;
-						}
-					}
-					
-					if(shapeOf[2][pos] == HIT_VALUE) {
+					if(shape[2][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					
@@ -1203,26 +1122,17 @@ public abstract class Craft {
 					
 				case EAST:
 					
-					if(this instanceof Battleship | this instanceof Carrier) {
-						if(pos > 24) {
-							pos -= 3;
-						}
-					}
+
 					
-					if(shapeOf[1][pos] == HIT_VALUE) {
+					if(shape[1][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					break;
 					
 				case WEST:
+				
 					
-					if(this instanceof Battleship | this instanceof Carrier) {
-						if(pos > 24) {
-							pos -= 3;
-						}
-					}
-					
-					if(shapeOf[3][pos] == HIT_VALUE) {
+					if(shape[3][pos] == HIT_VALUE) {
 						dev = true;
 					}
 					break;
@@ -1231,7 +1141,6 @@ public abstract class Craft {
 		return dev;
 	
 	}
-	
 	
 	/**
 	 * To string destroyer.
@@ -1287,11 +1196,17 @@ public abstract class Craft {
 	 */
 	private char toStringCruiser(Orientation or, int i, int j) {
 		char toReturn = 0;
+		int pos = getShapeIndex(new Coordinate2D(i, j));
 		
 		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
 			if(j == 2) {
 				if(i == 1 | i == 2 | i == 3) {
-					toReturn = this.getSymbol();
+					if(shape[0][pos] == HIT_VALUE | shape[2][pos] == HIT_VALUE) {
+						toReturn = Board.HIT_SYMBOL;
+					}
+					else {
+						toReturn = this.getSymbol();
+					}
 				}
 				else {
 					toReturn = Board.WATER_SYMBOL;
@@ -1305,7 +1220,12 @@ public abstract class Craft {
 		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
 			if(i == 2) {
 				if(j == 1 | j == 2 | j == 3) {
-					toReturn = this.getSymbol();
+					if(shape[1][pos] == HIT_VALUE | shape[3][pos] == HIT_VALUE) {
+						toReturn = Board.HIT_SYMBOL;
+					}
+					else {
+						toReturn = this.getSymbol();
+					}
 				}
 				else {
 					toReturn = Board.WATER_SYMBOL;
@@ -1330,11 +1250,17 @@ public abstract class Craft {
 	 */
 	private char toStringCarrier(Orientation or, int i, int j) {
 		char toReturn = 0;
+		int pos = getShapeIndex(new Coordinate2D(j, i));
+		
 		
 		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
 			if(j == 2) {
-				
-				toReturn = this.getSymbol();
+				if(shape[0][pos] == HIT_VALUE | shape[2][pos] == HIT_VALUE) {
+					toReturn = Board.HIT_SYMBOL;
+				}
+				else {
+					toReturn = this.getSymbol();
+				}
 			}
 			else {
 				toReturn = Board.WATER_SYMBOL;
@@ -1342,9 +1268,13 @@ public abstract class Craft {
 		}
 		
 		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
-			if(i == 2) {
-				
-				toReturn = this.getSymbol();
+			if(i == 2) {				
+				if(shape[1][pos] == HIT_VALUE | shape[3][pos] == HIT_VALUE) {
+					toReturn = Board.HIT_SYMBOL;
+				}
+				else {
+					toReturn = this.getSymbol();
+				}
 			}
 			else {
 				toReturn = Board.WATER_SYMBOL;	
@@ -1398,6 +1328,42 @@ public abstract class Craft {
 	}
 
 	
+	private char hitSymbol(Orientation or, int pos) {
+		char toReturn = 0;
+		boolean dev = false;
+		int ori = 0;
+		switch(or) {
+			case NORTH:
+				ori = 0;
+				break;
+				
+			case SOUTH:
+				ori = 2;
+				break;
+				
+			case EAST:
+				ori = 1;
+				break;
+				
+			case WEST:
+				ori = 3;
+				break;
+		}
+		
+		if(shape[ori][pos] == HIT_VALUE) {
+			dev = true;
+		}
+		
+		if(dev) {
+			toReturn = Board.HIT_SYMBOL;
+		}
+		else {
+			toReturn = this.getSymbol();
+		}
+		
+		return toReturn;
+	}
+	
 	/**
 	 * To string transport.
 	 *
@@ -1408,65 +1374,102 @@ public abstract class Craft {
 	 */
 	private char toStringTransport(Orientation or, int i, int j) {
 		char toReturn = 0;
+		int pos = getShapeIndex(new Coordinate2D(j, i));
 		
 		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
-			if(j == 2) {
-				toReturn = this.getSymbol();
-			}
 			
-			else {
-				toReturn = Board.WATER_SYMBOL;
-			}
-			
-			if(i == 2) {
-				if(j == 1 | j == 2 | j == 3) {
-					toReturn = this.getSymbol();
+			if(or.equals(Orientation.NORTH)){
+				if(j == 2) {
+					toReturn = hitSymbol(Orientation.NORTH, pos);
 				}
+				
 				else {
 					toReturn = Board.WATER_SYMBOL;
 				}
-			}
-			
-			if(or.equals(Orientation.NORTH)){
+				
+				if(i == 2) {
+					if(j == 1 | j == 2 | j == 3) {
+						toReturn = hitSymbol(Orientation.NORTH, pos);
+					}
+					else {
+						toReturn = Board.WATER_SYMBOL;
+					}
+				}
+				
 				if((i == 3 && j == 0) | (i == 3 && j == 4)){
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.NORTH, pos);
 				}
 			}
 			
 			if(or.equals(Orientation.SOUTH)) {
+				if(j == 2) {
+					toReturn = hitSymbol(Orientation.NORTH, pos);
+				}
+				
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(i == 2) {
+					if(j == 1 | j == 2 | j == 3) {
+						toReturn = hitSymbol(Orientation.NORTH, pos);
+					}
+					else {
+						toReturn = Board.WATER_SYMBOL;
+					}
+				}
+				
 				if((i == 1 && j == 0) | (i == 1 && j == 4)){
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.NORTH, pos);
 				}
 			}
 		}
 		
 		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
-			if(i == 2) {
-				toReturn = this.getSymbol();
-			}
 			
-			else {
-				toReturn = Board.WATER_SYMBOL;
-			}
-			
-			if(j == 2) {
-				if(i == 1 | i == 2 | i == 3) {
-					toReturn = this.getSymbol();
+			if(or.equals(Orientation.EAST)) {
+				if(i == 2) {
+					toReturn = hitSymbol(Orientation.EAST, pos);
 				}
+				
 				else {
 					toReturn = Board.WATER_SYMBOL;
 				}
-			}
-			
-			if(or.equals(Orientation.EAST)) {
+				
+				if(j == 2) {
+					if(i == 1 | i == 2 | i == 3) {
+						toReturn = hitSymbol(Orientation.EAST, pos);
+					}
+					else {
+						toReturn = Board.WATER_SYMBOL;
+					}
+				}
+				
 				if((i == 0 && j == 1) | (i == 4 && j == 1)){
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.EAST, pos);
 				}
 			}
 			
 			if(or.equals(Orientation.WEST)){
+				if(i == 2) {
+					toReturn = hitSymbol(Orientation.WEST, pos);
+				}
+				
+				else {
+					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(j == 2) {
+					if(i == 1 | i == 2 | i == 3) {
+						toReturn = hitSymbol(Orientation.WEST, pos);
+					}
+					else {
+						toReturn = Board.WATER_SYMBOL;
+					}
+				}
+				
 				if((i == 0 && j == 3) | (i == 4 && j == 3)){
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.WEST, pos);
 				}
 			}
 		}
@@ -1485,32 +1488,38 @@ public abstract class Craft {
 	 */
 	private char toStringFighter(Orientation or, int i, int j) {
 		char toReturn = 0;
+		int pos = getShapeIndex(new Coordinate2D(j, i));
 		
 		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)){
 			
 			if(or.equals(Orientation.NORTH)) {
 				if(j == 2 && i > 0) {
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.NORTH, pos);
 				}
 				
 				else {
 					toReturn = Board.WATER_SYMBOL;
+				}
+				if(i == 2) {
+					if(j == 1 | j == 2 | j == 3) {
+						toReturn = hitSymbol(Orientation.NORTH, pos);
+					}
 				}
 			}
 			
 			if(or.equals(Orientation.SOUTH)) {
 				if(j == 2 && i != 4) {
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.SOUTH, pos);
 				}
 				
 				else {
 					toReturn = Board.WATER_SYMBOL;
 				}
-			}
-			
-			if(i == 2) {
-				if(j == 1 | j == 2 | j == 3) {
-					toReturn = this.getSymbol();
+				
+				if(i == 2) {
+					if(j == 1 | j == 2 | j == 3) {
+						toReturn = hitSymbol(Orientation.SOUTH, pos);
+					}
 				}
 			}
 			
@@ -1520,34 +1529,39 @@ public abstract class Craft {
 			
 			if(or.equals(Orientation.EAST)) {
 				if(i == 2 && j != 4) {
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.EAST, pos);
 				}
 				
 				else {
 					toReturn = Board.WATER_SYMBOL;
+				}
+				
+				if(j == 2) {
+					if(i == 1 | i == 2 | i == 3) {
+						toReturn = hitSymbol(Orientation.EAST, pos);
+					}
 				}
 			}
 			
 			if(or.equals(Orientation.WEST)) {
 				if(i == 2 && j != 0) {
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.WEST, pos);
 				}
 				
 				else {
 					toReturn = Board.WATER_SYMBOL;
 				}
-			}
-			
-			if(j == 2) {
-				if(i == 1 | i == 2 | i == 3) {
-					toReturn = this.getSymbol();
+				
+				if(j == 2) {
+					if(i == 1 | i == 2 | i == 3) {
+						toReturn = hitSymbol(Orientation.WEST, pos);
+					}
 				}
 			}
 		}
 		
 		return toReturn;
 	}
-	
 	
 	/**
 	 * To string bomber.
@@ -1559,12 +1573,14 @@ public abstract class Craft {
 	 */
 	private char toStringBomber(Orientation or, int i, int j) {
 		char toReturn = 0;
+		int pos = getShapeIndex(new Coordinate2D(j, i));
+
 		
 		if(or.equals(Orientation.NORTH) | or.equals(Orientation.SOUTH)) {
 			
 			if(or.equals(Orientation.NORTH)) {
 				if(j == 2 && i > 0) {
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.NORTH, pos);
 				}
 				else {
 					toReturn = Board.WATER_SYMBOL;
@@ -1572,14 +1588,18 @@ public abstract class Craft {
 				
 				if(i == 3) {
 					if(j == 0 | j == 2 | j == 4) {
-						toReturn = this.getSymbol();
+						toReturn = hitSymbol(Orientation.NORTH, pos);
 					}
+				}
+				
+				if(i == 2) {
+					toReturn = hitSymbol(Orientation.NORTH, pos);
 				}
 			}
 			
 			if(or.equals(Orientation.SOUTH)) {
 				if(j == 2 && i != 4) {
-					toReturn = this.getSymbol();
+					toReturn = hitSymbol(Orientation.SOUTH, pos);
 				}
 				else {
 					toReturn = Board.WATER_SYMBOL;
@@ -1587,21 +1607,23 @@ public abstract class Craft {
 				
 				if(i == 1) {
 					if(j == 0 | j == 2 | j == 4) {
-						toReturn = this.getSymbol();
+						toReturn = hitSymbol(Orientation.SOUTH, pos);
 					}
+				}
+				
+				if(i == 2) {
+					toReturn = hitSymbol(Orientation.SOUTH, pos);
 				}
 			}
 			
-			if(i == 2) {
-				toReturn = this.getSymbol();
-			}
+
 		}
 		
 		else if(or.equals(Orientation.EAST) | or.equals(Orientation.WEST)){
 			
 			if(or.equals(Orientation.EAST)) {
 				if(i == 2 && j != 4) {
-					toReturn = this.getSymbol();	
+					toReturn = hitSymbol(Orientation.EAST, pos);
 				}
 				else {
 					toReturn = Board.WATER_SYMBOL;
@@ -1609,14 +1631,18 @@ public abstract class Craft {
 				
 				if(j == 1) {
 					if(i == 0 | i == 4) {
-						toReturn = this.getSymbol();
+						toReturn = hitSymbol(Orientation.EAST, pos);
 					}
+				}
+				
+				if(j == 2) {
+					toReturn = hitSymbol(Orientation.EAST, pos);
 				}
 			}
 			
 			if(or.equals(Orientation.WEST)) {
 				if(i == 2 && j != 0) {
-					toReturn = this.getSymbol();	
+					toReturn = hitSymbol(Orientation.WEST, pos);
 				}
 				else {
 					toReturn = Board.WATER_SYMBOL;
@@ -1624,13 +1650,13 @@ public abstract class Craft {
 				
 				if(j == 3) {
 					if(i == 0 | i == 4) {
-						toReturn = this.getSymbol();
+						toReturn = hitSymbol(Orientation.WEST, pos);
 					}
 				}
-			}
-			
-			if(j == 2) {
-				toReturn = this.getSymbol();
+				
+				if(j == 2) {
+					toReturn = hitSymbol(Orientation.WEST, pos);
+				}
 			}
 		}
 		

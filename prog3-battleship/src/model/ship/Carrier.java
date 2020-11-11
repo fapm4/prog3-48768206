@@ -7,34 +7,7 @@ import model.Orientation;
  * The Class Carrier.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class Carrier extends Ship{
-	
-	/** The shape. */
-	private int[][] shape = new int[][] {
-       {0, 0, 1, 0, 0,
-    	0, 0, 1, 0, 0,	
-    	0, 0, 1, 0, 0,	
-    	0, 0, 1, 0, 0,
-    	0, 0, 1, 0, 0},
-	      
-       {0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0,	
-		1, 1, 1, 1, 1,	
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0},
-	      
-	   {0, 0, 1, 0, 0,
-		0, 0, 1, 0, 0,	
-		0, 0, 1, 0, 0,	
-		0, 0, 1, 0, 0,
-		0, 0, 1, 0, 0},
-	      
-	   {0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,	
-		1, 1, 1, 1, 1,	
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0}};
-		
+public class Carrier extends Ship{	
 		
 	/**
 	 * Instantiates a new carrier.
@@ -43,6 +16,32 @@ public class Carrier extends Ship{
 	 */
 	public Carrier(Orientation o) {
 		super(o, '®', "Carrier");
+		
+		/** The shape. */
+		 super.shape =  new int[][] {
+	       {0, 0, 1, 0, 0,
+	    	0, 0, 1, 0, 0,	
+	    	0, 0, 1, 0, 0,	
+	    	0, 0, 1, 0, 0,
+	    	0, 0, 1, 0, 0},
+		      
+	       {0, 0, 0, 0, 0,
+	        0, 0, 0, 0, 0,	
+			1, 1, 1, 1, 1,	
+			0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0},
+		      
+		   {0, 0, 1, 0, 0,
+			0, 0, 1, 0, 0,	
+			0, 0, 1, 0, 0,	
+			0, 0, 1, 0, 0,
+			0, 0, 1, 0, 0},
+		      
+		   {0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0,	
+			1, 1, 1, 1, 1,	
+			0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0}};
 	}
 	
 	

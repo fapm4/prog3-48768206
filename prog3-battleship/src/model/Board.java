@@ -194,7 +194,6 @@ public abstract class Board {
 		Coordinate c = coord.copy();
 		
 		if(!checkCoordinate(c)) {
-			estado = CellStatus.WATER;
 			throw new InvalidCoordinateException(c);
 		}
 		
@@ -205,9 +204,8 @@ public abstract class Board {
 		
 		else {
 			Craft barcoGolpeado = getCraft(c);
-			boolean golpe = barcoGolpeado.hit(c);
 			
-			if(golpe) {
+			if(barcoGolpeado.hit(c)) {
 				if(barcoGolpeado.isShotDown()) {
 					Set<Coordinate> vecinos = getNeighborhood(barcoGolpeado);
 					seen.addAll(vecinos);

@@ -36,7 +36,7 @@ public class Board3D extends Board{
 		boolean dev = true;
 		
 		if(c instanceof Coordinate3D) {
-			if(c.get(0) < 0 | c.get(1) < 0 | c.get(2) < 0 | c.get(0) > size | c.get(1) > size | c.get(2) > size) {
+			if(c.get(0) < 0 | c.get(1) < 0 | c.get(2) < 0 | c.get(0) > (size - 1) | c.get(1) > (size - 1) | c.get(2) > (size - 1)) {
 				dev = false;
 			}
 		}
@@ -66,12 +66,6 @@ public class Board3D extends Board{
 			for(int j = 0;j < size;j++) {
 				for(int k = 0;k < size;k++) {
 					
-					// i j k
-					// i k j -
-					//j i k
-					//j k i
-					//k i j
-					//k j i
 					nueva = new Coordinate3D(k, i, j);
 					craft = getCraft(nueva);
 					

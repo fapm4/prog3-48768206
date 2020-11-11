@@ -7,34 +7,7 @@ import model.Orientation;
  * The Class Cruiser.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class Cruiser extends Ship{
-	
-	/** The shape. */
-	private int[][] shape = new int[][] {
-       {0, 0, 0, 0, 0,
-    	0, 0, 1, 0, 0,	
-    	0, 0, 1, 0, 0,	
-    	0, 0, 1, 0, 0,
-    	0, 0, 0, 0, 0},
-	      
-	   {0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,	
-		0, 1, 1, 1, 0,	
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0},
-	      
-	   {0, 0, 0, 0, 0,
-		0, 0, 1, 0, 0,	
-		0, 0, 1, 0, 0,	
-		0, 0, 1, 0, 0,
-		0, 0, 0, 0, 0},
-	      
-	   {0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,	
-		0, 1, 1, 1, 0,	
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0}};
-		
+public class Cruiser extends Ship{		
 		
 	/**
 	 * Instantiates a new cruiser.
@@ -43,6 +16,32 @@ public class Cruiser extends Ship{
 	 */
 	public Cruiser(Orientation o) {
 		super(o, 'Ø', "Cruiser");
+		
+		/** The shape. */
+		super.shape = new int[][] {
+	       {0, 0, 0, 0, 0,
+	    	0, 0, 1, 0, 0,	
+	    	0, 0, 1, 0, 0,	
+	    	0, 0, 1, 0, 0,
+	    	0, 0, 0, 0, 0},
+		      
+		   {0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0,	
+			0, 1, 1, 1, 0,	
+			0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0},
+		      
+		   {0, 0, 0, 0, 0,
+			0, 0, 1, 0, 0,	
+			0, 0, 1, 0, 0,	
+			0, 0, 1, 0, 0,
+			0, 0, 0, 0, 0},
+		      
+		   {0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0,	
+			0, 1, 1, 1, 0,	
+			0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0}};
 	}
 	
 	
