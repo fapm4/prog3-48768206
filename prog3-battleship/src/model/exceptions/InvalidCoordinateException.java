@@ -7,7 +7,7 @@ import model.Coordinate;
  * The Class InvalidCoordinateException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class InvalidCoordinateException extends BattleshipException{
+public class InvalidCoordinateException extends CoordinateException{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -27,8 +27,7 @@ public class InvalidCoordinateException extends BattleshipException{
 	 * @return the message
 	 */
 	public String getMessage() {
-		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " está fuera del tablero (InvalidCoordinateException)";
+		return "La coordenada está fuera del tablero (InvalidCoordinateException)";
 	}
 }

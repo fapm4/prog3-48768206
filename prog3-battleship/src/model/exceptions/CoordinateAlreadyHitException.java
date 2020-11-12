@@ -7,7 +7,7 @@ import model.Coordinate;
  * The Class CoordinateAlreadyHitException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class CoordinateAlreadyHitException extends BattleshipException{
+public class CoordinateAlreadyHitException extends CoordinateException{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -27,8 +27,7 @@ public class CoordinateAlreadyHitException extends BattleshipException{
 	 * @return the message
 	 */
 	public String getMessage() {
-		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " ya ha golpeada anteriormente (CoordinateAlreadyHitException)";
+		return "La coordenada ya ha golpeada anteriormente (CoordinateAlreadyHitException)";
 	}
 }

@@ -7,7 +7,7 @@ import model.Coordinate;
  * The Class NextToAnotherCraftException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class NextToAnotherCraftException extends BattleshipException{
+public class NextToAnotherCraftException extends CoordinateException{
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -27,8 +27,7 @@ public class NextToAnotherCraftException extends BattleshipException{
 	 * @return the message
 	 */
 	public String getMessage() {
-		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " está cerca de otra nave (NextToAnotherCraftException)";
+		return "La coordenada está cerca de otra nave (NextToAnotherCraftException)";
 	}
 }

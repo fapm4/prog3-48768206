@@ -62,7 +62,7 @@ public abstract class Craft {
 		position = null;		
 	}
 
-
+	
 	/**
 	 * Gets the position.
 	 *

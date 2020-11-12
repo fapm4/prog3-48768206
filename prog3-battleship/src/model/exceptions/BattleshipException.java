@@ -11,17 +11,9 @@ public abstract class BattleshipException extends Exception{
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** The c. */
-	private Coordinate c;
-	
-	/**
-	 * Instantiates a new battleship exception.
-	 *
-	 * @param c the c
-	 */
-	public BattleshipException(Coordinate c) {
+
+	public BattleshipException() {
 		super();
-		this.c = c;
 	}
 	
 	/**
@@ -33,12 +25,4 @@ public abstract class BattleshipException extends Exception{
 		return super.getMessage();
 	}
 	
-	/**
-	 * Gets the coord.
-	 *
-	 * @return the coord
-	 */
-	public Coordinate getCoord() {
-		return c;
-	}
 }

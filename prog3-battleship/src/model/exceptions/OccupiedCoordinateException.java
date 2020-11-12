@@ -7,7 +7,7 @@ import model.Coordinate;
  * The Class OccupiedCoordinateException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
-public class OccupiedCoordinateException extends BattleshipException{
+public class OccupiedCoordinateException extends CoordinateException{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -27,8 +27,7 @@ public class OccupiedCoordinateException extends BattleshipException{
 	 * @return the message
 	 */
 	public String getMessage() {
-		Coordinate copia = super.getCoord();
 		
-		return "La coordenada " + copia.toString() + " ya está ocupada (OccupiedCoordinateException)";
+		return "La coordenada ya está ocupada (OccupiedCoordinateException)";
 	}
 }
