@@ -2,24 +2,23 @@ package model.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Set;
 
 import model.Board;
 import model.Coordinate;
 import model.CoordinateFactory;
 import model.Craft;
 import model.Orientation;
-import model.aircraft.Board3D;
 import model.aircraft.Bomber;
 import model.aircraft.Fighter;
 import model.aircraft.Transport;
+import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
 import model.exceptions.OccupiedCoordinateException;
 import model.exceptions.io.BattleshipIOException;
 import model.ship.Battleship;
-import model.ship.Board2D;
 import model.ship.Carrier;
-import model.ship.Coordinate2D;
 import model.ship.Cruiser;
 import model.ship.Destroyer;
 
@@ -131,43 +130,87 @@ public class PlayerFile implements IPlayer{
 		return nuevo;
 	}
 	
-	private Coordinate getPutCoordinate(String linea, Board b, int c1, int c2, int c3) 
-			throws BattleshipIOException {
-		
-		String comando = "";
-		Coordinate nueva = null;		
+	private Coordinate getCoordinate(String linea, boolean desdePut) throws BattleshipIOException {
 		String[] tokens = linea.split("\\s+");
+		int c1 = 0, c2 = 0, c3 = 0;
+		Coordinate nueva;
 		
-		comando = tokens[0];
-		
-		if(!comando.equals(put) && !comando.equals(endput) && !comando.equals(exit)) {
-			// Lanzo excepcion de comando
-			throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un argumento que no es exit, put o endput");
-		}
-		
-		try {
-			c1 = Integer.parseInt(tokens[3]);
-			c2 = Integer.parseInt(tokens[4]);
-		}
-		catch(NumberFormatException e) {
-			throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
-		}
-		
-		if(tokens.length == 6) {
+		if(desdePut) {
 			try {
-				c3 = Integer.parseInt(tokens[5]);
-				nueva = CoordinateFactory.createCoordinate(c1, c2, c3);
+				c1 = Integer.parseInt(tokens[3]);
+				c2 = Integer.parseInt(tokens[4]);
 			}
 			catch(NumberFormatException e) {
 				throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
 			}
-		}
-		else {
-			nueva = CoordinateFactory.createCoordinate(c1, c2);
-		}
 			
+			if(tokens.length == 6) {
+				try {
+					c3 = Integer.parseInt(tokens[5]);
+					nueva = CoordinateFactory.createCoordinate(c1, c2, c3);
+				}
+				catch(NumberFormatException e) {
+					throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
+				}
+			}
+			else {
+				nueva = CoordinateFactory.createCoordinate(c1, c2);
+			}
+		}
+		
+		else {
+			try {
+				c1 = Integer.parseInt(tokens[1]);
+				c2 = Integer.parseInt(tokens[2]);
+			}
+			catch(NumberFormatException e) {
+				throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
+			}
+			
+			if(tokens.length == 4) {
+				try {
+					c3 = Integer.parseInt(tokens[3]);
+					nueva = CoordinateFactory.createCoordinate(c1, c2, c3);
+				}
+				catch(NumberFormatException e) {
+					throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
+				}
+			}
+			else {
+				nueva = CoordinateFactory.createCoordinate(c1, c2);
+			}
+		}
+		
+		
 		return nueva;
+		
 	}
+	
+	private String getComando(String linea) {
+		String[] tokens = linea.split("\\s+");
+		return tokens[0];
+	}
+	
+	
+	private void comprobarElementos(String linea, boolean desdePut) 
+			throws BattleshipIOException {
+		
+		String comando = getComando(linea);
+		
+		if(desdePut) {
+			if(!comando.equals(put) && !comando.equals(endput) && !comando.equals(exit)) {
+				// Lanzo excepcion de comando
+				throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un argumento que no es exit, put o endput");
+			}
+		}
+		
+		else if(!desdePut){
+			if(!comando.equals(shoot) && !comando.equals(exit)) {
+				throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un argumento que no es shoot o exit");
+			}
+		}
+	}
+	
 	
 	public void putCrafts(Board b) throws BattleshipIOException, InvalidCoordinateException, OccupiedCoordinateException, 
 	NextToAnotherCraftException {
@@ -180,16 +223,21 @@ public class PlayerFile implements IPlayer{
 		Orientation or = null;
 		Coordinate nuevaCoord = null;
 		String craftName = "";
-		int c1 = 0, c2 = 0, c3 = 0;
 		
 		try {
 			String linea = br.readLine();
 			
 			while(linea != null && !linea.equals(exit) && !linea.equals(endput)) {
-				nuevaCoord = getPutCoordinate(linea, b, c1, c2, c3);
+				comprobarElementos(linea, true);
+				nuevaCoord = getCoordinate(linea, true);
 				craftName = getCraftName(linea);
 				or = getPutOrientation(linea);
 				nuevoCraft = getPutCraft(craftName, or);
+				
+				Set<Coordinate> posAbs = nuevoCraft.getAbsolutePositions(nuevaCoord);
+				for(Coordinate c: posAbs) {
+					System.out.println(c);
+				}
 				b.addCraft(nuevoCraft, nuevaCoord);
 				
 				nuevaCoord = null;
@@ -207,8 +255,32 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
-	public Coordinate nextShoot(Board b) {
-		Coordinate nuevo = null;
-		return nuevo;
+	public Coordinate nextShoot(Board b) throws BattleshipIOException, InvalidCoordinateException, CoordinateAlreadyHitException {
+		
+		if(b == null) {
+			throw new NullPointerException();
+		}
+		
+		Coordinate nuevaCoord;
+		Coordinate golpea = null;
+		
+		try {
+			String linea = br.readLine();
+			
+			while(linea != null && !linea.equals(exit)) {
+				comprobarElementos(linea, false);
+				nuevaCoord = getCoordinate(linea, false);
+				b.hit(nuevaCoord);
+				//golpea = nuevaCoord;
+				//nuevaCoord = null;
+				linea = br.readLine();
+			}
+						
+		}
+		catch(IOException e) {
+			throw new BattleshipIOException("Se produjo un error al leer una línea");
+		}
+		
+		return golpea;
 	}
 }
