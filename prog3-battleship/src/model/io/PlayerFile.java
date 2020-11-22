@@ -2,8 +2,6 @@ package model.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Set;
-
 import model.Board;
 import model.Coordinate;
 import model.CoordinateFactory;
@@ -33,12 +31,11 @@ public class PlayerFile implements IPlayer{
 	
 	
 	public PlayerFile(String name, BufferedReader reader) {
-		this.name = name;
 		
 		if(reader == null) {
 			throw new NullPointerException();
 		}
-		
+		this.name = name;
 		br = reader;
 	}
 	
@@ -87,7 +84,6 @@ public class PlayerFile implements IPlayer{
 		}
 		
 		return nueva;
-		
 	}
 	
 	
@@ -129,6 +125,7 @@ public class PlayerFile implements IPlayer{
 		
 		return nuevo;
 	}
+	
 	
 	private Coordinate getCoordinate(String linea, boolean desdePut) throws BattleshipIOException {
 		String[] tokens = linea.split("\\s+");
@@ -183,8 +180,8 @@ public class PlayerFile implements IPlayer{
 		
 		
 		return nueva;
-		
 	}
+	
 	
 	private String getComando(String linea) {
 		String[] tokens = linea.split("\\s+");
@@ -234,10 +231,6 @@ public class PlayerFile implements IPlayer{
 				or = getPutOrientation(linea);
 				nuevoCraft = getPutCraft(craftName, or);
 				
-				Set<Coordinate> posAbs = nuevoCraft.getAbsolutePositions(nuevaCoord);
-				for(Coordinate c: posAbs) {
-					System.out.println(c);
-				}
 				b.addCraft(nuevoCraft, nuevaCoord);
 				
 				nuevaCoord = null;

@@ -24,7 +24,7 @@ import model.ship.Destroyer;
 public abstract class Craft {
 	
 	/** The Constant BOUNDING_SQUARE_SIZE. */
-	private static final int BOUNDING_SQUARE_SIZE = 5;
+	public static final int BOUNDING_SQUARE_SIZE = 5;
 	
 	/** The Constant HIT_VALUE. */
 	private static final int HIT_VALUE = -1;
