@@ -10,7 +10,7 @@ import model.ship.Destroyer;
 
 public class CraftFactory {
 	
-	public static Craft CraftFactory(String type, Orientation o) {
+	public static Craft createCraft (String type, Orientation o) {
 		Craft newCraft = null;
 		
 		switch(type) {

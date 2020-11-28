@@ -24,6 +24,7 @@ public class PlayerFile implements IPlayer{
 	private BufferedReader br;
 	String name;
 	
+	private boolean leido = false;
 	private static final String endput = "endput";
 	private static final String exit = "exit";
 	private static final String shoot = "shoot";
@@ -127,12 +128,35 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	private boolean correctCoordinates(String[] linea, boolean desdePut) {
+		boolean toReturn = false;
+		
+		if(desdePut) {
+			if(linea.length < 5 | linea.length > 6) {
+				toReturn = true;
+			}
+		}
+		else {
+			if(linea.length < 3 | linea.length >4) {
+				toReturn = true;
+			}
+		}
+		
+		return toReturn;
+	}
+	
 	private Coordinate getCoordinate(String linea, boolean desdePut) throws BattleshipIOException {
 		String[] tokens = linea.split("\\s+");
+		
 		int c1 = 0, c2 = 0, c3 = 0;
 		Coordinate nueva;
 		
 		if(desdePut) {
+			
+			if(correctCoordinates(tokens, true)) {
+				throw new BattleshipIOException("Argumentos Incorrectos: Se han pasado un número erróneo de coordenadas");
+			}
+			
 			try {
 				c1 = Integer.parseInt(tokens[3]);
 				c2 = Integer.parseInt(tokens[4]);
@@ -156,6 +180,10 @@ public class PlayerFile implements IPlayer{
 		}
 		
 		else {
+			if(correctCoordinates(tokens, false)) {
+				throw new BattleshipIOException("Argumentos Incorrectos: Se han pasado un número erróneo de coordenadas");
+			}
+			
 			try {
 				c1 = Integer.parseInt(tokens[1]);
 				c2 = Integer.parseInt(tokens[2]);
@@ -177,7 +205,6 @@ public class PlayerFile implements IPlayer{
 				nueva = CoordinateFactory.createCoordinate(c1, c2);
 			}
 		}
-		
 		
 		return nueva;
 	}
@@ -225,6 +252,9 @@ public class PlayerFile implements IPlayer{
 			String linea = br.readLine();
 			
 			while(linea != null && !linea.equals(exit) && !linea.equals(endput)) {
+				if(linea.equals(endput)) {
+					leido = true;
+				}
 				comprobarElementos(linea, true);
 				nuevaCoord = getCoordinate(linea, true);
 				craftName = getCraftName(linea);
@@ -237,6 +267,7 @@ public class PlayerFile implements IPlayer{
 				craftName = "";
 				or = null;
 				nuevoCraft = null;
+				
 				
 				linea = br.readLine();
 			}

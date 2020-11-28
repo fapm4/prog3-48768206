@@ -1,9 +1,8 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.aircraft.Coordinate3D;
@@ -11,45 +10,37 @@ import model.ship.Coordinate2D;
 
 public class CoordinateFactoryPreTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
+	   
 	//TODO
-	/* Crea coordenadas correctas con el método createCoordinate y comprueba 
-	 * que se han creado bien
+	/* Crea una Coordinate2D con su constructor. Crea la misma Coordinate2D con el 
+	 * método createCoordinate. Comprueba que ambas Coordinate2D creadas son iguales.
+	 * Realiza lo mismo para Coordinate3D
 	 */
 	@Test
 	public void testCreateCoordinateOk() {
-		Coordinate2D prueba1 = new Coordinate2D(1, 2);
-		Coordinate pruebaFactory1 = CoordinateFactory.createCoordinate(1, 2);
+		Coordinate2D original = new Coordinate2D(1, 2);
+		Coordinate copia = CoordinateFactory.createCoordinate(1, 2);
 		
-		Coordinate2D prueba2 = new Coordinate2D(-1, 2);
-		Coordinate pruebaFactory2 = CoordinateFactory.createCoordinate(-1, 2);
+		assertEquals(original, copia);
 		
-		Coordinate3D prueba3 = new Coordinate3D(1, 2, 3);
-		Coordinate pruebaFactory3 = CoordinateFactory.createCoordinate(1, 2, 3);
+		Coordinate3D original3D = new Coordinate3D(1, 2, 3);
+		Coordinate copia3D = CoordinateFactory.createCoordinate(1, 2, 3);
 		
-		assertEquals(prueba1, pruebaFactory1);
-		assertEquals(prueba2, pruebaFactory2);
-		assertEquals(prueba3, pruebaFactory3);
+		assertEquals(original3D, copia3D);
+		
 	}
 	
-	//TODO
-	/* Comprueba que en los distintos casos de creación de coordenadas incorrectas
-	 * createCoordinateException lanza la excepción IllegalArgument exception
+	/* Comprueba que si a createCoordinate se le pasa una cantidad de argumentos enteros 
+	 * incorrecto, lanza la excepción IllegalArgumentException
 	 */
 	@Test
 	public void testCreateCoordinateException() {
 		try {
-		   CoordinateFactory.createCoordinate(-1);
-		   fail("Error: debió lanzarse la excepción IllegalArgumentException");
-		} catch (IllegalArgumentException e1) {
-			System.out.println(e1.getMessage());
+			Coordinate throwExcep1 = CoordinateFactory.createCoordinate(1);
+			Coordinate throwExcep2 = CoordinateFactory.createCoordinate(1, 2, 3, 4);
+		}
+		catch(IllegalArgumentException e) {
+			System.out.println("Se lanazó correctamente la excepción");
 		}
 	}
 
