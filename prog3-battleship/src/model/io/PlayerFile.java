@@ -24,7 +24,6 @@ public class PlayerFile implements IPlayer{
 	private BufferedReader br;
 	String name;
 	
-	private boolean leido = false;
 	private static final String endput = "endput";
 	private static final String exit = "exit";
 	private static final String shoot = "shoot";
@@ -137,7 +136,7 @@ public class PlayerFile implements IPlayer{
 			}
 		}
 		else {
-			if(linea.length < 3 | linea.length >4) {
+			if(linea.length < 3 | linea.length > 4) {
 				toReturn = true;
 			}
 		}
@@ -145,18 +144,20 @@ public class PlayerFile implements IPlayer{
 		return toReturn;
 	}
 	
-	private Coordinate getCoordinate(String linea, boolean desdePut) throws BattleshipIOException {
-		String[] tokens = linea.split("\\s+");
-		
+	
+	private Coordinate constructCoordinate(String[] tokens, boolean desdePut) throws BattleshipIOException {
+		Coordinate nueva = null;
 		int c1 = 0, c2 = 0, c3 = 0;
-		Coordinate nueva;
 		
 		if(desdePut) {
 			
+			// Comprueba la longitud de los argumentos
 			if(correctCoordinates(tokens, true)) {
 				throw new BattleshipIOException("Argumentos Incorrectos: Se han pasado un número erróneo de coordenadas");
 			}
 			
+			
+			// Creo las dos primeras coordenadas
 			try {
 				c1 = Integer.parseInt(tokens[3]);
 				c2 = Integer.parseInt(tokens[4]);
@@ -165,8 +166,11 @@ public class PlayerFile implements IPlayer{
 				throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
 			}
 			
+			// Si el tamaño = 6, significa que hay una tercera coordenada
 			if(tokens.length == 6) {
 				try {
+					
+					// Creo la coordenada 3D
 					c3 = Integer.parseInt(tokens[5]);
 					nueva = CoordinateFactory.createCoordinate(c1, c2, c3);
 				}
@@ -175,16 +179,22 @@ public class PlayerFile implements IPlayer{
 				}
 			}
 			else {
+				
+				// Sino, 2D
 				nueva = CoordinateFactory.createCoordinate(c1, c2);
 			}
 		}
 		
 		else {
+			
+			// Comprueba la longitud de los argumentos
 			if(correctCoordinates(tokens, false)) {
 				throw new BattleshipIOException("Argumentos Incorrectos: Se han pasado un número erróneo de coordenadas");
 			}
 			
 			try {
+				
+				// Creo las dos primeras coordenadas
 				c1 = Integer.parseInt(tokens[1]);
 				c2 = Integer.parseInt(tokens[2]);
 			}
@@ -192,8 +202,11 @@ public class PlayerFile implements IPlayer{
 				throw new BattleshipIOException("Argumentos Incorrectos: Se ha pasado un carácter que no es un número");
 			}
 			
+			// Si el tamaño = 4, significa que hay una tercera coordenada
 			if(tokens.length == 4) {
 				try {
+					
+					// Creo la coordenada 3D
 					c3 = Integer.parseInt(tokens[3]);
 					nueva = CoordinateFactory.createCoordinate(c1, c2, c3);
 				}
@@ -202,9 +215,21 @@ public class PlayerFile implements IPlayer{
 				}
 			}
 			else {
+				
+				// Sino, 2D
 				nueva = CoordinateFactory.createCoordinate(c1, c2);
 			}
 		}
+		
+		return nueva;
+	}
+	
+	
+	private Coordinate getCoordinate(String linea, boolean desdePut) throws BattleshipIOException {
+		String[] tokens = linea.split("\\s+");
+		Coordinate nueva;
+		
+		nueva = constructCoordinate(tokens, desdePut);
 		
 		return nueva;
 	}
@@ -216,9 +241,7 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
-	private void comprobarElementos(String linea, boolean desdePut) 
-			throws BattleshipIOException {
-		
+	private void comprobarElementos(String linea, boolean desdePut) throws BattleshipIOException {
 		String comando = getComando(linea);
 		
 		if(desdePut) {
@@ -252,9 +275,6 @@ public class PlayerFile implements IPlayer{
 			String linea = br.readLine();
 			
 			while(linea != null && !linea.equals(exit) && !linea.equals(endput)) {
-				if(linea.equals(endput)) {
-					leido = true;
-				}
 				comprobarElementos(linea, true);
 				nuevaCoord = getCoordinate(linea, true);
 				craftName = getCraftName(linea);
@@ -291,13 +311,12 @@ public class PlayerFile implements IPlayer{
 		try {
 			String linea = br.readLine();
 			
-			while(linea != null && !linea.equals(exit)) {
+			if(linea != null && !linea.equals(exit)) {
 				comprobarElementos(linea, false);
 				nuevaCoord = getCoordinate(linea, false);
 				b.hit(nuevaCoord);
-				//golpea = nuevaCoord;
-				//nuevaCoord = null;
-				linea = br.readLine();
+				golpea = nuevaCoord;
+				nuevaCoord = null;
 			}
 						
 		}

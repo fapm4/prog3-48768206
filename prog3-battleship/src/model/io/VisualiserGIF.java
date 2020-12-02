@@ -40,29 +40,26 @@ public class VisualiserGIF implements IVisualiser{
 			if(c == Board.HIT_SYMBOL) {
 				frame.printSquare(col, fila, Color.RED);
 			}
-					
 		}
 		catch(BattleshipIOException e) {
 			throw new RuntimeException();
 		}
-		
 	}	
 	
 	
 	private void printBoard(Board b, FrameGIF frame, boolean bType) {
 		String cad = b.show(false);
-		int tamCadena = cad.length();
-		int tamBoard = b.getSize();
+		int tamBoard = b.show(false).length();
 		
 		if(!bType) {
-			for(int i = 0;i < tamCadena && i != tamBoard; i++) {
+			for(int i = 0;i < tamBoard; i++) {
 				for(int j = 0;j < tamBoard; j++) {
-					addFrameAux(j, i, cad.charAt(i), frame);
+					addFrameAux(i, j, cad.charAt(j), frame);
 				}
 			}
 		}
 		else {
-			for(int i = 0;i < tamCadena &&  i != tamBoard; i++) {
+			for(int i = 0;i < tamBoard; i++) {
 				for(int j = tamBoard + 1;j <= tamBoard * 2;j++) {
 					addFrameAux(j, i, cad.charAt(i), frame);
 				}
@@ -73,7 +70,7 @@ public class VisualiserGIF implements IVisualiser{
 	
 	private void añadeFranjas(FrameGIF frame) {
 		Board b = game.getBoard1();
-		int tam = b.getSize();
+		int tam = b.show(false).length();
 		
 		
 		for(int i = 0;i < tam;i++) {
@@ -90,9 +87,10 @@ public class VisualiserGIF implements IVisualiser{
 	public void show() {
 		Board b1 = game.getBoard1();
 		Board b2 = game.getBoard2();
-		FrameGIF frame = new FrameGIF(b1.getSize(), b1.getSize()*2+1);
+		int tamFrame = b1.show(false).length();
+		FrameGIF frame = new FrameGIF(tamFrame, tamFrame*2+1);
 		
-		if(b1 instanceof Board2D && b2 instanceof Board2D) {
+		if(b1 instanceof Board2D) {
 			printBoard(b1, frame, false);
 			añadeFranjas(frame);
 			printBoard(b2, frame, true);
@@ -104,7 +102,6 @@ public class VisualiserGIF implements IVisualiser{
 				throw new RuntimeException();
 			}
 		}
-		
 	}
 	
 
@@ -115,5 +112,4 @@ public class VisualiserGIF implements IVisualiser{
 			throw new RuntimeException();
 		}
 	}
-
 }
