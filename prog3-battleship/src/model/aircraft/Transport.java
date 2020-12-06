@@ -2,6 +2,7 @@ package model.aircraft;
 
 import model.Orientation;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Transport.
@@ -17,7 +18,6 @@ public class Transport extends Aircraft{
 	public Transport(Orientation o) {
 		super(o, '⇋', "Transport");
 		
-		/** The shape. */
 		super.shape = new int[][] {
 	       {0, 0, 1, 0, 0,	//2
 	    	0, 0, 1, 0, 0,	//7

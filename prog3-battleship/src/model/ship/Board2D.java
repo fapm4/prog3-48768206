@@ -45,7 +45,7 @@ public class Board2D extends Board {
 		return dev;
 	}
 	
-
+	
 	/**
 	 * Show.
 	 *

@@ -6,6 +6,7 @@ import java.util.Set;
 import model.Coordinate;
 import model.CoordinateFactory;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Coordinate3D.
@@ -27,6 +28,7 @@ public class Coordinate3D extends Coordinate{
 		set(2, z);
 	}
 	
+	
 	/**
 	 * Instantiates a new coordinate 3 D.
 	 *
@@ -38,7 +40,7 @@ public class Coordinate3D extends Coordinate{
 			set(i, coordinate.get(i));
 		}
 	}
-	
+
 
 	/**
 	 * To string.

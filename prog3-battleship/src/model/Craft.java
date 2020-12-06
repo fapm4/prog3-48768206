@@ -16,6 +16,7 @@ import model.ship.Coordinate2D;
 import model.ship.Cruiser;
 import model.ship.Destroyer;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Craft.
@@ -47,6 +48,7 @@ public abstract class Craft {
 	/** The shape. */
 	protected int shape[][];
 		
+
 	/**
 	 * Instantiates a new craft.
 	 *
@@ -85,10 +87,15 @@ public abstract class Craft {
 	 * @param position the new position
 	 */
 	public void setPosition(Coordinate position){
+		
+		if(position == null) {
+			throw new NullPointerException();
+		}
+		
 		this.position = position.copy();
 	}
 
-	
+
 	/**
 	 * Gets the name.
 	 *
@@ -98,7 +105,7 @@ public abstract class Craft {
 		return name;
 	}
 
-	
+
 	/**
 	 * Gets the orientation.
 	 *
@@ -128,7 +135,7 @@ public abstract class Craft {
 		return shape;
 	}
 
-
+	
 	/**
 	 * Gets the shape index.
 	 *
@@ -1063,7 +1070,7 @@ public abstract class Craft {
 		return dev;
 	}
 
-
+	
 	/**
 	 * Checks if is hit.
 	 *
@@ -1141,6 +1148,7 @@ public abstract class Craft {
 		return dev;
 	
 	}
+	
 	
 	/**
 	 * To string destroyer.
@@ -1284,7 +1292,7 @@ public abstract class Craft {
 		return toReturn;
 	}
 	
-	
+
 	/**
 	 * To string battleship.
 	 *
@@ -1328,6 +1336,13 @@ public abstract class Craft {
 	}
 
 	
+	/**
+	 * Hit symbol.
+	 *
+	 * @param or the or
+	 * @param pos the pos
+	 * @return the char
+	 */
 	private char hitSymbol(Orientation or, int pos) {
 		char toReturn = 0;
 		boolean dev = false;
@@ -1364,6 +1379,7 @@ public abstract class Craft {
 		return toReturn;
 	}
 	
+
 	/**
 	 * To string transport.
 	 *
@@ -1562,6 +1578,7 @@ public abstract class Craft {
 		
 		return toReturn;
 	}
+	
 	
 	/**
 	 * To string bomber.

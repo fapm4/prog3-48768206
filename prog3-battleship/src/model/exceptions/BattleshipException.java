@@ -1,6 +1,7 @@
 package model.exceptions;
 import model.Coordinate;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class BattleshipException.
@@ -12,9 +13,13 @@ public abstract class BattleshipException extends Exception{
 	private static final long serialVersionUID = 1L;
 	
 
+	/**
+	 * Instantiates a new battleship exception.
+	 */
 	public BattleshipException() {
 		super();
 	}
+	
 	
 	/**
 	 * Gets the message.
@@ -24,5 +29,4 @@ public abstract class BattleshipException extends Exception{
 	public String getMessage() {
 		return super.getMessage();
 	}
-	
 }

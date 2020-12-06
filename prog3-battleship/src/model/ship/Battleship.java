@@ -2,13 +2,14 @@ package model.ship;
 
 import model.Orientation;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Battleship.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public class Battleship extends Ship{		
-		
+	
 	/**
 	 * Instantiates a new battleship.
 	 *
@@ -17,7 +18,6 @@ public class Battleship extends Ship{
 	public Battleship(Orientation o) {
 		super(o, 'O', "Battleship");
 		
-		/** The shape. */
 		super.shape = new int[][] {
 	       {0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	

@@ -2,6 +2,7 @@ package model.exceptions;
 
 import model.Coordinate;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class CoordinateAlreadyHitException.
@@ -12,6 +13,7 @@ public class CoordinateAlreadyHitException extends CoordinateException{
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	
 	/**
 	 * Instantiates a new coordinate already hit exception.
 	 *
@@ -20,6 +22,7 @@ public class CoordinateAlreadyHitException extends CoordinateException{
 	public CoordinateAlreadyHitException(Coordinate c) {
 		super(c);
 	}
+	
 	
 	/**
 	 * Gets the message.

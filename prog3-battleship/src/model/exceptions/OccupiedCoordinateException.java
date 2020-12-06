@@ -2,6 +2,7 @@ package model.exceptions;
 
 import model.Coordinate;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class OccupiedCoordinateException.
@@ -20,6 +21,7 @@ public class OccupiedCoordinateException extends CoordinateException{
 	public OccupiedCoordinateException(Coordinate c) {
 		super(c);
 	}
+	
 	
 	/**
 	 * Gets the message.

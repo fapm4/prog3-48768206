@@ -6,8 +6,6 @@ import java.util.Set;
 import model.aircraft.Coordinate3D;
 import model.ship.Coordinate2D;
 
-
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Coordinate.
@@ -18,7 +16,7 @@ public abstract class Coordinate{
 	/** The components. */
 	protected int [] components;
 	
-	
+
 	/**
 	 * Instantiates a new coordinate.
 	 *
@@ -27,7 +25,7 @@ public abstract class Coordinate{
 	protected Coordinate(int dim){
 		 components = new int[dim];
 	}
-	
+
 
 	/**
 	 * Instantiates a new coordinate.
@@ -50,7 +48,7 @@ public abstract class Coordinate{
 			}
 		}
 	}
-	
+
 
 	/**
 	 * Sets the.
@@ -175,7 +173,7 @@ public abstract class Coordinate{
 		return toReturn;
 	}
 
-	
+
 	/**
 	 * Subtract.
 	 *
@@ -278,11 +276,11 @@ public abstract class Coordinate{
 	 */
 	public abstract Coordinate copy();
 	
+
 	/**
 	 * Adjacent coordinates.
 	 *
 	 * @return the sets the
 	 */
 	public abstract Set<Coordinate> adjacentCoordinates();
-	
 }

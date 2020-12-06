@@ -83,7 +83,7 @@ public abstract class Board {
 		return size;
 	}
 
-
+	
 	/**
 	 * Adds the craft.
 	 *
@@ -143,6 +143,7 @@ public abstract class Board {
 		return dev;
 	}
 
+	
 	/**
 	 * Gets the craft.
 	 *
@@ -159,7 +160,7 @@ public abstract class Board {
 		}
 	}
 
-
+	
 	/**
 	 * Checks if is seen.
 	 *
@@ -223,7 +224,7 @@ public abstract class Board {
 		return estado;
 	}
 
-
+	
 	/**
 	 * Are all crafts destroyed.
 	 *
@@ -239,7 +240,7 @@ public abstract class Board {
 		return dev;
 	}
 
-
+	
 	/**
 	 * Gets the neighborhood.
 	 *
@@ -311,7 +312,7 @@ public abstract class Board {
 		return vecindarioToReturn;
 	}
 
-
+	
 	/**
 	 * Gets the neighborhood.
 	 *
@@ -336,6 +337,7 @@ public abstract class Board {
 	 */
 	public abstract boolean checkCoordinate(Coordinate c);
 	
+	
 	/**
 	 * Show.
 	 *
@@ -354,5 +356,4 @@ public abstract class Board {
 		String dev = "Board " + this.size + "; " + "crafts: " + numCrafts + "; " + "destroyed: " + destroyedCrafts;
 		return dev;
 	}
-
 }

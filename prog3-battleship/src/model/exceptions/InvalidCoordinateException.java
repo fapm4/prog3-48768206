@@ -2,6 +2,7 @@ package model.exceptions;
 
 import model.Coordinate;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class InvalidCoordinateException.
@@ -12,6 +13,7 @@ public class InvalidCoordinateException extends CoordinateException{
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	
 	/**
 	 * Instantiates a new invalid coordinate exception.
 	 *
@@ -20,6 +22,7 @@ public class InvalidCoordinateException extends CoordinateException{
 	public InvalidCoordinateException(Coordinate c) {
 		super(c);
 	}
+	
 	
 	/**
 	 * Gets the message.

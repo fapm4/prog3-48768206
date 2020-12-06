@@ -6,6 +6,7 @@ import java.util.Set;
 import model.Coordinate;
 import model.CoordinateFactory;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Coordinate2D.
@@ -24,6 +25,7 @@ public class Coordinate2D extends Coordinate{
 		set(0, x);
 		set(1, y);
 	}
+	
 	
 	/**
 	 * Instantiates a new coordinate 2 D.

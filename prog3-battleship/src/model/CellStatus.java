@@ -6,13 +6,10 @@ package model;
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public enum CellStatus {
-	
 	/** The water. */
 	WATER, 
-	
 	/** The hit. */
 	HIT, 
- 
- /** The destroyed. */
- DESTROYED;
+	/** The destroyed. */
+	DESTROYED;
 }

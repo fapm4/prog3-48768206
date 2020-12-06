@@ -5,13 +5,13 @@ import model.Coordinate;
 import model.Craft;
 import model.ship.Coordinate2D;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Board3D.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public class Board3D extends Board{
+	
 	
 	/**
 	 * Instantiates a new board 3 D.
@@ -22,7 +22,7 @@ public class Board3D extends Board{
 		super(size);
 	}
 	
-	
+
 	/**
 	 * Check coordinate.
 	 *

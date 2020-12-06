@@ -2,6 +2,7 @@ package model.exceptions;
 
 import model.Coordinate;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class NextToAnotherCraftException.
@@ -12,6 +13,7 @@ public class NextToAnotherCraftException extends CoordinateException{
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	
 	/**
 	 * Instantiates a new next to another craft exception.
 	 *
@@ -20,6 +22,7 @@ public class NextToAnotherCraftException extends CoordinateException{
 	public NextToAnotherCraftException(Coordinate c) {
 		super(c);
 	}
+	
 	
 	/**
 	 * Gets the message.

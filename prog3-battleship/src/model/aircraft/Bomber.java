@@ -2,15 +2,14 @@ package model.aircraft;
 
 import model.Orientation;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Bomber.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public class Bomber extends Aircraft{
-
-		
-		
+	
 	/**
 	 * Instantiates a new bomber.
 	 *
@@ -19,7 +18,6 @@ public class Bomber extends Aircraft{
 	public Bomber(Orientation o) {
 		super(o, '⇶', "Bomber");
 		
-		/** The shape. */
 		super.shape = new int[][] {
 	       {0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	
@@ -46,7 +44,7 @@ public class Bomber extends Aircraft{
 			0, 0, 1, 1, 0}};
 	}
 		
-		
+	
 	/**
 	 * Gets the shape.
 	 *

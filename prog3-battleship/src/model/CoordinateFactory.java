@@ -3,6 +3,7 @@ package model;
 import model.aircraft.Coordinate3D;
 import model.ship.Coordinate2D;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * A factory for creating Coordinate objects.

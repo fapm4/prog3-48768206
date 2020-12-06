@@ -2,6 +2,7 @@ package model.ship;
 
 import model.Orientation;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Carrier.
@@ -17,7 +18,6 @@ public class Carrier extends Ship{
 	public Carrier(Orientation o) {
 		super(o, '®', "Carrier");
 		
-		/** The shape. */
 		 super.shape =  new int[][] {
 	       {0, 0, 1, 0, 0,
 	    	0, 0, 1, 0, 0,	
@@ -44,7 +44,7 @@ public class Carrier extends Ship{
 			0, 0, 0, 0, 0}};
 	}
 	
-	
+
 	/**
 	 * Gets the shape.
 	 *

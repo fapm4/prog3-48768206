@@ -8,8 +8,21 @@ import model.ship.Carrier;
 import model.ship.Cruiser;
 import model.ship.Destroyer;
 
+
+// TODO: Auto-generated Javadoc
+/**
+ * A factory for creating Craft objects.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class CraftFactory {
-	
+
+	/**
+	 * Creates a new Craft object.
+	 *
+	 * @param type the type
+	 * @param o the o
+	 * @return the craft
+	 */
 	public static Craft createCraft (String type, Orientation o) {
 		Craft newCraft = null;
 		

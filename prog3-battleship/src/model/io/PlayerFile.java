@@ -20,16 +20,41 @@ import model.ship.Carrier;
 import model.ship.Cruiser;
 import model.ship.Destroyer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PlayerFile.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class PlayerFile implements IPlayer{
+	
+	/** The br. */
 	private BufferedReader br;
+	
+	/** The name. */
 	String name;
 	
+	/** The Constant endput. */
 	private static final String endput = "endput";
+	
+	/** The Constant exit. */
 	private static final String exit = "exit";
+	
+	/** The Constant shoot. */
 	private static final String shoot = "shoot";
+	
+	/** The Constant put. */
 	private static final String put = "put";
 	
+	/** The leido. */
+	private boolean leido = false;
 	
+	
+	/**
+	 * Instantiates a new player file.
+	 *
+	 * @param name the name
+	 * @param reader the reader
+	 */
 	public PlayerFile(String name, BufferedReader reader) {
 		
 		if(reader == null) {
@@ -40,17 +65,35 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return name + " (PlayerFile)";
 	}
 	
 	
+	/**
+	 * Gets the craft name.
+	 *
+	 * @param linea the linea
+	 * @return the craft name
+	 */
 	private String getCraftName(String linea) {
 		String[] tokens = linea.split("\\s+");
 		return tokens[1];
 	}
 	
 	
+	/**
+	 * Gets the put orientation.
+	 *
+	 * @param linea the linea
+	 * @return the put orientation
+	 * @throws BattleshipIOException the battleship IO exception
+	 */
 	private Orientation getPutOrientation(String linea) throws BattleshipIOException {
 		String[] tokens = linea.split("\\s+");
 		
@@ -87,6 +130,13 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Gets the put craft.
+	 *
+	 * @param craftName the craft name
+	 * @param or the or
+	 * @return the put craft
+	 */
 	private Craft getPutCraft(String craftName, Orientation or) {
 		Craft nuevo;
 		
@@ -127,6 +177,13 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Correct coordinates.
+	 *
+	 * @param linea the linea
+	 * @param desdePut the desde put
+	 * @return true, if successful
+	 */
 	private boolean correctCoordinates(String[] linea, boolean desdePut) {
 		boolean toReturn = false;
 		
@@ -145,6 +202,14 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Construct coordinate.
+	 *
+	 * @param tokens the tokens
+	 * @param desdePut the desde put
+	 * @return the coordinate
+	 * @throws BattleshipIOException the battleship IO exception
+	 */
 	private Coordinate constructCoordinate(String[] tokens, boolean desdePut) throws BattleshipIOException {
 		Coordinate nueva = null;
 		int c1 = 0, c2 = 0, c3 = 0;
@@ -225,6 +290,14 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Gets the coordinate.
+	 *
+	 * @param linea the linea
+	 * @param desdePut the desde put
+	 * @return the coordinate
+	 * @throws BattleshipIOException the battleship IO exception
+	 */
 	private Coordinate getCoordinate(String linea, boolean desdePut) throws BattleshipIOException {
 		String[] tokens = linea.split("\\s+");
 		Coordinate nueva;
@@ -235,12 +308,25 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Gets the comando.
+	 *
+	 * @param linea the linea
+	 * @return the comando
+	 */
 	private String getComando(String linea) {
 		String[] tokens = linea.split("\\s+");
 		return tokens[0];
 	}
 	
 	
+	/**
+	 * Comprobar elementos.
+	 *
+	 * @param linea the linea
+	 * @param desdePut the desde put
+	 * @throws BattleshipIOException the battleship IO exception
+	 */
 	private void comprobarElementos(String linea, boolean desdePut) throws BattleshipIOException {
 		String comando = getComando(linea);
 		
@@ -259,6 +345,15 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Put crafts.
+	 *
+	 * @param b the b
+	 * @throws BattleshipIOException the battleship IO exception
+	 * @throws InvalidCoordinateException the invalid coordinate exception
+	 * @throws OccupiedCoordinateException the occupied coordinate exception
+	 * @throws NextToAnotherCraftException the next to another craft exception
+	 */
 	public void putCrafts(Board b) throws BattleshipIOException, InvalidCoordinateException, OccupiedCoordinateException, 
 	NextToAnotherCraftException {
 		
@@ -288,7 +383,6 @@ public class PlayerFile implements IPlayer{
 				or = null;
 				nuevoCraft = null;
 				
-				
 				linea = br.readLine();
 			}
 		}
@@ -299,6 +393,15 @@ public class PlayerFile implements IPlayer{
 	}
 	
 	
+	/**
+	 * Next shoot.
+	 *
+	 * @param b the b
+	 * @return the coordinate
+	 * @throws BattleshipIOException the battleship IO exception
+	 * @throws InvalidCoordinateException the invalid coordinate exception
+	 * @throws CoordinateAlreadyHitException the coordinate already hit exception
+	 */
 	public Coordinate nextShoot(Board b) throws BattleshipIOException, InvalidCoordinateException, CoordinateAlreadyHitException {
 		
 		if(b == null) {
@@ -318,10 +421,17 @@ public class PlayerFile implements IPlayer{
 				golpea = nuevaCoord;
 				nuevaCoord = null;
 			}
+			else {
+				leido = true;
+			}
 						
 		}
 		catch(IOException e) {
 			throw new BattleshipIOException("Se produjo un error al leer una línea");
+		}
+	
+		if(leido) {
+			golpea = null;
 		}
 		
 		return golpea;

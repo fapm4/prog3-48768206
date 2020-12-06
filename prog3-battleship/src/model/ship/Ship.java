@@ -3,6 +3,7 @@ package model.ship;
 import model.Craft;
 import model.Orientation;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Ship.

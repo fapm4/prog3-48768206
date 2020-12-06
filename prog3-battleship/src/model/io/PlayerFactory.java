@@ -7,8 +7,19 @@ import java.io.IOException;
 
 import model.exceptions.io.BattleshipIOException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * A factory for creating Player objects.
+ * @author Francisco Alejandro Pérez Meneses - 48768206H
+ */
 public class PlayerFactory {
 	
+	/**
+	 * Busca caracteres.
+	 *
+	 * @param s the s
+	 * @return true, if successful
+	 */
 	private static boolean buscaCaracteres(String s) {
 		boolean found = false;
 		
@@ -21,6 +32,12 @@ public class PlayerFactory {
 	}
 	
 	
+	/**
+	 * Busca long.
+	 *
+	 * @param s the s
+	 * @return true, if successful
+	 */
 	private static boolean buscaLong(String s) {
 		boolean found;
 			try {
@@ -34,6 +51,14 @@ public class PlayerFactory {
 	}
 	
 	
+	/**
+	 * Creates a new Player object.
+	 *
+	 * @param name the name
+	 * @param s the s
+	 * @return the i player
+	 * @throws BattleshipIOException the battleship IO exception
+	 */
 	public static IPlayer createPlayer(String name, String s) throws BattleshipIOException {
 		boolean charactersFound = buscaCaracteres(s);
 		boolean longFound = buscaLong(s);

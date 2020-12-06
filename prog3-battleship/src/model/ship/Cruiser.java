@@ -9,6 +9,7 @@ import model.Orientation;
  */
 public class Cruiser extends Ship{		
 		
+	
 	/**
 	 * Instantiates a new cruiser.
 	 *
@@ -17,7 +18,6 @@ public class Cruiser extends Ship{
 	public Cruiser(Orientation o) {
 		super(o, 'Ø', "Cruiser");
 		
-		/** The shape. */
 		super.shape = new int[][] {
 	       {0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	

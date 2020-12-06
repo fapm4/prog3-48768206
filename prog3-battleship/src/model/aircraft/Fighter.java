@@ -2,15 +2,14 @@ package model.aircraft;
 
 import model.Orientation;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Fighter.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
 public class Fighter extends Aircraft{
-
-		
-		
+	
 	/**
 	 * Instantiates a new fighter.
 	 *
@@ -19,7 +18,6 @@ public class Fighter extends Aircraft{
 	public Fighter(Orientation o) {
 		super(o, '⇄', "Fighter");
 		
-		/** The shape. */
 		super.shape = new int[][] {
 	       {0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	
