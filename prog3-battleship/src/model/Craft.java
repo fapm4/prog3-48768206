@@ -95,7 +95,19 @@ public abstract class Craft {
 		this.position = position.copy();
 	}
 
-
+	
+	private void setOrientation(Orientation or) {
+		
+		if(or == null) {
+			if(position == null) {
+				throw new NullPointerException();
+			}
+		}
+		
+		this.orientation = or;
+	}
+	
+	
 	/**
 	 * Gets the name.
 	 *
@@ -1743,4 +1755,7 @@ public abstract class Craft {
 		sb.append(" -----");
 		return sb.toString();
 	}
+	
+	
+	abstract public int getValue();
 }

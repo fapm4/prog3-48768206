@@ -226,7 +226,7 @@ public class VisualiserGIF implements IVisualiser{
 	 */
 	public void close() {
 		try {
-			agif.saveFile(new File("/home/alu/git/prog3-48768206/prog3-battleship/files/output.gif"));
+			agif.saveFile(new File("files/output.gif"));
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

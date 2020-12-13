@@ -1,11 +1,14 @@
 package model.io;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 import model.Board;
+import model.CellStatus;
 import model.Coordinate;
 import model.CoordinateFactory;
 import model.Craft;
+import model.CraftFactory;
 import model.Orientation;
 import model.aircraft.Board3D;
 import model.aircraft.Bomber;
@@ -34,6 +37,7 @@ public class PlayerRandom implements IPlayer{
 	/** The name. */
 	private String name;
 	
+	private CellStatus lastShotStatus;
 	
 	/**
 	 * Instantiates a new player random.
@@ -96,43 +100,11 @@ public class PlayerRandom implements IPlayer{
 	 * @param or the or
 	 * @param is3D the is 3 D
 	 * @return the craft
+	 * @throws Exception 
 	 */
 	private Craft generaCraft(String craft, Orientation or, boolean is3D) {
 		Craft nuevo = null;
-		
-		switch(craft) {
-		case "Battleship":
-			nuevo = new Battleship(or);
-			break;
-			
-		case "Carrier":
-			nuevo = new Carrier(or);
-			break;
-			
-		case "Cruiser":
-			nuevo = new Cruiser(or);
-			break;
-			
-		case "Destroyer":
-			nuevo = new Destroyer(or);
-			break;
-		}
-		
-		if(is3D) {
-			switch(craft) {
-			case "Bomber":
-				nuevo = new Bomber(or);
-				break;
-				
-			case "Fighter":
-				nuevo = new Fighter(or);
-				break;
-				
-			case "Transport":
-				nuevo = new Transport(or);
-				break;
-			}
-		}
+		nuevo = CraftFactory.createCraft(craft, or);
 		
 		return nuevo;
 	}
@@ -178,35 +150,36 @@ public class PlayerRandom implements IPlayer{
 	 *
 	 * @param b the b
 	 */
-	public void putCrafts(Board b) {	
+	public void putCrafts(Board b) {
+		
 		// Añado Battleship
-		auxPutCrafts(b, "Battleship", false);
+		auxPutCrafts(b, "ship.Battleship", false);
 		// ----------------
 		
 		// Añado Carrier
-		auxPutCrafts(b, "Carrier", false);
+		auxPutCrafts(b, "ship.Carrier", false);
 		// ----------------
 		
 		// Añado Cruiser
-		auxPutCrafts(b, "Cruiser", false);
+		auxPutCrafts(b, "ship.Cruiser", false);
 		// ----------------
 		
 		// Añado Destroyer
-		auxPutCrafts(b, "Destroyer", false);
+		auxPutCrafts(b, "ship.Destroyer", false);
 		// ----------------
 		
 		
 		if(b instanceof Board3D) {
 			// Añado Bomber
-			auxPutCrafts(b, "Bomber", true);
+			auxPutCrafts(b, "aircraft.Bomber", true);
 			// ----------------
 			
 			// Añado Fighter
-			auxPutCrafts(b, "Fighter", true);
+			auxPutCrafts(b, "aircraft.Fighter", true);
 			// ----------------
 			
 			// Añado Transport
-			auxPutCrafts(b, "Transport", true);
+			auxPutCrafts(b, "aircraft.Transport", true);
 			// ----------------
 		}
 	}
@@ -222,7 +195,7 @@ public class PlayerRandom implements IPlayer{
 	 */
 	public Coordinate nextShoot(Board b) throws InvalidCoordinateException, CoordinateAlreadyHitException {
 		Coordinate nueva = getRandomCoordinate(b, 0);
-		b.hit(nueva);
+		lastShotStatus = b.hit(nueva);
 		return nueva;
 	}
 	
@@ -261,5 +234,11 @@ public class PlayerRandom implements IPlayer{
 			nueva = CoordinateFactory.createCoordinate(x, y, z);
 		}
 		return nueva;
+	}
+
+
+	@Override
+	public CellStatus getLastShotStatus() {
+		return lastShotStatus;
 	}
 }

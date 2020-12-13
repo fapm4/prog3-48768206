@@ -7,6 +7,8 @@ import model.exceptions.OccupiedCoordinateException;
 import model.exceptions.io.BattleshipIOException;
 import model.io.IPlayer;
 import model.io.IVisualiser;
+import model.score.CraftScore;
+import model.score.HitScore;
 
 
 // TODO: Auto-generated Javadoc
@@ -31,6 +33,12 @@ public class Game {
 	/** The board 2. */
 	private Board board1, board2;
 	
+	private HitScore hitScore1, hitScore2;
+	
+	private CraftScore craftScore1, craftScore2;
+	
+	
+	
 
 	/**
 	 * Instantiates a new game.
@@ -50,6 +58,12 @@ public class Game {
 		board2 = b2;
 		player1 = p1;
 		player2 = p2;
+		hitScore1 = new HitScore(p1);
+		hitScore2 = new HitScore(p2);
+		craftScore1 = new CraftScore(p1);
+		craftScore2 = new CraftScore(p2);
+		
+		
 	}
 	
 	
@@ -123,7 +137,7 @@ public class Game {
 			player1.putCrafts(board1);
 			player2.putCrafts(board2);
 			shootCounter = 0;
-			nextToShoot = 1;
+			nextToShoot = 0;
 			gameStarted = true;
 		} catch (InvalidCoordinateException | OccupiedCoordinateException | NextToAnotherCraftException
 				| BattleshipIOException e1) {
@@ -160,13 +174,13 @@ public class Game {
 		boolean dev = false;
 		
 		try {
-			if(shoot == 1) {
+			if(shoot == 0) {
 				player1.nextShoot(board2);
-				nextToShoot = 2;
-			}
-			else if(shoot == 2) {
-				player2.nextShoot(board1);
 				nextToShoot = 1;
+			}
+			else if(shoot == 1) {
+				player2.nextShoot(board1);
+				nextToShoot = 0;
 			}
 			
 			dev = true;
@@ -212,18 +226,18 @@ public class Game {
 	 * @param visualiser the visualiser
 	 */
 	public void playGame(IVisualiser visualiser) {
-		boolean stop = false;
-		boolean play = true;
+		boolean stop = false, play = true;
+		
 		start();
 		visualiser.show();
+		
 		while(play == true && stop == false) {
 			play = playNext();
+			stop = gameEnded();
 			
 			if(play) {
 				visualiser.show();
 			}
-			
-			stop = gameEnded();
 		}
 		
 		visualiser.close();
@@ -271,5 +285,36 @@ public class Game {
 	
 		
 		return sb.toString();
+	}
+	
+	
+	public String getScoreInfo() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Player 1\n");
+		sb.append("HitScore: " + hitScore1.toString() + "\n");
+		sb.append("CraftScore: " + craftScore1.toString() + "\n");
+		sb.append("------------------\n");
+		sb.append("Player 2\n");
+		sb.append("HitScore: " + hitScore2.toString() + "\n");
+		sb.append("CraftScore: " + craftScore2.toString() + "\n");
+		
+		return sb.toString();
+	}
+	
+	public HitScore getHitScorePlayer1() {
+		return hitScore1;
+	}
+	
+	public HitScore getHitScorePlayer2() {
+		return hitScore2;
+	}
+	
+	public CraftScore getCraftScorePlayer1() {
+		return craftScore1;
+	}
+	
+	public CraftScore getCraftScorePlayer2() {
+		return craftScore2;
 	}
 }

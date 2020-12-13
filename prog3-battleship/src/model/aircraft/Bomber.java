@@ -53,4 +53,10 @@ public class Bomber extends Aircraft{
 	public int[][] getShape(){
 		return this.shape;
 	}
+
+
+	@Override
+	public int getValue() {
+		return 15;
+	}
 }

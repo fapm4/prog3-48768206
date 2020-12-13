@@ -1,5 +1,8 @@
 package model;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import model.aircraft.Bomber;
 import model.aircraft.Fighter;
 import model.aircraft.Transport;
@@ -23,42 +26,66 @@ public class CraftFactory {
 	 * @param o the o
 	 * @return the craft
 	 */
-	public static Craft createCraft (String type, Orientation o) {
+	public static Craft createCraft (String craft, Orientation o) {
+		
+		// Variable para almacenar la clase
+		Class<?> craftClass = null;
+		
+		// Variable para almacenar si es un ship o aircraft
+		boolean typeCraft = getModelCraft(craft);
+		
+		// Variable para guardar el constructor
+		Constructor[] constructor = null;
 		Craft newCraft = null;
 		
-		switch(type) {
-			case "Battleship":
-				newCraft = new Battleship(o);
-				break;
+		String type = getCraftClass(craft);
+		
+		try {
+			if(type != "") {
+				if(typeCraft) {
+					craftClass = Class.forName("model.ship." + type);
+				}
 				
-			case "Carrier":
-				newCraft = new Carrier(o);
-				break;
+				else {
+					craftClass = Class.forName("model.aircraft." + type);
+				}
 				
-			case "Cruiser":
-				newCraft = new Cruiser(o);
-				break;
-				
-			case "Destroyer":
-				newCraft = new Destroyer(o);
-				break;
-				
-			case "Bomber":
-				newCraft = new Bomber(o);
-				break;
-				
-			case "Fighter":
-				newCraft = new Fighter(o);
-				break;
-				
-			case "Transport":
-				newCraft = new Transport(o);
-				break;
-				
-			default:
-				newCraft = null;
+				constructor = craftClass.getConstructors();
+				newCraft = (Craft)constructor[0].newInstance(o);
+			}
+		}
+		catch(Exception e) {
+			
 		}
 		
+		
 		return newCraft;
+	}
+	
+	
+	private static boolean getModelCraft(String craft) {
+		boolean t = false;
+		
+		String[] components = craft.split("\\.");
+		if(components[0].equals("ship")) {
+			t = true;
+		}
+		
+		else if(components[0].equals("aircraft")) {
+			t = false;
+		}
+	
+		return t;
+	}
+	
+	
+	private static String getCraftClass(String craft) {
+		String[] components = craft.split("\\.");
+		
+		if(components.length == 1) {
+			return "";
+		}
+		
+		return components[1];
 	}
 }

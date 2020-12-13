@@ -3,6 +3,7 @@ package model.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import model.Board;
+import model.CellStatus;
 import model.Coordinate;
 import model.CoordinateFactory;
 import model.Craft;
@@ -47,6 +48,8 @@ public class PlayerFile implements IPlayer{
 	
 	/** The leido. */
 	private boolean leido = false;
+	
+	private CellStatus lastShotStatus;
 	
 	
 	/**
@@ -417,13 +420,14 @@ public class PlayerFile implements IPlayer{
 			if(linea != null && !linea.equals(exit)) {
 				comprobarElementos(linea, false);
 				nuevaCoord = getCoordinate(linea, false);
-				b.hit(nuevaCoord);
+				lastShotStatus = b.hit(nuevaCoord);
 				golpea = nuevaCoord;
 				nuevaCoord = null;
 			}
-			else {
+			if(linea.equals(exit) | linea == null){
 				leido = true;
 			}
+			
 						
 		}
 		catch(IOException e) {
@@ -435,5 +439,17 @@ public class PlayerFile implements IPlayer{
 		}
 		
 		return golpea;
+	}
+
+
+	@Override
+	public CellStatus getLastShotStatus() {
+		CellStatus dev = null;
+		
+		if(!leido) {
+			dev = lastShotStatus;
+		}
+		
+		return dev;
 	}
 }

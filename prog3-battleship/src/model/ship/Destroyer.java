@@ -53,4 +53,10 @@ public class Destroyer extends Ship{
 	public int[][] getShape(){
 		return this.shape;
 	}
+
+
+	@Override
+	public int getValue() {
+		return 3;
+	}
 }

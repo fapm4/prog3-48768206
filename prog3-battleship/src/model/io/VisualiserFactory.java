@@ -1,5 +1,8 @@
 package model.io;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import model.Game;
 
 // TODO: Auto-generated Javadoc
@@ -17,17 +20,26 @@ public class VisualiserFactory {
 	 * @return the i visualiser
 	 */
 	public static IVisualiser createVisualiser(String n, Game g) {
-		IVisualiser nuevo = null;		
+		Class<?> visualiserClass = null;
+		Constructor[] constructor = null;
+		IVisualiser nueva = null;
 		
-		if(n.equals("Console")) {
-			VisualiserConsole nuevo2 = new VisualiserConsole(g);
-			nuevo = nuevo2;
+		
+		try {
+			if(n.equals("Console")) {
+				visualiserClass = Class.forName("model.io.VisualiserConsole");
+			}
+			else if(n.equals("GIF")) {
+				visualiserClass = Class.forName("model.io.VisualiserGIF");
+			}
+			
+			constructor = visualiserClass.getConstructors();
+			nueva = (IVisualiser)constructor[0].newInstance(g);
 		}
-		else if(n.equals("GIF")) {
-			VisualiserGIF nuevo2 = new VisualiserGIF(g);
-			nuevo = nuevo2;
+		catch(Exception e) {
+			
 		}
 		
-		return nuevo;
+		return nueva;
 	}
 }

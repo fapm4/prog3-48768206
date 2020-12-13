@@ -1,6 +1,7 @@
 package model.io;
 
 import model.Board;
+import model.CellStatus;
 import model.Coordinate;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
@@ -45,4 +46,7 @@ public interface IPlayer {
 	 * @throws CoordinateAlreadyHitException the coordinate already hit exception
 	 */
 	Coordinate nextShoot(Board b) throws BattleshipIOException, InvalidCoordinateException, CoordinateAlreadyHitException;
+	
+	
+	public CellStatus getLastShotStatus();
 }

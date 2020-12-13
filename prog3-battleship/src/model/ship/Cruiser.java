@@ -53,4 +53,10 @@ public class Cruiser extends Ship{
 	public int[][] getShape(){
 		return this.shape;
 	}
+
+
+	@Override
+	public int getValue() {
+		return 5;
+	}
 }

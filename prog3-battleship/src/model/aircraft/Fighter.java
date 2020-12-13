@@ -52,5 +52,11 @@ public class Fighter extends Aircraft{
 	 */
 	public int[][] getShape(){
 		return this.shape;
+	}
+
+
+	@Override
+	public int getValue() {
+		return 10;
 	}		
 }
