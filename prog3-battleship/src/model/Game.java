@@ -33,10 +33,11 @@ public class Game {
 	/** The board 2. */
 	private Board board1, board2;
 	
+	/** The hit score 2. */
 	private HitScore hitScore1, hitScore2;
 	
+	/** The craft score 2. */
 	private CraftScore craftScore1, craftScore2;
-	
 	
 	
 
@@ -62,8 +63,6 @@ public class Game {
 		hitScore2 = new HitScore(p2);
 		craftScore1 = new CraftScore(p1);
 		craftScore2 = new CraftScore(p2);
-		
-		
 	}
 	
 	
@@ -137,7 +136,7 @@ public class Game {
 			player1.putCrafts(board1);
 			player2.putCrafts(board2);
 			shootCounter = 0;
-			nextToShoot = 0;
+			nextToShoot = 1;
 			gameStarted = true;
 		} catch (InvalidCoordinateException | OccupiedCoordinateException | NextToAnotherCraftException
 				| BattleshipIOException e1) {
@@ -172,21 +171,38 @@ public class Game {
 	 */
 	private boolean auxShoot(IPlayer player, Board b, int shoot) {
 		boolean dev = false;
+		Coordinate golpeada = null;
+		CellStatus isDestroyed = null;
+		
 		
 		try {
-			if(shoot == 0) {
-				player1.nextShoot(board2);
-				nextToShoot = 1;
+			if(shoot == 1) {
+				golpeada = player1.nextShoot(board2);
+				isDestroyed = player1.getLastShotStatus();
+				hitScore1.score(isDestroyed);
+				
+				if(player1.getLastShotStatus().equals(CellStatus.DESTROYED)) {
+					craftScore1.score(b.getCraft(golpeada));
+				}
+				
+				nextToShoot = 2;
 			}
-			else if(shoot == 1) {
-				player2.nextShoot(board1);
-				nextToShoot = 0;
+			else if(shoot == 2) {
+				golpeada = player2.nextShoot(board1);
+				isDestroyed = player2.getLastShotStatus();
+				hitScore2.score(isDestroyed);
+				
+				if(player2.getLastShotStatus().equals(CellStatus.DESTROYED)) {
+					craftScore2.score(b.getCraft(golpeada));
+				}
+				
+				nextToShoot = 1;
 			}
 			
 			dev = true;
 			shootCounter ++;
 		}
-		catch (InvalidCoordinateException | CoordinateAlreadyHitException | BattleshipIOException e) {
+		catch (InvalidCoordinateException | CoordinateAlreadyHitException | BattleshipIOException | NullPointerException e) {
 			if(e instanceof CoordinateAlreadyHitException) {
 				System.out.println("Action by " + player.getName() + " Coordinate ya golpeada");
 			}
@@ -233,11 +249,11 @@ public class Game {
 		
 		while(play == true && stop == false) {
 			play = playNext();
-			stop = gameEnded();
 			
 			if(play) {
 				visualiser.show();
 			}
+			stop = gameEnded();
 		}
 		
 		visualiser.close();
@@ -288,6 +304,11 @@ public class Game {
 	}
 	
 	
+	/**
+	 * Gets the score info.
+	 *
+	 * @return the score info
+	 */
 	public String getScoreInfo() {
 		StringBuilder sb = new StringBuilder();
 		
@@ -297,23 +318,43 @@ public class Game {
 		sb.append("------------------\n");
 		sb.append("Player 2\n");
 		sb.append("HitScore: " + hitScore2.toString() + "\n");
-		sb.append("CraftScore: " + craftScore2.toString() + "\n");
+		sb.append("CraftScore: " + craftScore2.toString());
 		
 		return sb.toString();
 	}
 	
+	/**
+	 * Gets the hit score player 1.
+	 *
+	 * @return the hit score player 1
+	 */
 	public HitScore getHitScorePlayer1() {
 		return hitScore1;
 	}
 	
+	/**
+	 * Gets the hit score player 2.
+	 *
+	 * @return the hit score player 2
+	 */
 	public HitScore getHitScorePlayer2() {
 		return hitScore2;
 	}
 	
+	/**
+	 * Gets the craft score player 1.
+	 *
+	 * @return the craft score player 1
+	 */
 	public CraftScore getCraftScorePlayer1() {
 		return craftScore1;
 	}
 	
+	/**
+	 * Gets the craft score player 2.
+	 *
+	 * @return the craft score player 2
+	 */
 	public CraftScore getCraftScorePlayer2() {
 		return craftScore2;
 	}

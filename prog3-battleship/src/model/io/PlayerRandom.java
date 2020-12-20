@@ -1,6 +1,5 @@
 package model.io;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 import model.Board;
@@ -11,18 +10,12 @@ import model.Craft;
 import model.CraftFactory;
 import model.Orientation;
 import model.aircraft.Board3D;
-import model.aircraft.Bomber;
-import model.aircraft.Fighter;
-import model.aircraft.Transport;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
 import model.exceptions.OccupiedCoordinateException;
-import model.ship.Battleship;
 import model.ship.Board2D;
-import model.ship.Carrier;
-import model.ship.Cruiser;
-import model.ship.Destroyer;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,6 +30,7 @@ public class PlayerRandom implements IPlayer{
 	/** The name. */
 	private String name;
 	
+	/** The last shot status. */
 	private CellStatus lastShotStatus;
 	
 	/**
@@ -100,7 +94,6 @@ public class PlayerRandom implements IPlayer{
 	 * @param or the or
 	 * @param is3D the is 3 D
 	 * @return the craft
-	 * @throws Exception 
 	 */
 	private Craft generaCraft(String craft, Orientation or, boolean is3D) {
 		Craft nuevo = null;
@@ -237,6 +230,11 @@ public class PlayerRandom implements IPlayer{
 	}
 
 
+	/**
+	 * Gets the last shot status.
+	 *
+	 * @return the last shot status
+	 */
 	@Override
 	public CellStatus getLastShotStatus() {
 		return lastShotStatus;

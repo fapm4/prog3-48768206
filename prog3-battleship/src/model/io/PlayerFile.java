@@ -7,19 +7,16 @@ import model.CellStatus;
 import model.Coordinate;
 import model.CoordinateFactory;
 import model.Craft;
+import model.CraftFactory;
 import model.Orientation;
-import model.aircraft.Bomber;
-import model.aircraft.Fighter;
-import model.aircraft.Transport;
+import model.aircraft.Coordinate3D;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
 import model.exceptions.OccupiedCoordinateException;
 import model.exceptions.io.BattleshipIOException;
-import model.ship.Battleship;
-import model.ship.Carrier;
-import model.ship.Cruiser;
-import model.ship.Destroyer;
+import model.ship.Board2D;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -49,6 +46,7 @@ public class PlayerFile implements IPlayer{
 	/** The leido. */
 	private boolean leido = false;
 	
+	/** The last shot status. */
 	private CellStatus lastShotStatus;
 	
 	
@@ -141,40 +139,8 @@ public class PlayerFile implements IPlayer{
 	 * @return the put craft
 	 */
 	private Craft getPutCraft(String craftName, Orientation or) {
-		Craft nuevo;
-		
-		switch(craftName) {
-			case "Destroyer":
-				nuevo = new Destroyer(or);
-				break;
-				
-			case "Cruiser":
-				nuevo = new Cruiser(or);
-				break;
-				
-			case "Carrier":
-				nuevo = new Carrier(or);
-				break;
-				
-			case "Battleship":
-				nuevo = new Battleship(or);
-				break;
-				
-			case "Transport":
-				nuevo = new Transport(or);
-				break;
-				
-			case "Fighter":
-				nuevo = new Fighter(or);
-				break;
-				
-			case "Bomber":
-				nuevo = new Bomber(or);
-				break;
-				
-			default:
-				nuevo = null;
-		}
+		Craft nuevo = null;		
+		nuevo = CraftFactory.createCraft(craftName, or);
 		
 		return nuevo;
 	}
@@ -379,6 +345,10 @@ public class PlayerFile implements IPlayer{
 				or = getPutOrientation(linea);
 				nuevoCraft = getPutCraft(craftName, or);
 				
+				if(b instanceof Board2D && nuevaCoord instanceof Coordinate3D) {
+					throw new IllegalArgumentException();
+				}
+				
 				b.addCraft(nuevoCraft, nuevaCoord);
 				
 				nuevaCoord = null;
@@ -417,6 +387,10 @@ public class PlayerFile implements IPlayer{
 		try {
 			String linea = br.readLine();
 			
+			if(linea == null) {
+				return null;
+			}
+			
 			if(linea != null && !linea.equals(exit)) {
 				comprobarElementos(linea, false);
 				nuevaCoord = getCoordinate(linea, false);
@@ -442,6 +416,11 @@ public class PlayerFile implements IPlayer{
 	}
 
 
+	/**
+	 * Gets the last shot status.
+	 *
+	 * @return the last shot status
+	 */
 	@Override
 	public CellStatus getLastShotStatus() {
 		CellStatus dev = null;

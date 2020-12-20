@@ -26,18 +26,12 @@ public class VisualiserFactory {
 		
 		
 		try {
-			if(n.equals("Console")) {
-				visualiserClass = Class.forName("model.io.VisualiserConsole");
-			}
-			else if(n.equals("GIF")) {
-				visualiserClass = Class.forName("model.io.VisualiserGIF");
-			}
-			
+			visualiserClass = Class.forName("model.io.Visualiser" + n);
 			constructor = visualiserClass.getConstructors();
 			nueva = (IVisualiser)constructor[0].newInstance(g);
 		}
 		catch(Exception e) {
-			
+			nueva = null;
 		}
 		
 		return nueva;

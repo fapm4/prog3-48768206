@@ -1,5 +1,4 @@
 package model.exceptions;
-import model.Coordinate;
 
 
 // TODO: Auto-generated Javadoc

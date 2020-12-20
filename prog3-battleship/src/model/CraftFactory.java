@@ -22,7 +22,7 @@ public class CraftFactory {
 	/**
 	 * Creates a new Craft object.
 	 *
-	 * @param type the type
+	 * @param craft the craft
 	 * @param o the o
 	 * @return the craft
 	 */
@@ -55,7 +55,7 @@ public class CraftFactory {
 			}
 		}
 		catch(Exception e) {
-			
+			newCraft = null;
 		}
 		
 		
@@ -63,6 +63,12 @@ public class CraftFactory {
 	}
 	
 	
+	/**
+	 * Gets the model craft.
+	 *
+	 * @param craft the craft
+	 * @return the model craft
+	 */
 	private static boolean getModelCraft(String craft) {
 		boolean t = false;
 		
@@ -79,6 +85,12 @@ public class CraftFactory {
 	}
 	
 	
+	/**
+	 * Gets the craft class.
+	 *
+	 * @param craft the craft
+	 * @return the craft class
+	 */
 	private static String getCraftClass(String craft) {
 		String[] components = craft.split("\\.");
 		
