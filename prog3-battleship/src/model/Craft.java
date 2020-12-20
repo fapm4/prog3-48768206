@@ -96,6 +96,11 @@ public abstract class Craft {
 	}
 
 	
+	/**
+	 * Sets the orientation.
+	 *
+	 * @param or the new orientation
+	 */
 	private void setOrientation(Orientation or) {
 		
 		if(or == null) {
@@ -1757,5 +1762,10 @@ public abstract class Craft {
 	}
 	
 	
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
+	 */
 	abstract public int getValue();
 }

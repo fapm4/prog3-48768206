@@ -10,6 +10,7 @@ import model.Craft;
 import model.CraftFactory;
 import model.Orientation;
 import model.aircraft.Board3D;
+import model.aircraft.Coordinate3D;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
@@ -119,6 +120,10 @@ public class PlayerRandom implements IPlayer{
 		or = getRandomOrientation();
 		nuevo = generaCraft(craft, or, is3D);
 		coord = getRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE);
+		
+		if(b instanceof Board2D && coord instanceof Coordinate3D) {
+			throw new IllegalArgumentException();
+		}
 		
 		try {
 			b.addCraft(nuevo, coord);

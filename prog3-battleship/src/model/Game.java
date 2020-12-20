@@ -95,11 +95,11 @@ public class Game {
 		IPlayer toReturn = null;
 		
 		if(shootCounter != 0) {
-			if(nextToShoot == 1) {
+			if(nextToShoot == 2) {
 				toReturn = player1;
 			}
 			
-			else if(nextToShoot == 2) {
+			else if(nextToShoot == 1) {
 				toReturn = player2;
 			}
 		}
