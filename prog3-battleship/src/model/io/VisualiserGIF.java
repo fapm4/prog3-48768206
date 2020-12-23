@@ -16,6 +16,7 @@ import model.aircraft.Board3D;
  * The Class VisualiserGIF.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class VisualiserGIF implements IVisualiser{
 
 	/** The game. */

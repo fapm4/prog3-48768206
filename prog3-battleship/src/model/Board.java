@@ -15,6 +15,7 @@ import model.exceptions.OccupiedCoordinateException;
  * The Class Board.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class Board {
 	
 	/** The not set. */

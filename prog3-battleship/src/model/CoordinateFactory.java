@@ -9,6 +9,7 @@ import model.ship.Coordinate2D;
  * A factory for creating Coordinate objects.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class CoordinateFactory {
 	
 	/**

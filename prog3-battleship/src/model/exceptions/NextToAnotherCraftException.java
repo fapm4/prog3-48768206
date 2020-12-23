@@ -8,6 +8,7 @@ import model.Coordinate;
  * The Class NextToAnotherCraftException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class NextToAnotherCraftException extends CoordinateException{
 	
 	/** The Constant serialVersionUID. */

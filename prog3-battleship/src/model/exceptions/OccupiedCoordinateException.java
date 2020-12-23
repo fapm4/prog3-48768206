@@ -8,6 +8,7 @@ import model.Coordinate;
  * The Class OccupiedCoordinateException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class OccupiedCoordinateException extends CoordinateException{
 
 	/** The Constant serialVersionUID. */
@@ -29,7 +30,6 @@ public class OccupiedCoordinateException extends CoordinateException{
 	 * @return the message
 	 */
 	public String getMessage() {
-		
 		return "La coordenada ya está ocupada (OccupiedCoordinateException)";
 	}
 }

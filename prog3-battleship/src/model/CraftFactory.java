@@ -17,6 +17,7 @@ import model.ship.Destroyer;
  * A factory for creating Craft objects.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class CraftFactory {
 
 	/**
@@ -35,7 +36,7 @@ public class CraftFactory {
 		boolean typeCraft = getModelCraft(craft);
 		
 		// Variable para guardar el constructor
-		Constructor[] constructor = null;
+		Constructor<?> constructor = null;
 		Craft newCraft = null;
 		
 		String type = getCraftClass(craft);
@@ -50,8 +51,8 @@ public class CraftFactory {
 					craftClass = Class.forName("model.aircraft." + type);
 				}
 				
-				constructor = craftClass.getConstructors();
-				newCraft = (Craft)constructor[0].newInstance(o);
+				constructor = craftClass.getConstructor(Orientation.class);
+				newCraft = (Craft)constructor.newInstance(o);
 			}
 		}
 		catch(Exception e) {

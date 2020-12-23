@@ -17,6 +17,7 @@ import model.exceptions.io.BattleshipIOException;
  *
  * @author drizo
  */
+
 public class FrameGIF {
 
 	/** The Constant PIXELS_SQUARE. */

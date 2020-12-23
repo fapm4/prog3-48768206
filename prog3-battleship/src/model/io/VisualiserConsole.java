@@ -7,6 +7,7 @@ import model.Game;
  * The Class VisualiserConsole.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class VisualiserConsole implements IVisualiser{
 	
 	/** The game. */

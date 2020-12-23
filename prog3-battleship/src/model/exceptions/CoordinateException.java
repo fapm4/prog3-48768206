@@ -7,6 +7,7 @@ import model.Coordinate;
  * The Class CoordinateException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class CoordinateException extends BattleshipException{
 	
 	/** The c. */

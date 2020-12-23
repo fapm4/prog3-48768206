@@ -8,6 +8,7 @@ import model.Orientation;
  * The Class Bomber.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Bomber extends Aircraft{
 	
 	/**

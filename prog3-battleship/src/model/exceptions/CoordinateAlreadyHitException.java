@@ -8,6 +8,7 @@ import model.Coordinate;
  * The Class CoordinateAlreadyHitException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class CoordinateAlreadyHitException extends CoordinateException{
 
 	/** The Constant serialVersionUID. */

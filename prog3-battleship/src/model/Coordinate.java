@@ -11,6 +11,7 @@ import model.ship.Coordinate2D;
  * The Class Coordinate.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class Coordinate{
 
 	/** The components. */

@@ -6,6 +6,7 @@ package model.exceptions;
  * The Class BattleshipException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class BattleshipException extends Exception{
 	
 	/** The Constant serialVersionUID. */

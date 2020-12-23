@@ -8,6 +8,7 @@ import model.Orientation;
  * The Class Carrier.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Carrier extends Ship{	
 		
 	/**

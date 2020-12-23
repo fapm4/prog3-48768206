@@ -9,6 +9,7 @@ import model.Orientation;
  * The Class Aircraft.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class Aircraft extends Craft{
 	
 	

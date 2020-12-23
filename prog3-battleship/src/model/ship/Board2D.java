@@ -9,6 +9,7 @@ import model.Craft;
  * The Class Board2D.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Board2D extends Board {
 	
 	/**

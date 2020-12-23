@@ -7,6 +7,7 @@ import model.Orientation;
  * The Class Cruiser.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Cruiser extends Ship{		
 		
 	

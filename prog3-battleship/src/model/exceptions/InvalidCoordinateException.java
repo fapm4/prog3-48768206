@@ -8,6 +8,7 @@ import model.Coordinate;
  * The Class InvalidCoordinateException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class InvalidCoordinateException extends CoordinateException{
 
 	/** The Constant serialVersionUID. */

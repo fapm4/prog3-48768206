@@ -23,6 +23,7 @@ import model.ship.Board2D;
  * The Class PlayerFile.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class PlayerFile implements IPlayer{
 	
 	/** The br. */

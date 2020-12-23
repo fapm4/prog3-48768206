@@ -7,6 +7,7 @@ import model.exceptions.BattleshipException;
  * The Class BattleshipIOException.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class BattleshipIOException extends BattleshipException{
 	
 	/** The message. */

@@ -8,6 +8,7 @@ import model.io.IPlayer;
  * The Class CraftScore.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class CraftScore extends Score<Craft>{
 
 	/**

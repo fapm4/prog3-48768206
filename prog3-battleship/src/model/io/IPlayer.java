@@ -14,6 +14,7 @@ import model.exceptions.io.BattleshipIOException;
  * The Interface IPlayer.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public interface IPlayer {
 	
 	/**

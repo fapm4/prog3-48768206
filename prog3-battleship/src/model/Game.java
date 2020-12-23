@@ -16,6 +16,7 @@ import model.score.HitScore;
  * The Class Game.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Game {
 	
 	/** The game started. */

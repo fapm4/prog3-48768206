@@ -9,6 +9,7 @@ import model.Orientation;
  * The Class Ship.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class Ship extends Craft {
 	
 	/**

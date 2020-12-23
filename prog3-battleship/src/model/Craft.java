@@ -22,6 +22,7 @@ import model.ship.Destroyer;
  * The Class Craft.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public abstract class Craft {
 	
 	/** The Constant BOUNDING_SQUARE_SIZE. */

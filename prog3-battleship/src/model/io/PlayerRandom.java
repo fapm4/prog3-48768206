@@ -23,6 +23,7 @@ import model.ship.Board2D;
  * The Class PlayerRandom.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class PlayerRandom implements IPlayer{
 	
 	/** The random. */

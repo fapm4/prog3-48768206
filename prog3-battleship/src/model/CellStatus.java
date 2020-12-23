@@ -5,6 +5,7 @@ package model;
  * The Enum CellStatus.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public enum CellStatus {
 	/** The water. */
 	WATER, 

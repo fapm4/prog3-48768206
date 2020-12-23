@@ -12,6 +12,7 @@ import model.CoordinateFactory;
  * The Class Coordinate2D.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Coordinate2D extends Coordinate{
 
 	/**

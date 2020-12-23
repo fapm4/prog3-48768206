@@ -8,6 +8,7 @@ import model.Orientation;
  * The Class Fighter.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Fighter extends Aircraft{
 	
 	/**

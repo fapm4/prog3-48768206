@@ -8,6 +8,7 @@ import model.Orientation;
  * The Class Destroyer.
  * @author Francisco Alejandro Pérez Meneses - 48768206H
  */
+
 public class Destroyer extends Ship{
 		
 	/**
