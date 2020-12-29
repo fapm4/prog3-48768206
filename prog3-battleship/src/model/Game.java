@@ -316,7 +316,7 @@ public class Game {
 		sb.append("Player 1\n");
 		sb.append("HitScore: " + hitScore1.toString() + "\n");
 		sb.append("CraftScore: " + craftScore1.toString() + "\n");
-		sb.append("------------------\n");
+		sb.append("--------------\n");
 		sb.append("Player 2\n");
 		sb.append("HitScore: " + hitScore2.toString() + "\n");
 		sb.append("CraftScore: " + craftScore2.toString());
