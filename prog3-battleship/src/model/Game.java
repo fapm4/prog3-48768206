@@ -206,6 +206,16 @@ public class Game {
 		catch (InvalidCoordinateException | CoordinateAlreadyHitException | BattleshipIOException | NullPointerException e) {
 			if(e instanceof CoordinateAlreadyHitException) {
 				System.out.println("Action by " + player.getName() + " Coordinate ya golpeada");
+				
+				if(shoot == 1) {
+					nextToShoot = 2;
+				}
+				else if(shoot == 2) {
+					nextToShoot = 1;
+				}
+				
+				dev = true;
+				shootCounter ++;
 			}
 			else if(e instanceof InvalidCoordinateException  | e instanceof BattleshipIOException) {
 				throw new RuntimeException();
