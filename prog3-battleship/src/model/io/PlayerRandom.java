@@ -97,7 +97,7 @@ public class PlayerRandom implements IPlayer{
 	 * @param is3D the is 3 D
 	 * @return the craft
 	 */
-	private Craft generaCraft(String craft, Orientation or, boolean is3D) {
+	private Craft generaCraft(String craft, Orientation or) {
 		Craft nuevo = null;
 		nuevo = CraftFactory.createCraft(craft, or);
 		
@@ -112,14 +112,14 @@ public class PlayerRandom implements IPlayer{
 	 * @param craft the craft
 	 * @param is3D the is 3 D
 	 */
-	private void auxPutCrafts(Board b, String craft, boolean is3D) {
+	private void auxPutCrafts(Board b, String craft) {
 		Orientation or = null;
 		Coordinate coord = null;
 		Craft nuevo = null;
 		int cont = 0;
 		
 		or = getRandomOrientation();
-		nuevo = generaCraft(craft, or, is3D);
+		nuevo = generaCraft(craft, or);
 		coord = getRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE);
 		
 		if(b instanceof Board2D && coord instanceof Coordinate3D) {
@@ -152,33 +152,33 @@ public class PlayerRandom implements IPlayer{
 	public void putCrafts(Board b) {
 		
 		// Añado Battleship
-		auxPutCrafts(b, "ship.Battleship", false);
+		auxPutCrafts(b, "ship.Battleship");
 		// ----------------
 		
 		// Añado Carrier
-		auxPutCrafts(b, "ship.Carrier", false);
+		auxPutCrafts(b, "ship.Carrier");
 		// ----------------
 		
 		// Añado Cruiser
-		auxPutCrafts(b, "ship.Cruiser", false);
+		auxPutCrafts(b, "ship.Cruiser");
 		// ----------------
 		
 		// Añado Destroyer
-		auxPutCrafts(b, "ship.Destroyer", false);
+		auxPutCrafts(b, "ship.Destroyer");
 		// ----------------
 		
 		
 		if(b instanceof Board3D) {
 			// Añado Bomber
-			auxPutCrafts(b, "aircraft.Bomber", true);
+			auxPutCrafts(b, "aircraft.Bomber");
 			// ----------------
 			
 			// Añado Fighter
-			auxPutCrafts(b, "aircraft.Fighter", true);
+			auxPutCrafts(b, "aircraft.Fighter");
 			// ----------------
 			
 			// Añado Transport
-			auxPutCrafts(b, "aircraft.Transport", true);
+			auxPutCrafts(b, "aircraft.Transport");
 			// ----------------
 		}
 	}

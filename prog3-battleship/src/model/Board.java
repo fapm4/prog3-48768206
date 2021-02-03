@@ -61,6 +61,8 @@ public abstract class Board {
 	 * @param size the size
 	 */
 	public Board(int size) {
+
+		// Si mayor que 20 o menor que 5 -> Lanzo excepcion
 		if(size < MIN_BOARD_SIZE | size > MAX_BOARD_SIZE) {
 			throw new IllegalArgumentException();
 		}
@@ -255,62 +257,24 @@ public abstract class Board {
 			throw new NullPointerException();
 		}
 		
-		Set<Coordinate> vecindario = new HashSet<Coordinate>();
-		Set<Coordinate> vecindarioToReturn = new HashSet<Coordinate>();
-		Set<Coordinate> listaVacia = new HashSet<Coordinate>();
-		Set<Coordinate> posAbs = new HashSet<Coordinate>();
-		int contFuera = 0;
-		Coordinate pos = ship.getPosition();
-		ship.setPosition(position);
-		posAbs = ship.getAbsolutePositions();
+		Set<Coordinate> posAdj = new HashSet<Coordinate>();
+		Set<Coordinate> posAbs = ship.getAbsolutePositions(position);
 		
 		for(Coordinate c: posAbs) {
-			vecindario.addAll(c.adjacentCoordinates());
+			posAdj.addAll(c.adjacentCoordinates());
 		}
 		
-		for(Coordinate c: vecindario) {
-			if(checkCoordinate(c)) {
-				vecindarioToReturn.add(c);
-			}
-		}
+		posAdj.removeAll(posAbs);
+		Set<Coordinate> toRemove = new HashSet<Coordinate>();
 		
-		vecindarioToReturn.removeAll(posAbs);
-		
-		if(notSet == false) {
-			vecindarioToReturn = listaVacia;
-		}
-		
-		for(Coordinate c: posAbs) {
+		for(Coordinate c: posAdj) {
 			if(!checkCoordinate(c)) {
-				contFuera ++;
+				toRemove.add(c);
 			}
 		}
 		
-		if(contFuera == 3) {
-			for(Coordinate c: posAbs) {
-				vecindario.addAll(c.adjacentCoordinates());
-			}
-			
-			for(Coordinate c: vecindario) {
-				if(checkCoordinate(c)) {
-					vecindarioToReturn.add(c);
-				}
-			}
-			
-		}
-		
-		for(Coordinate c: posAbs) {
-			vecindario.addAll(c.adjacentCoordinates());
-		}
-		
-		for(Coordinate c: vecindario) {
-			if(checkCoordinate(c)) {
-				vecindarioToReturn.add(c);
-			}
-		}
-		
-		vecindarioToReturn.removeAll(posAbs);
-		return vecindarioToReturn;
+		posAdj.removeAll(toRemove);
+		return posAdj;
 	}
 
 	
