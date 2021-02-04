@@ -98,23 +98,6 @@ public abstract class Craft {
 
 	
 	/**
-	 * Sets the orientation.
-	 *
-	 * @param or the new orientation
-	 */
-	private void setOrientation(Orientation or) {
-		
-		if(or == null) {
-			if(position == null) {
-				throw new NullPointerException();
-			}
-		}
-		
-		this.orientation = or;
-	}
-	
-	
-	/**
 	 * Gets the name.
 	 *
 	 * @return the name
@@ -204,7 +187,7 @@ public abstract class Craft {
 	public Set<Coordinate> getAbsolutePositions(Coordinate position){
 		Set<Coordinate> positionsToReturn = new HashSet<Coordinate>();
 		int or = OrientationToInteger();
-		int aux = 0;
+		int pos = 0;
 		
 		if(position == null) {
 			throw new NullPointerException();
@@ -214,11 +197,13 @@ public abstract class Craft {
 		for(int i = 0;i < BOUNDING_SQUARE_SIZE;i++) {
 			for(int j = 0;j < BOUNDING_SQUARE_SIZE;j++) {
 				Coordinate c = CoordinateFactory.createCoordinate(j, i);
-				aux = getShapeIndex(c);
-				if(shape[or][aux] == CRAFT_VALUE || shape[or][aux] == HIT_VALUE) {
+				pos = getShapeIndex(c);
+				if(shape[or][pos] == CRAFT_VALUE || shape[or][pos] == HIT_VALUE) {
+					int pos0 = c.get(0) + position.get(0);
+					int pos1 = c.get(1) + position.get(1);
 					Coordinate c2 = position.copy();
-					c2.set(0, c.get(0) + position.get(0));
-					c2.set(1, c.get(1) + position.get(1));
+					c2.set(0, pos0);
+					c2.set(1, pos1);
 					positionsToReturn.add(c2);
 				}
 			}
